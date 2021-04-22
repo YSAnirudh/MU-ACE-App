@@ -1,11 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-//import LoginScreen from './screens/LoginScreen'
+import LoginScreen from './screens/LoginScreen'
+import DiscussionForum from './screens/DiscussionForum'
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Hello man</Text>
+      <DiscussionForum/>
       <StatusBar style="auto" />
     </View>
   );
@@ -14,7 +15,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#00f',
+    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
