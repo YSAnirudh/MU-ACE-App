@@ -1,13 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
-
+import { StyleSheet, Text, View } from 'react-native';
+//import LoginScreen from './screens/LoginScreen'
 export default function App() {
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Text>Hello man</Text>
       <StatusBar style="auto" />
-    </SafeAreaView>
+    </View>
   );
 }
 
