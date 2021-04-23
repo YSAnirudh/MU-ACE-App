@@ -69,7 +69,7 @@ const styles=StyleSheet.create({
     },
     viewContainer:{
       flex:1,
-      backgroundColor:Colors.primary_dark,
+      backgroundColor:Colors.Grey,
       alignItems:'center',
       justifyContent:'center',
       padding:21,
@@ -97,7 +97,7 @@ const styles=StyleSheet.create({
     ForgotTxt: {
       fontSize: 14,
       fontWeight: '500',
-      color: Colors.secondary
+      color: Colors.Gold
     },
     forgot: {
       marginVertical: 38,

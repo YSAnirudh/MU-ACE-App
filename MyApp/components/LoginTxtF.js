@@ -8,7 +8,7 @@ const LoginTxtF=({label,placeholder,icon,...other})=>{
     return(    
         <View style={styles.TF}>
             <View style={styles.iconStyle}>
-                <AntDesign name={icon} size={25} color={Colors.primary_light}/>
+                <AntDesign name={icon} size={25} color={Colors.Red}/>
             </View>    
             <TextInput label={label} numberOfLines={1} placeholder={placeholder} placeholderTextColor='#666' style={styles.input} required {...other}>
             </TextInput>      
@@ -22,20 +22,20 @@ const styles =StyleSheet.create({
         marginBottom:10,
         width:'100%',
         height:screenHeight/15,
-        borderColor:Colors.secondary,
+        borderColor:Colors.Gold,
         borderRadius:20,
         borderWidth:1,
         flexDirection:'row',
         alignItems:'center',
-        backgroundColor:Colors.secondary_dark
+        backgroundColor:Colors.DarkGrey
     },
     iconStyle:{
         padding:10,
         height:'100%',
         justifyContent:'center',
         alignItems:'center',
-        borderRightColor:Colors.secondary,
-        color:Colors.secondary,
+        borderRightColor:Colors.Gold,
+        color:Colors.Gold,
         borderRightWidth:1,
         width:50
     },
@@ -56,7 +56,7 @@ const styles =StyleSheet.create({
         padding:10,
         flex:1,
         fontSize:16,
-        color:Colors.secondary,
+        color:Colors.Gold,
         justifyContent:'center',
         alignItems:'center'
     }

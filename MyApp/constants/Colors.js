@@ -1,7 +1,12 @@
+import React from 'react'
+
 export default {
-    primary_light: '#f50000',
-    primary_dark: '#404040',
-    secondary:'#efc44d',
-    secondary_dark:"#14171c"
-    
+    Red: '#f50000', // RED
+    Grey: '#404040', // Dark Grey
+    Gold:'#efc44d', // GOLDEN
+    DarkGrey:"#14171c", // Ultra Dark Grey
+    DiscussionView: "#FF0000",
+    DiscussionCreate:"#FF5733",
+    DiscussionAvailability:"#FFFF00",
+    DiscussionProfile:"#00FF00"
 };

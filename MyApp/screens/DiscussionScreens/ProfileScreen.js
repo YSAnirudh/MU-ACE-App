@@ -8,21 +8,21 @@ import {
 } from 'react-native';
 import Colors from '../../constants/Colors'
 
-export default function CreatePostScreen ({navigation}) {
+export default function ProfileScreen ({navigation}) {
     return (
         <View style={styles.container}>
             <Text>
-                CreateScreen
+                ProfileScreen
             </Text>
             <Button 
                 title="Go to View Post"
                 onPress= {() => navigation.navigate("View Post")}/>
             <Button 
+                title="Go to Create"
+                onPress= {() => navigation.navigate("Create")}/>
+            <Button 
                 title="Go to Availability"
                 onPress= {() => navigation.navigate("Availability")}/>
-            <Button 
-                title="Go to Profile"
-                onPress= {() => navigation.navigate("Profile")}/>
         </View>
     );
 }

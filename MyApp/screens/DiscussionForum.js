@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import Icon from 'react-native-vector-icons/Ionicons'
 import { 
     StyleSheet, 
     Text, 
@@ -10,86 +8,31 @@ import {
     TextInput
 } from 'react-native';
 import Colors from '../constants/Colors'
-import ViewPostScreen from "./DiscussionScreens/ViewPostScreen"
-import CreatePostScreen from "./DiscussionScreens/CreatePostScreen"
-
-ViewPostStack = createStackNavigator();
-CreatePostStack = createStackNavigator();
-
+import {ViewPostStackSc} from './DiscussionScreens/Stacks'
+import Tabs from "./DiscussionScreens/Tab"
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 const Drawer = createDrawerNavigator();
-
-function ViewPostStackSc ({navigation}) {
-    return (
-        <ViewPostStack.Navigator
-        screenOptions={
-            {
-                headerStyle: {
-                    backgroundColor:Colors.primary_dark
-                }
-            }
-        }>
-            <ViewPostStack.Screen
-                name = "View Posts"
-                component = {ViewPostScreen}
-                options={{
-                    title:"Posts",
-                    headerLeft: () => {
-                        <Icon.Button 
-                        name="android-menu"
-                        size={25}
-                        backgroundColor="#fff"
-                        onClick={()=>navigation.openDrawer()}>
-                            
-                        </Icon.Button>
-                    }
-                }}>
-
-            </ViewPostStack.Screen>
-        </ViewPostStack.Navigator>
-    );
-}
-function CreatePostStackSc ({navigation}) {
-    return (
-        <CreatePostStack.Navigator 
-        screenOptions={
-            {
-                headerStyle: {
-                    backgroundColor:Colors.primary_dark
-                }
-            }
-        }>
-            <CreatePostStack.Screen
-                name = "Create Posts"
-                component = {CreatePostScreen}
-                options={{
-                    title:"Create Posts",
-                    headerLeft: () => {
-                        <Icon.Button 
-                        name="android-menu"
-                        size={25}
-                        backgroundColor="#fff"
-                        onClick={()=>navigation.operDrawer()}>
-
-                        </Icon.Button>
-                    }
-                }}>
-
-            </CreatePostStack.Screen>
-        </CreatePostStack.Navigator>
-    );
-}
-
+const myTab = createMaterialBottomTabNavigator();
 export default function DiscussionForum () {
     return (
         <NavigationContainer>
             <Drawer.Navigator initialRouteName="Home">
                 <Drawer.Screen 
                     name="Home" 
-                    component={ViewPostStackSc} />
-                <Drawer.Screen 
+                    component={Tabs} />
+            {/* <Tabs/> */}
+                {/* <Drawer.Screen 
                     name="Create" 
                     component={CreatePostStackSc} />
+                <Drawer.Screen 
+                    name="Availability" 
+                    component={AvailabilityStackSc} />
+                <Drawer.Screen 
+                    name="Profile" 
+                    component={ProfileStackSc} /> */}
             </Drawer.Navigator>
+
         </NavigationContainer>
     );
 }
@@ -98,8 +41,8 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       borderWidth: 10,
-      borderColor:Colors.secondary,
-      backgroundColor: Colors.primary_dark,
+      borderColor:Colors.Gold,
+      backgroundColor: Colors.Grey,
       alignItems: 'center',
       justifyContent: 'center',
     },

@@ -18,16 +18,16 @@ const styles=StyleSheet.create({
         marginTop:10,
         width:'100%',
         height:screenHeight/15,
-        backgroundColor:Colors.secondary_dark,
+        backgroundColor:Colors.DarkGrey,
         padding:10,
         alignItems:'center',
         justifyContent:'center',
-        borderColor:Colors.secondary,
+        borderColor:Colors.Gold,
         borderRadius:20
     },
     buttonText:{
         fontSize:18,
-        color:Colors.secondary
+        color:Colors.Gold
        
 
     }
