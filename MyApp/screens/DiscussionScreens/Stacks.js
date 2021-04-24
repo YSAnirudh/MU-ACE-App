@@ -113,7 +113,7 @@ function menuButton (navigation, color) {
     return (
     <Ionicons.Button 
         name="reorder-three-outline" 
-        size={40}
+        size={35}
         backgroundColor={color}
         color={Colors.DarkGrey}
         onPress={() => navigation.openDrawer()}/>

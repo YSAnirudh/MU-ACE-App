@@ -4,13 +4,15 @@ import {
     Text, 
     View,
     TextInput,
-    Button
+    Button,
+    Image
 } from 'react-native';
 import Colors from '../../constants/Colors'
-
+import { styles } from "../../constants/DiscussionStyles"
 export default function ProfileScreen ({navigation}) {
     return (
         <View style={styles.container}>
+            <Image source={require('../../assets/logo3.png')} style={styles.backgroundImage}/>
             <Text>
                 ProfileScreen
             </Text>
@@ -26,14 +28,3 @@ export default function ProfileScreen ({navigation}) {
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      borderWidth: 10,
-      borderColor:Colors.Gold,
-      backgroundColor: Colors.Grey,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-});
