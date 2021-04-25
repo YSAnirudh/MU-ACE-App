@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import Colors from '../constants/Colors'
 import Tabs from "./DiscussionScreens/Tab"
+import SettingsScreen from './SettingsScreen'
 import { DrawerMan } from './DiscussionScreens/DrawerMan'
 const MyDrawer = createDrawerNavigator();
 export default function DiscussionForum () {
@@ -17,6 +18,9 @@ export default function DiscussionForum () {
                 <MyDrawer.Screen 
                     name="Home" 
                     component={Tabs} />
+                <MyDrawer.Screen 
+                    name="Settings" 
+                    component={SettingsScreen} />
             </MyDrawer.Navigator>
 
         </NavigationContainer>

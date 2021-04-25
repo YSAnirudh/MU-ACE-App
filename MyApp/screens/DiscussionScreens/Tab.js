@@ -9,14 +9,14 @@ var MainTab = createMaterialBottomTabNavigator();
 function Tabs (){
   return (
     <MainTab.Navigator
-        initialRouteName="View Post"
+        initialRouteName="Forum"
         activeColor={Colors.Grey}
     >
       <MainTab.Screen
-        name="View Post"
+        name="Forum"
         component={ViewPostStackSc}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Forum',
           tabBarColor:Colors.DiscussionView,
           tabBarIcon: () => (
             <Icons name="chatbubble-ellipses" color={Colors.Grey} size={26} />
@@ -24,10 +24,10 @@ function Tabs (){
         }}
       />
       <MainTab.Screen
-        name="Create"
+        name="Create Post"
         component={CreatePostStackSc}
         options={{
-          tabBarLabel: 'Create',
+          tabBarLabel: 'Create Post',
           tabBarColor:Colors.DiscussionCreate,
           tabBarIcon: () => (
             <Icons name="create" color={Colors.Grey} size={26} />
