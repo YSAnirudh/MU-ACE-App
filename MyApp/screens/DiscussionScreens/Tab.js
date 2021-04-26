@@ -19,7 +19,7 @@ function Tabs (){
           tabBarLabel: 'Forum',
           tabBarColor:Colors.DiscussionView,
           tabBarIcon: () => (
-            <Icons name="chatbubble-ellipses" color={Colors.Grey} size={26} />
+            <Icons name="chatbubble-ellipses" color={Colors.Gold} size={26} />
           ),
         }}
       />
@@ -30,7 +30,7 @@ function Tabs (){
           tabBarLabel: 'Create Post',
           tabBarColor:Colors.DiscussionCreate,
           tabBarIcon: () => (
-            <Icons name="create" color={Colors.Grey} size={26} />
+            <Icons name="create" color={Colors.Gold} size={26} />
           ),
         }}
       />
@@ -41,7 +41,7 @@ function Tabs (){
           tabBarLabel: 'Availability',
           tabBarColor:Colors.DiscussionAvailability,
           tabBarIcon: () => (
-            <Icons name="checkmark-circle" color={Colors.Grey} size={26} />
+            <Icons name="checkmark-circle" color={Colors.Gold} size={26} />
           ),
         }}
       />
@@ -50,9 +50,9 @@ function Tabs (){
         component={ProfileStackSc}
         options={{
           tabBarLabel: 'Profile',
-          tabBarColor:Colors.DiscussionProfile,
+          tabBarColor:Colors.Red,
           tabBarIcon: () => (
-            <Icons name="person" color={Colors.Grey} size={26} />
+            <Icons name="person" color={Colors.Gold} size={26} />
           ),
         }}
       />

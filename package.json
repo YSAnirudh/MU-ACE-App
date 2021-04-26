@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "expo-cli": "^4.4.2"
+    "expo-cli": "^4.4.2",
+    "expo-linear-gradient": "^9.1.0"
   }
 }
