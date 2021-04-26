@@ -107,7 +107,7 @@ const Status = ()=>{
               <Text style={{fontSize:18,marginRight:20}}>{val.name}</Text> 
             </View> 
             <View style={styles.personDepartment}>
-              <Text style = {{fontSize:13,marginRight:10}}>{val.department}</Text>
+              <Text style = {{fontSize:13}}>{val.department}</Text>
             </View>
             <Svg height="50" width="35">
               {val.status &&  
@@ -143,7 +143,6 @@ const styles = StyleSheet.create({
     elevation:10,
     backgroundColor:'lightyellow',
     borderRadius:15
-    
   },
   personDepartment:{
     padding:10,

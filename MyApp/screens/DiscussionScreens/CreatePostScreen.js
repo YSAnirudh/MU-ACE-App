@@ -11,7 +11,7 @@ import Colors from '../../constants/Colors'
 import { styles } from "../../constants/DiscussionStyles"
 export default function CreatePostScreen ({navigation}) {
     return (
-        <View>
+        <View style={styles.container}>
             <Image source={require('../../assets/logo3.png')} style={styles.backgroundImage}/>
             <Text>
                 CreateScreen
