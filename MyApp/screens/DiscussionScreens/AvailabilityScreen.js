@@ -10,22 +10,14 @@ import {
 import Colors from '../../constants/Colors'
 import { styles, theme } from "../../constants/Styles"
 
+import { styles } from "../../constants/DiscussionStyles"
+import Status from "../../components/Status"
+
 export default function AvailabilityScreen ({navigation}) {
     return (
-        <View style={styles().container}>
-                <Image source={theme().file} style={styles().backgroundImage}/>
-                <Text>
-                    AvailabilityScreen
-                </Text>
-                <Button 
-                    title="Go to View Post"
-                    onPress= {() => navigation.navigate("Forum")}/>
-                <Button 
-                    title="Go to Create"
-                    onPress= {() => navigation.navigate("Create Post")}/>
-                <Button 
-                    title="Go to Profile"
-                    onPress= {() => navigation.navigate("Profile")}/>
+        <View style={styles.container}>
+                <Image source={require('../../assets/logo3.png')} style={styles.backgroundImage}/>
+                <Status/>
         </View>
     );
 }

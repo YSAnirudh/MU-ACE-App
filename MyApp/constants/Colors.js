@@ -12,5 +12,5 @@ export default {
     DiscussionView: "#FF0000",
     DiscussionCreate:"#FF5733",
     DiscussionAvailability:"#FFFF00",
-    DiscussionProfile:"#00FF00"
+    DiscussionProfile:"#404040"
 };
