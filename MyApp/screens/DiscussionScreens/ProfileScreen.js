@@ -10,7 +10,7 @@ export default function ProfileScreen ({navigation}) {
         <View style={styles.root}>
         <LinearGradient colors={[Colors.DiscussionProfile,Colors.DiscussionProfile]} style={{height:"20%"}}></LinearGradient>
         <View style={{alignItems:"center",marginTop:-50}}>
-        <Image style={{height:140,width:140,borderRadius:70}} source={require("../../assets/logo2.png")}/>
+        <Image style={{height:140,width:140,borderRadius:70,borderWidth:1,borderColor:Colors.Red}} source={require("../../assets/logo2.png")}/>
         </View>
         <View style={{alignItems:"center",margin:7}}>
             <Title style={{color:Colors.Gold,fontSize:17}}>Koushik Y</Title>
@@ -18,24 +18,22 @@ export default function ProfileScreen ({navigation}) {
         </View>
         
             <View style={styles.emailBox}>
-                <MaterialIcons name="email" size={32} color="#006aff"/>
+                <MaterialIcons name="email" size={32} color={Colors.Red}/>
                 <Text style={styles.myText}>koushiky@gmail.com</Text>
                
             </View>
     
-        <Button icon="account-key" mode="outlined"  theme={theme} color={Colors.Gold}  onPress={() => console.log('Pressed')} style={styles.buttonStyle}>
-            <Text style={styles.buttonText}>Change Password</Text>
-        </Button>
+       
         
-        <View style={{flexDirection:"row",justifyContent:"space-between",padding:10,fontSize:0.5}}>
-        <Button icon="account-edit" mode="outlined" theme={theme} color={Colors.Gold} onPress={() => console.log('Pressed')} style={styles.smolbuttonStyle} >
+       
+        <Button icon="account-edit" mode="outlined" theme={theme} color={Colors.Red} onPress={() => console.log('Pressed')} style={styles.buttonStyle} >
             <Text style={styles.buttonText} >Edit Profile</Text>
         </Button>
-        <Button icon="logout" mode="outlined" theme={theme} color={Colors.Gold} onPress={() => console.log('Pressed')} style={styles.smolbuttonStyle}>
+        <Button icon="logout" mode="outlined" theme={theme} color={Colors.Red} onPress={() => console.log('Pressed')} style={styles.buttonStyle}>
            <Text style={styles.buttonText}>Logout</Text>
         </Button>
     
-        </View>
+        
         
         
         
@@ -88,13 +86,16 @@ const styles=StyleSheet.create({
         backgroundColor:Colors.black,
         borderWidth:1,
         width:150,
-        borderColor:Colors.Gold
+        borderColor:Colors.Gold,
+        borderRadius:20
+        
     },
     buttonStyle:{
         margin:15,
         marginTop:20,
         backgroundColor:Colors.black,
         borderWidth:1,
-        borderColor:Colors.Gold
+        borderColor:Colors.Gold,
+        borderRadius:20
     }
 })
