@@ -14,9 +14,9 @@ export default function App() {
     //   {/* <LoginScreen/> */}
     //   <StatusBar style="auto" />
     // </View>
-   // <DiscussionForum/>
-   <Registration/>
-  // <LoginScreen/>
+
+    //<LoginScreen/>
+    <DiscussionForum/>
   );
 }
 
