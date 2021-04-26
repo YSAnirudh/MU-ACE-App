@@ -11,14 +11,14 @@ import {
     TouchableOpacity
 } from 'react-native';
 
-import Colors from '../constants/Colors'
+import { styles } from '../constants/Styles'
 
 const LoginScreen = () => {
   const [username,setUsername] = useState('')
   const [pass,setPass] = useState('')
 
   return(
-    <View style={styles.viewContainer}>
+    <View style={styles().viewContainer}>
 
     <Image source={require('../assets/logo3.png')} style={styles.logo}/>
     <LoginTxtF 
@@ -38,12 +38,12 @@ const LoginScreen = () => {
       onChangeText = {(text) => {setPass(text)}}
       ></LoginTxtF>
 
-    <View style={styles.buttonContainer}>
+    <View style={styles().buttonContainer}>
 
     <LoginButton bname="Login" onPress={()=>{Alert.alert("Login")}} ></LoginButton>
 
-    <TouchableOpacity style={styles.forgot} onPress={()=>Alert.alert("Forgot?")}>
-    <Text style={styles.ForgotTxt}>Forgot Password?</Text>
+    <TouchableOpacity style={styles().forgot} onPress={()=>Alert.alert("Forgot?")}>
+    <Text style={styles().ForgotTxt}>Forgot Password?</Text>
     </TouchableOpacity>
 
     <OutlookBtn 
@@ -57,52 +57,5 @@ const LoginScreen = () => {
     </View>
   );
 }
-
-const styles=StyleSheet.create({
-  screen: {
-      flex: 1
-    },
-    label: {
-      width: '100%',
-      fontFamily: 'OpenSansBold',
-      marginVertical: 8
-    },
-    viewContainer:{
-      flex:1,
-      backgroundColor:Colors.Grey,
-      alignItems:'center',
-      justifyContent:'center',
-      padding:21,
-      paddingTop:0
-  },
-    logo:{
-      alignSelf:'center',
-      paddingBottom:150,
-      height:120,
-      width:200,
-      resizeMode:'cover'
-    },
-    input: {
-      width: '100%',
-      paddingHorizontal: 2,
-      paddingVertical: 5,
-      borderBottomColor: '#ccc',
-      borderBottomWidth: 1
-    },
-    
-    buttonContainer: {
-      marginTop: 10,
-      alignSelf:'stretch'
-    },
-    ForgotTxt: {
-      fontSize: 14,
-      fontWeight: '500',
-      color: Colors.Gold
-    },
-    forgot: {
-      marginVertical: 38,
-      alignItems:'center'
-    },
-});
 
 export default LoginScreen

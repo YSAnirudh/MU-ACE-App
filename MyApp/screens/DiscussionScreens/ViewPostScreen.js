@@ -8,17 +8,17 @@ import {
     Image
 } from 'react-native';
 import Colors from '../../constants/Colors'
-import { styles } from "../../constants/DiscussionStyles"
+import { styles, theme } from "../../constants/Styles"
 export default function ViewPostScreen ({navigation}) {
     return (
-        <View style={styles.container}>
-            <Image source={require('../../assets/logo3.png')} style={styles.backgroundImage}/>
+        <View style={styles().container}>
+            <Image source={theme().file} style={styles().backgroundImage}/>
             <Text>
                 PostScreen
             </Text>
             <Button 
                 title="Go to Create"
-                onPress= {() => navigation.navigate("Create")}/>
+                onPress= {() => navigation.navigate("Create Post")}/>
             <Button 
                 title="Go to Availability"
                 onPress= {() => navigation.navigate("Availability")}/>

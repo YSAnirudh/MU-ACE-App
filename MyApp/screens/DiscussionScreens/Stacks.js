@@ -104,11 +104,6 @@ export function ProfileStackSc ({navigation}) {
     );
 }
 
-const headerOptions = {
-    
-    
-}
-
 function menuButton (navigation, color) {
     return (
     <Ionicons.Button 

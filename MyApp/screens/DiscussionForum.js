@@ -8,8 +8,9 @@ import Colors from '../constants/Colors'
 import Tabs from "./DiscussionScreens/Tab"
 import SettingsScreen from './SettingsScreen'
 import { DrawerMan } from './DiscussionScreens/DrawerMan'
+import { ThemeProvider } from '../components/Theme'
 const MyDrawer = createDrawerNavigator();
-export default function DiscussionForum () {
+function DiscussionForum () {
     return (
         <NavigationContainer>
             <MyDrawer.Navigator 
@@ -27,13 +28,8 @@ export default function DiscussionForum () {
     );
 }
 
-export const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      borderWidth: 10,
-      borderColor:Colors.Gold,
-      backgroundColor: Colors.Grey,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-});
+export default () => (
+    <ThemeProvider>
+        <DiscussionForum/>
+    </ThemeProvider>
+);

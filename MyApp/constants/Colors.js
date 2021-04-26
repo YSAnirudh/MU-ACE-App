@@ -5,6 +5,9 @@ export default {
     Grey: '#404040', // Dark Grey
     Gold:'#FFD700', // GOLDEN
     DarkGrey:"#14171c", // Ultra Dark Grey
+    LightGrey:'#D3D3D3',
+    White:'#ffffff',
+    Black:'#000000',
     DiscussionView: "#FF0000",
     DiscussionCreate:"#FF5733",
     DiscussionAvailability:"#FFFF00",

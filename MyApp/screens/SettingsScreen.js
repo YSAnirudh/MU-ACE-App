@@ -8,15 +8,20 @@ import {
     Image
 } from 'react-native';
 import Colors from '../constants/Colors'
-import { styles } from "../constants/DiscussionStyles"
+import { styles, theme } from "../constants/Styles"
 
 export default function SettingsScreen ({navigation}) {
     return (
-        <View style={styles.container}>
-                <Image source={require('../assets/logo3.png')} style={styles.backgroundImage}/>
+        <View style={styles().container}>
+                <Image source={theme().file} style={styles().backgroundImage}/>
                 <Text>
                     SettingsScreen
                 </Text>
+                <Button 
+                    title="BACK"
+                    style={styles().settingBackButton}
+                    onPress={()=>navigation.goBack()}
+                />
         </View>
     );
 }
