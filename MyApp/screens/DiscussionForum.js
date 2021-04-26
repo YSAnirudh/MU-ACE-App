@@ -7,6 +7,7 @@ import {
 import Colors from '../constants/Colors'
 import Tabs from "./DiscussionScreens/Tab"
 import SettingsScreen from './SettingsScreen'
+import LoginScreen from '../screens/LoginScreen'
 import { DrawerMan } from './DiscussionScreens/DrawerMan'
 import { ThemeProvider } from '../components/Theme'
 const MyDrawer = createDrawerNavigator();
@@ -22,8 +23,10 @@ function DiscussionForum () {
                 <MyDrawer.Screen 
                     name="Settings" 
                     component={SettingsScreen} />
+                <MyDrawer.Screen 
+                    name="Login" 
+                    component={LoginScreen} />
             </MyDrawer.Navigator>
-
         </NavigationContainer>
     );
 }

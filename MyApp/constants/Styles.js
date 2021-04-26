@@ -5,8 +5,18 @@ import Colors from './Colors'
 export const theme = () => {
   const { darkMode } = React.useContext(ThemeContext)
   const dark = darkMode ? 
-    { background:Colors.Grey, text:Colors.Gold, textBoxBack:Colors.DarkGrey, file:require('../assets/logo3_auto_x2.png') } : 
-    { background:Colors.White, text:Colors.Black, textBoxBack:Colors.LightGrey, file:require('../assets/logo3_auto_x2.png') }
+    { background:Colors.Grey, 
+      text:Colors.Gold, 
+      textBoxBack:Colors.DarkGrey,
+      postColor:Colors.DarkerLightGrey,
+      file:require('../assets/logo3_auto_x2.png') 
+    } : 
+    { background:Colors.White, 
+      text:Colors.Black, 
+      textBoxBack:Colors.LightGrey,
+      postColor:Colors.LightGrey,
+      file:require('../assets/logo3_auto_x2.png') 
+    }
   return dark;
 }
 export const styles = () => ({
@@ -25,50 +35,81 @@ export const styles = () => ({
     height:400,
     opacity:0.5
   },
-  settingsBackButton:{
+  post:{
+    flex:2,
+    backgroundColor:theme().postColor,
+    color:theme().text,
+    marginBottom:25,
+    padding:10,
+    borderRadius:10
   },
-  screen: {
-    flex: 1
-  },
-  label: {
-    width: '100%',
-    fontFamily: 'OpenSansBold',
-    marginVertical: 8
-  },
-  viewContainer:{
+  postWrapper:{
     flex:1,
-    backgroundColor:Colors.Grey,
-    alignItems:'center',
-    justifyContent:'center',
-    padding:21,
-    paddingTop:0
-},
-  logo:{
-    alignSelf:'center',
-    paddingBottom:150,
-    height:120,
-    width:200,
-    resizeMode:'cover'
+    backgroundColor:theme().background,
+    color:theme().text,
+    width:'90%',
+    marginBottom:20
   },
-  input: {
-    width: '100%',
-    paddingHorizontal: 2,
-    paddingVertical: 5,
-    borderBottomColor: '#ccc',
-    borderBottomWidth: 1
-  },
-  
-  buttonContainer: {
-    marginTop: 10,
-    alignSelf:'stretch'
-  },
-  ForgotTxt: {
-    fontSize: 14,
-    fontWeight: '500',
-    color: Colors.Gold
-  },
-  forgot: {
-    marginVertical: 38,
-    alignItems:'center'
-  },
+});
+
+export const drawerStyles = () => ({
+    drawerContent: {
+        flex : 1,
+        
+    },
+    bottomDrawer : {
+        borderTopColor:theme().text,
+        borderTopWidth : 2,
+    },
+    profile:{
+        borderBottomColor:theme().text,
+        borderBottomWidth:2
+    },
+    profilePic:{
+        marginLeft:15,
+        flexDirection:'row'
+    },
+    profileTitle:{
+        marginLeft:10,
+        color:theme().text
+    },
+    profileCaption:{
+        marginLeft:10,
+        color:theme().text
+    },
+    profileInfo:{
+        marginTop:20,
+        marginBottom:20,
+        paddingLeft:20,
+        color:theme().text,
+    },
+    preferences:{
+        marginLeft:20,
+        color:theme().text,
+    },
+    darkText:{
+        fontSize:15, 
+        color:theme().text, 
+        alignSelf:'flex-end',
+        marginRight:20
+    },
+    descTitle:{
+      color:theme().text,
+      fontWeight:'bold'
+    },
+    description:{
+      color:theme().text,
+      marginLeft:10
+    },
+    postTitle:{
+      color:theme().text,
+      marginLeft:20
+    },
+    postCaption:{
+      color:theme().text,
+      marginLeft:20
+    },
+    postPic:{
+      flexDirection:'row'
+    }
 });

@@ -22,7 +22,8 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons'
 import Colors from '../../constants/Colors'
 import { ThemeContext, ThemeProvider } from '../../components/Theme'
-import { theme } from "../../constants/Styles"
+import { theme, drawerStyles as styles } from "../../constants/Styles"
+
 
 export function DrawerMan({...props}) {
     const { darkMode, toggleTheme } = React.useContext(ThemeContext)
@@ -83,6 +84,14 @@ export function DrawerMan({...props}) {
                             }}
                             onPress={()=>{props.navigation.navigate('Settings')}}
                         />
+                        <DrawerItem 
+                            icon={({size, color}) => gimmeIcon('settings', size, theme().text)}
+                            label="Login"
+                            labelStyle={{
+                                color:theme().text
+                            }}
+                            onPress={()=>{props.navigation.navigate('Login')}}
+                        />
                     </Drawer.Section>
                     <Drawer.Section>
                         <TouchableRipple onPress={() => toggleTheme()}>
@@ -122,49 +131,3 @@ const gimmeIcon = (text, size, color) => {
         />
     );
 }
-
-const styles = () => {
-    return ({
-        drawerContent: {
-            flex : 1,
-            
-        },
-        bottomDrawer : {
-            borderTopColor:theme().text,
-            borderTopWidth : 2,
-        },
-        profile:{
-            borderBottomColor:theme().text,
-            borderBottomWidth:2
-        },
-        profilePic:{
-            marginLeft:15,
-            flexDirection:'row'
-        },
-        profileTitle:{
-            marginLeft:10,
-            color:theme().text
-        },
-        profileCaption:{
-            marginLeft:10,
-            color:theme().text
-        },
-        profileInfo:{
-            marginTop:20,
-            marginBottom:20,
-            paddingLeft:20,
-            color:theme().text,
-            
-        },
-        preferences:{
-            marginLeft:20,
-            color:theme().text,
-        },
-        darkText:{
-            fontSize:15, 
-            color:theme().text, 
-            alignSelf:'flex-end',
-            marginRight:20
-        }
-    });
-};
