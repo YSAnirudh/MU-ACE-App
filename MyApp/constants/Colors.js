@@ -12,5 +12,7 @@ export default {
     DiscussionView: "#FF0000",
     DiscussionCreate:"#FF5733",
     DiscussionAvailability:"#FFFF00",
-    DiscussionProfile:"#404040"
+    DiscussionProfile:"#39FF14",
+    StatusGreen:"000000",
+    StatusRed:"ffffff"
 };

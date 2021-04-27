@@ -17,7 +17,7 @@ const Registration = () => {
     const [Firstname,setFirstname] = useState('')
     const [Lastname,setLastname] = useState('')
   
- const [Email,setEmail] = useState('')
+  const [Email,setEmail] = useState('')
   const [pass,setPass] = useState('')
 
   return(

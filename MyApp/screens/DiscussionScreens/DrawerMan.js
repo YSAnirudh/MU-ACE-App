@@ -53,7 +53,7 @@ export function DrawerMan({...props}) {
                         </View>
                     <Drawer.Section>
                         <DrawerItem 
-                            icon={({size, color}) => gimmeIcon('chatbubble-ellipses', size, theme().text)}
+                            icon={({size, color}) => gimmeIcon('chatbubble-ellipses', size, theme().iconColor)}
                             label="Forum"
                             labelStyle={{
                                 color:theme().text
@@ -61,7 +61,7 @@ export function DrawerMan({...props}) {
                             onPress={()=>{props.navigation.navigate('Forum')}}
                         />
                         <DrawerItem 
-                            icon={({size, color}) => gimmeIcon('create', size, theme().text)}
+                            icon={({size, color}) => gimmeIcon('create', size, theme().iconColor)}
                             label="Create Post"
                             labelStyle={{
                                 color:theme().text
@@ -69,7 +69,7 @@ export function DrawerMan({...props}) {
                             onPress={()=>{props.navigation.navigate('Create Post')}}
                         />
                         <DrawerItem 
-                            icon={({size, color}) => gimmeIcon('checkmark-circle', size, theme().text)}
+                            icon={({size, color}) => gimmeIcon('checkmark-circle', size, theme().iconColor)}
                             label="Check Availability"
                             labelStyle={{
                                 color:theme().text
@@ -77,7 +77,7 @@ export function DrawerMan({...props}) {
                             onPress={()=>{props.navigation.navigate('Availability')}}
                         />
                         <DrawerItem 
-                            icon={({size, color}) => gimmeIcon('settings', size, theme().text)}
+                            icon={({size, color}) => gimmeIcon('settings', size, theme().iconColor)}
                             label="Settings"
                             labelStyle={{
                                 color:theme().text
@@ -85,12 +85,20 @@ export function DrawerMan({...props}) {
                             onPress={()=>{props.navigation.navigate('Settings')}}
                         />
                         <DrawerItem 
-                            icon={({size, color}) => gimmeIcon('settings', size, theme().text)}
+                            icon={({size, color}) => gimmeIcon('log-in', size, theme().iconColor)}
                             label="Login"
                             labelStyle={{
                                 color:theme().text
                             }}
                             onPress={()=>{props.navigation.navigate('Login')}}
+                        />
+                        <DrawerItem 
+                            icon={({size, color}) => gimmeIcon('alert', size, theme().iconColor)}
+                            label="Register"
+                            labelStyle={{
+                                color:theme().text
+                            }}
+                            onPress={()=>{props.navigation.navigate('Register')}}
                         />
                     </Drawer.Section>
                     <Drawer.Section>
@@ -110,7 +118,7 @@ export function DrawerMan({...props}) {
             </DrawerContentScrollView>
             <Drawer.Section style={styles().bottomDrawer}>
                 <DrawerItem
-                    icon={({size, color}) => gimmeIcon('exit', size, theme().text)}
+                    icon={({size, color}) => gimmeIcon('exit', size, theme().iconColor)}
                     label='Log Out'
                     labelStyle={{
                         color:theme().text

@@ -9,7 +9,7 @@ var MainTab = createMaterialBottomTabNavigator();
 function Tabs (){
   return (
     <MainTab.Navigator
-        initialRouteName="Forum"
+        initialRouteName="Profile"
         activeColor={Colors.Grey}
     >
       <MainTab.Screen
@@ -50,7 +50,7 @@ function Tabs (){
         component={ProfileStackSc}
         options={{
           tabBarLabel: 'Profile',
-          tabBarColor:Colors.Red,
+          tabBarColor:Colors.DiscussionProfile,
           tabBarIcon: () => (
             <Icons name="person" color={Colors.Gold} size={26} />
           ),
