@@ -11,7 +11,7 @@ import Colors from '../../constants/Colors'
 import { styles, theme } from "../../constants/Styles"
 
 //import { styles } from "../../constants/DiscussionStyles"
-import Status from "../../components/Status"
+import Status from "../../components/status"
 
 export default function AvailabilityScreen ({navigation}) {
     return (
