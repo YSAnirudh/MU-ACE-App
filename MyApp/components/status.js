@@ -1,14 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View,ScrollView,FlatList,Button} from 'react-native';
-import Svg,{Circle} from 'react-native-svg'
+import { Text, View,ScrollView,FlatList,Button} from 'react-native';
 import ProfilePicture from 'react-native-profile-picture'
 import { Searchbar, IconButton, TouchableRipple } from 'react-native-paper';
 import { availabilityStyles, theme } from '../constants/Styles'
 import Icon from 'react-native-vector-icons/Ionicons'
-import Colors from '../constants/Colors'
 
-const Status = ()=>{
+const Status = ({...navigation})=>{
   const data = [
    {
     name:"Raghuveer",
@@ -110,50 +108,65 @@ const Status = ()=>{
             }).map((val,key)=>{
                 return (
                   <View style={availabilityStyles().statusEntry} key={key}>
-                    <View style={{marginRight:5}}>
-                      <ProfilePicture
-                        isPicture={true}
-                        requirePicture={require('../assets/bulusu.jpeg')}
-                        shape='circle'
-                      />
+						<TouchableRipple 
+							onPress={()=>{
+								navigation.navigate(
+									// Need more details from here when we create database for user
+									'ViewUserProfile', 
+									{
+										username:val.name, 
+										department:val.department
+									}
+								)
+							}}
+						>
+							<View style={availabilityStyles().statusEntry}>
+								<View style={{marginRight:5}}>
+									<ProfilePicture
+									isPicture={true}
+									requirePicture={require('../assets/bulusu.jpeg')}
+									shape='circle'
+									/>
+								</View>
+								<View style={availabilityStyles().personName}>
+									<Text style={{fontSize:18, fontWeight:'bold',marginRight:20, color:theme().text}} textBreakStrategy={'simple'}>{val.name}</Text> 
+								</View> 
+								<View style={availabilityStyles().personDepartment}>
+									<Text style = {{fontSize:13, fontWeight:'bold', color:theme().text}} textBreakStrategy={'simple'}>{val.department}</Text>
+								</View>
+								<View >
+									{val.status &&
+									<View style={availabilityStyles(val.status).statusIcon}>
+										<Icon
+										name="checkmark-circle"
+										size={25}
+										color='green'
+										style={{marginLeft:1.5}}
+										/>
+									</View>
+									}
+									{!val.status &&
+									<View style={availabilityStyles(val.status).statusIcon}>
+										<Icon
+										name="checkmark-circle"
+										size={25}
+										color='red'
+										style={{marginLeft:1.5}}
+										/>
+									</View>
+									}
+								</View>
+							</View>
+						{/* <Svg height="50" width="35">
+							{val.status &&  
+							<Circle cx="25" cy="25" r="10" fill="green" />
+							}
+							{!val.status &&
+							<Circle cx="25" cy="25" r="10" fill="red" />
+							}
+						</Svg> */}
+						</TouchableRipple>
                     </View>
-                    <View style={availabilityStyles().personName}>
-                      <Text style={{fontSize:18, fontWeight:'bold',marginRight:20, color:theme().text}}>{val.name}</Text> 
-                    </View> 
-                    <View style={availabilityStyles().personDepartment}>
-                      <Text style = {{fontSize:13, fontWeight:'bold', color:theme().text}}>{val.department}</Text>
-                    </View>
-                    <View >
-                      {val.status &&
-                        <View style={availabilityStyles(val.status).statusIcon}>
-                          <Icon
-                            name="checkmark-circle"
-                            size={25}
-                            color='green'
-                            style={{marginLeft:1.5}}
-                          />
-                        </View>
-                      }
-                      {!val.status &&
-                        <View style={availabilityStyles(val.status).statusIcon}>
-                          <Icon
-                            name="checkmark-circle"
-                            size={25}
-                            color='red'
-                            style={{marginLeft:1.5}}
-                          />
-                        </View>
-                      }
-                    </View>
-                    {/* <Svg height="50" width="35">
-                      {val.status &&  
-                        <Circle cx="25" cy="25" r="10" fill="green" />
-                      }
-                      {!val.status &&
-                        <Circle cx="25" cy="25" r="10" fill="red" />
-                      }
-                    </Svg> */}
-                  </View>
                 );
             })}
             </ScrollView>

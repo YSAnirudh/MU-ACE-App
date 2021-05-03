@@ -9,6 +9,7 @@ import Tabs from "./DiscussionScreens/Tab"
 import SettingsScreen from './SettingsScreen'
 import LoginScreen from '../screens/LoginScreen'
 import Registration from '../screens/Registration'
+import { ViewUserProfileStackSc } from './ViewUserProfileScreen'
 import { DrawerMan } from './DiscussionScreens/DrawerMan'
 import { ThemeProvider } from '../components/Theme'
 const MyDrawer = createDrawerNavigator();
@@ -30,6 +31,9 @@ function DiscussionForum () {
                 <MyDrawer.Screen 
                     name="Register" 
                     component={Registration} />
+                <MyDrawer.Screen 
+                    name="ViewUserProfile" 
+                    component={ViewUserProfileStackSc} />
             </MyDrawer.Navigator>
         </NavigationContainer>
     );

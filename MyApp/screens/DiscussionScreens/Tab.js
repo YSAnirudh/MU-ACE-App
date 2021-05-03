@@ -9,7 +9,7 @@ var MainTab = createMaterialBottomTabNavigator();
 function Tabs (){
   return (
     <MainTab.Navigator
-        initialRouteName="Profile"
+        initialRouteName="Availability"
         activeColor={Colors.Grey}
     >
       <MainTab.Screen
