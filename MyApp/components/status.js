@@ -11,63 +11,87 @@ const Status = ({...navigation})=>{
    {
     name:"Raghuveer",
     department:"C.S.E",
+    usertype:"Student",
+    email:"raghbeer@gmail.com",
+    description:"I drink Beer",
+    posts:10,
+    answers:10,
+    karma:10000,
     status:true, 
     key:Math.random().toString()
    },
    {
-     name:"rohon jioji",
-     department:"M.E.C",
-     status:false,
-     key:Math.random().toString()
+    name:"rohon jioji",
+    department:"M.E.C",
+    usertype:"Professor",
+    email:"jiojio@gmail.com",
+    description:"I is Jio",
+    posts:5,
+    answers:5,
+    karma:500,
+    status:false,
+    key:Math.random().toString()
    },
    {
-     name:"anirudh noob",
-     department:"EEE",
-     status:false,
-     key:Math.random().toString()
-   },
-   {
-     name:"koushik Topper",
-     department:"civil",
-     status:true,
-     key:Math.random().toString()
-   },
-   {
-     name:"koushik Topper",
-     department:"civil",
-     status:true,
-     key:Math.random().toString()
-   },
-   {
-     name:"koushik Topper",
-     department:"civil",
-     status:true,
-     key:Math.random().toString()
-   },
-   {
-     name:"koushik Topper",
-     department:"civil",
-     status:true,
-     key:Math.random().toString()
-   },
-   {
-     name:"koushik Topper",
-     department:"civil",
-     status:true,
-     key:Math.random().toString()
-   },
-   {
-     name:"koushik Topper",
-     department:"civil",
-     status:true,
-     key:Math.random().toString()
-   },
-   {
-     name:"koushik Topper",
-     department:"civil",
-     status:true,
-     key:Math.random().toString()
-   }
+    name:"Koushik noobde",
+    department:"M.E.C",
+    usertype:"Student",
+    email:"noobde@gmail.com",
+    description:"I am Noob!",
+    posts:2,
+    answers:1,
+    karma:-100,
+    status:false,
+    key:Math.random().toString()
+  },
+  //  {
+  //    name:"anirudh noob",
+  //    department:"EEE",
+  //    status:false,
+  //    key:Math.random().toString()
+  //  },
+  //  {
+  //    name:"koushik Topper",
+  //    department:"civil",
+  //    status:true,
+  //    key:Math.random().toString()
+  //  },
+  //  {
+  //    name:"koushik Topper",
+  //    department:"civil",
+  //    status:true,
+  //    key:Math.random().toString()
+  //  },
+  //  {
+  //    name:"koushik Topper",
+  //    department:"civil",
+  //    status:true,
+  //    key:Math.random().toString()
+  //  },
+  //  {
+  //    name:"koushik Topper",
+  //    department:"civil",
+  //    status:true,
+  //    key:Math.random().toString()
+  //  },
+  //  {
+  //    name:"koushik Topper",
+  //    department:"civil",
+  //    status:true,
+  //    key:Math.random().toString()
+  //  },
+  //  {
+  //    name:"koushik Topper",
+  //    department:"civil",
+  //    status:true,
+  //    key:Math.random().toString()
+  //  },
+  //  {
+  //    name:"koushik Topper",
+  //    department:"civil",
+  //    status:true,
+  //    key:Math.random().toString()
+  //  }
    
  ]
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -115,7 +139,13 @@ const Status = ({...navigation})=>{
 									'ViewUserProfile', 
 									{
 										username:val.name, 
-										department:val.department
+										department:val.department,
+                    usertype:val.usertype,
+                    email:val.email,
+                    description:val.description,
+                    posts:val.posts,
+                    answers:val.answers,
+                    karma:val.karma
 									}
 								)
 							}}

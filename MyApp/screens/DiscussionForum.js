@@ -12,6 +12,7 @@ import Registration from '../screens/Registration'
 import { ViewUserProfileStackSc } from './ViewUserProfileScreen'
 import { DrawerMan } from './DiscussionScreens/DrawerMan'
 import { ThemeProvider } from '../components/Theme'
+import ViewUserProfileScreen from './ViewUserProfileScreen';
 const MyDrawer = createDrawerNavigator();
 function DiscussionForum () {
     return (
@@ -33,7 +34,12 @@ function DiscussionForum () {
                     component={Registration} />
                 <MyDrawer.Screen 
                     name="ViewUserProfile" 
-                    component={ViewUserProfileStackSc} />
+                    component={ViewUserProfileStackSc}
+                    options={
+                        {
+                            gestureEnabled:false
+                        }
+                    }/>
             </MyDrawer.Navigator>
         </NavigationContainer>
     );

@@ -216,8 +216,63 @@ export const profileStyles = () => ({
 });
 
 export const userProfileStyles = () => ({
-	mainView: {
-		flex:1,
-		justifyContent:'center'
-	}
+	root: {
+		flex: 1,
+		backgroundColor: theme().background,
+	},
+	myCard: {
+		marginTop: 3,
+		padding: 8,
+		borderColor: theme().text,
+		borderWidth: 1,
+		backgroundColor: theme().textBoxBack,
+	},
+	cardContent: {
+		flexDirection: "row",
+	},
+	userProfImg:{
+		margin:7,
+		flexDirection:'row',
+		alignItems:'center'
+	},
+	stats:{
+		fontSize:17,
+		color: theme().text,
+		fontFamily: "sans-serif",
+		fontWeight:'bold'
+	},
+	profileDetails:{
+		borderBottomWidth:1,
+		borderBottomColor:theme().text,
+		paddingBottom:10,
+	},
+	userTitle:{
+		fontSize: 19,
+		marginLeft: 10,
+		color: theme().text,
+		fontFamily: "sans-serif",
+		fontWeight:'bold',
+	},
+	userText:{
+		fontSize: 17,
+		marginLeft: 10,
+		color: theme().text,
+		fontFamily: "sans-serif",
+	},
+	emailBox: {
+		flexDirection: "row",
+		borderBottomWidth:1,
+		borderBottomColor:theme().text,
+		paddingBottom:10,
+	},
+	emailIcon:{
+		size:25,
+		color:theme().iconColor
+	},
+	myText: {
+		fontSize: 17,
+		marginLeft: 3,
+		color: theme().text,
+		fontFamily: "sans-serif",
+	},
 });
