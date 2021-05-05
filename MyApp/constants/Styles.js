@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { ThemeContext } from "../components/Theme";
 import Colors from "./Colors";
-
+import { screenHeight,screenWidth } from '../../utils/ScreenParams';
 export const theme = () => {
 	const { darkMode } = React.useContext(ThemeContext);
 	const dark = darkMode
@@ -276,3 +276,169 @@ export const userProfileStyles = () => ({
 		fontFamily: "sans-serif",
 	},
 });
+
+export const profileStyles=() => ({
+  root:{
+      flex:1,
+      backgroundColor:theme().background,
+      justifyContent:'center',
+  },
+  myCard:{
+      marginTop:3,
+      padding:8,
+      borderColor:theme().text,
+      borderWidth:1,
+      backgroundColor:theme().textBoxBack
+  },
+  cardContent:{
+      flexDirection:'row',
+  },
+  emailBox:{
+      flexDirection:'row',
+      justifyContent:"center",
+      
+  },
+  myText:{
+      fontSize:16,
+      marginTop:3,
+      marginLeft:3,
+      color:theme().text,
+      fontFamily:"sans-serif"
+  },
+  buttonText:{
+      fontSize:12,
+      color:theme().text
+  },
+  smolbuttonStyle:{
+      backgroundColor:theme().textBoxBack,
+      borderWidth:1,
+      width:150,
+      borderColor:theme().text,
+      borderRadius:20
+      
+  },
+  buttonStyle:{
+      margin:15,
+      marginTop:20,
+      backgroundColor:theme().textBoxBack,
+      borderWidth:1,
+      borderColor:theme().text,
+      borderRadius:20
+  }
+})
+
+export const editProfileStyles = ()=>({
+  container:{
+        flex : 1,
+        alignItems:'center',
+        justifyContent: 'center',
+        backgroundColor:'violet'
+    },
+    ti:{
+        
+        borderWidth:2,
+        padding:10,
+        width:'80%',
+        borderRadius:20,
+        borderColor:'lightblue',
+        marginBottom:13
+    },
+    savebtn:{
+        padding:10,
+        marginTop:15,
+        backgroundColor:'yellow',
+        borderRadius:20
+    },
+    img:{
+        marginBottom:20
+    },
+    profilebtn:{
+        marginBottom:15,
+        padding:5,
+        backgroundColor:'red'
+
+    },
+    te:{
+        fontSize: 19,
+        fontWeight: "bold",
+        
+    },
+    blocks:{
+        textAlign: 'left',
+        marginLeft:50, 
+        alignSelf: 'stretch'
+    }
+})
+
+export const createPostStyles = () => ({
+    container:{
+        flex:1,
+        position:'absolute',
+        alignItems:'center',
+        justifyContent:'center',
+        padding:21,
+        paddingTop:0,
+        marginTop:'20%',
+        
+    },
+    container2:{
+        flex:1,
+        position:'absolute',
+        alignItems:'center',
+        justifyContent:'center',
+        padding:21,
+        paddingTop:0,
+        marginTop:'10%'
+    },
+	textFieldDescription:{
+		color:theme().text,
+		height:screenHeight/15,
+		padding:9,
+		textAlignVertical: 'top'
+	},
+	textFieldTitle:{
+		color:theme().text,
+		maxHeight:80,
+		padding:9,
+		textAlignVertical: 'top'
+	},
+    container3:{
+        flex:1,
+        backgroundColor:theme().background
+        
+    },
+    flairC:{
+        width:'100%',
+        height:'30%'
+
+    },
+    buttonContainer:{
+        flexDirection:'row',
+        justifyContent:'space-between',
+     
+    },
+    titleC:{
+        marginTop:20, 
+        height:40, 
+        borderColor:'gray',
+        borderWidth:3,
+        justifyContent:'center',
+        textAlignVertical: 'top',
+        padding:9
+
+    },
+    descC:{
+        
+        borderColor: 'grey',
+        borderWidth: 3,
+        padding: 9,
+        justifyContent:'center',
+        textAlignVertical: 'top'
+
+    },
+    textArea:{
+        height:160,
+        justifyContent: "flex-start"
+    }
+
+})

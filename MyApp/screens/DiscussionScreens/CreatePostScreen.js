@@ -13,8 +13,8 @@ import {
     Button,
     Image
 } from 'react-native';
-import Colors from '../../constants/Colors'
-import { screenHeight,screenWidth } from '../../utils/ScreenParams';
+import { createPostStyles } from '../../constants/Styles'
+
 
 export default function CreatePostScreen ({navigation}) {
     const [title,setTitle] = useState('')
@@ -25,19 +25,25 @@ export default function CreatePostScreen ({navigation}) {
        <KeyboardAvoidingView
             behavior="padding"
             keyboardVerticalOffset={50}
-            style={styles.container3}
+            style={createPostStyles().container3}
         >
-       <View style={styles.container3}>
+       <View style={createPostStyles().container3}>
             
-                <View style={styles.container}>
+                <View style={createPostStyles().container}>
                     
-                    <TextFieldPs placeholder="Title" autoCorrect={true} onChangeText = {(title) => {setTitle(title)}} style={{color:Colors.Gold,height:screenHeight/15,padding:9,textAlignVertical: 'top'}}></TextFieldPs>
+                    <TextFieldPs 
+                        placeholder="Title" 
+                        autoCorrect={true} 
+                        onChangeText = {(title) => {setTitle(title)}} 
+                        style={}></TextFieldPs>
                     
+                    <TextFieldPs 
+                        placeholder="Decription" 
+                        autoCorrect={true} 
+                        onChangeText = {(desc) => {setDesc(desc)}} 
+                        multiline={true} style={}  numberOfLines={10}></TextFieldPs>
                     
-                    
-                    <TextFieldPs placeholder="Decription" autoCorrect={true} onChangeText = {(desc) => {setDesc(desc)}} multiline={true} style={{color:Colors.Gold,maxHeight:80,padding:9,textAlignVertical: 'top'}}  numberOfLines={10}></TextFieldPs>
-                    
-                    <View style={styles.buttonContainer}>    
+                    <View style={createPostStyles().buttonContainer}>    
                         <CreatePostButton bname="Upload Image" onPress={()=>{Alert.alert("Post Clicked")}} ></CreatePostButton>
                         <CreatePostButton bname="Add Tags" onPress={()=>{setActive(true)}} ></CreatePostButton>
                         
@@ -53,22 +59,28 @@ export default function CreatePostScreen ({navigation}) {
             <KeyboardAvoidingView
             behavior="padding"
             keyboardVerticalOffset={50}
-            style={styles.container3}
+            style={createPostStyles().container3}
         >
-            <View style={styles.container3}>
-                <View style={styles.container2}>
+            <View style={createPostStyles().container3}>
+                <View style={createPostStyles().container2}>
                     
-                    <TextFieldPs placeholder="Title" autoCorrect={true} onChangeText = {(title) => {setTitle(title)}} style={{color:Colors.Gold,height:screenHeight/15,padding:9,textAlignVertical: 'top'}}></TextFieldPs>
+                    <TextFieldPs 
+                        placeholder="Title" 
+                        autoCorrect={true} 
+                        onChangeText = {(title) => {setTitle(title)}} 
+                        style={{color:Colors.Gold,height:screenHeight/15,padding:9,textAlignVertical: 'top'}}></TextFieldPs>
                     
-                    
-                    
-                    <TextFieldPs placeholder="Decription" autoCorrect={true} onChangeText = {(desc) => {setDesc(desc)}} multiline={true} style={{color:Colors.Gold,maxHeight:80,padding:9,textAlignVertical: 'top'}}  numberOfLines={10}></TextFieldPs>
-                    <View style={styles.flairC}>
+                    <TextFieldPs 
+                        placeholder="Decription" 
+                        autoCorrect={true} 
+                        onChangeText = {(desc) => {setDesc(desc)}} 
+                        multiline={true} style={{color:Colors.Gold,maxHeight:80,padding:9,textAlignVertical: 'top'}}  numberOfLines={10}></TextFieldPs>
+                    <View style={createPostStyles().flairC}>
                     
                         <Flairs></Flairs>
                     
                     </View>
-                    <View style={styles.buttonContainer}>    
+                    <View style={createPostStyles().buttonContainer}>    
                         <CreatePostButton bname="Upload Image" onPress={()=>{Alert.alert("Post Clicked")}} ></CreatePostButton>
                         <CreatePostButton bname="Remove Tags" onPress={()=>{setActive(false)}} ></CreatePostButton>
                         
@@ -82,65 +94,3 @@ export default function CreatePostScreen ({navigation}) {
         );
     }
 }
-
-const styles=StyleSheet.create({
-    container:{
-        flex:1,
-        position:'absolute',
-        alignItems:'center',
-        justifyContent:'center',
-        padding:21,
-        paddingTop:0,
-        marginTop:'20%',
-        
-    },
-    container2:{
-        flex:1,
-        position:'absolute',
-        alignItems:'center',
-        justifyContent:'center',
-        padding:21,
-        paddingTop:0,
-        marginTop:'10%'
-        
-    },
-    container3:{
-        flex:1,
-        backgroundColor:Colors.Grey
-        
-    },
-    flairC:{
-        width:'100%',
-        height:'30%'
-
-    },
-    buttonContainer:{
-        flexDirection:'row',
-        justifyContent:'space-between',
-     
-    },
-    titleC:{
-        marginTop:20, 
-        height:40, 
-        borderColor:'gray',
-        borderWidth:3,
-        justifyContent:'center',
-        textAlignVertical: 'top',
-        padding:9
-
-    },
-    descC:{
-        
-        borderColor: 'grey',
-        borderWidth: 3,
-        padding: 9,
-        justifyContent:'center',
-        textAlignVertical: 'top'
-
-    },
-    textArea:{
-        height:160,
-        justifyContent: "flex-start"
-    }
-
-})
