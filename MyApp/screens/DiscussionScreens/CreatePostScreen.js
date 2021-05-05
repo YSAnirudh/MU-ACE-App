@@ -35,13 +35,13 @@ export default function CreatePostScreen ({navigation}) {
                         placeholder="Title" 
                         autoCorrect={true} 
                         onChangeText = {(title) => {setTitle(title)}} 
-                        style={}></TextFieldPs>
+                        style={createPostStyles().textFieldTitle}></TextFieldPs>
                     
                     <TextFieldPs 
                         placeholder="Decription" 
                         autoCorrect={true} 
                         onChangeText = {(desc) => {setDesc(desc)}} 
-                        multiline={true} style={}  numberOfLines={10}></TextFieldPs>
+                        multiline={true} style={createPostStyles().textFieldDescription}  numberOfLines={10}></TextFieldPs>
                     
                     <View style={createPostStyles().buttonContainer}>    
                         <CreatePostButton bname="Upload Image" onPress={()=>{Alert.alert("Post Clicked")}} ></CreatePostButton>
@@ -68,13 +68,14 @@ export default function CreatePostScreen ({navigation}) {
                         placeholder="Title" 
                         autoCorrect={true} 
                         onChangeText = {(title) => {setTitle(title)}} 
-                        style={{color:Colors.Gold,height:screenHeight/15,padding:9,textAlignVertical: 'top'}}></TextFieldPs>
+                        style={createPostStyles().textFieldTitle}></TextFieldPs>
                     
                     <TextFieldPs 
                         placeholder="Decription" 
                         autoCorrect={true} 
                         onChangeText = {(desc) => {setDesc(desc)}} 
-                        multiline={true} style={{color:Colors.Gold,maxHeight:80,padding:9,textAlignVertical: 'top'}}  numberOfLines={10}></TextFieldPs>
+                        multiline={true} style={createPostStyles().textFieldDescription}  
+                        numberOfLines={10}></TextFieldPs>
                     <View style={createPostStyles().flairC}>
                     
                         <Flairs></Flairs>

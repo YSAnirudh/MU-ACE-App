@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { ThemeContext } from "../components/Theme";
 import Colors from "./Colors";
-import { screenHeight,screenWidth } from '../../utils/ScreenParams';
+import { screenHeight,screenWidth } from '../utils/ScreenParams';
 export const theme = () => {
 	const { darkMode } = React.useContext(ThemeContext);
 	const dark = darkMode
@@ -277,56 +277,6 @@ export const userProfileStyles = () => ({
 	},
 });
 
-export const profileStyles=() => ({
-  root:{
-      flex:1,
-      backgroundColor:theme().background,
-      justifyContent:'center',
-  },
-  myCard:{
-      marginTop:3,
-      padding:8,
-      borderColor:theme().text,
-      borderWidth:1,
-      backgroundColor:theme().textBoxBack
-  },
-  cardContent:{
-      flexDirection:'row',
-  },
-  emailBox:{
-      flexDirection:'row',
-      justifyContent:"center",
-      
-  },
-  myText:{
-      fontSize:16,
-      marginTop:3,
-      marginLeft:3,
-      color:theme().text,
-      fontFamily:"sans-serif"
-  },
-  buttonText:{
-      fontSize:12,
-      color:theme().text
-  },
-  smolbuttonStyle:{
-      backgroundColor:theme().textBoxBack,
-      borderWidth:1,
-      width:150,
-      borderColor:theme().text,
-      borderRadius:20
-      
-  },
-  buttonStyle:{
-      margin:15,
-      marginTop:20,
-      backgroundColor:theme().textBoxBack,
-      borderWidth:1,
-      borderColor:theme().text,
-      borderRadius:20
-  }
-})
-
 export const editProfileStyles = ()=>({
   container:{
         flex : 1,
@@ -420,7 +370,7 @@ export const createPostStyles = () => ({
     titleC:{
         marginTop:20, 
         height:40, 
-        borderColor:'gray',
+        borderColor:theme().text,
         borderWidth:3,
         justifyContent:'center',
         textAlignVertical: 'top',
@@ -428,13 +378,11 @@ export const createPostStyles = () => ({
 
     },
     descC:{
-        
-        borderColor: 'grey',
+        borderColor: theme().text,
         borderWidth: 3,
         padding: 9,
         justifyContent:'center',
         textAlignVertical: 'top'
-
     },
     textArea:{
         height:160,

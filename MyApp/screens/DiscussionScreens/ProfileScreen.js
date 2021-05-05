@@ -6,6 +6,11 @@ import {Button, Avatar} from 'react-native-paper'
 import { styles, theme, profileStyles } from "../../constants/Styles"
 
 export default function ProfileScreen ({navigation}) {
+    const data = {
+        Firstname : 'Noob',
+        Lastname : 'Noob',
+        Description : 'Noob',
+    }
     return (
         <View style={profileStyles().root}>
             <View 
@@ -35,7 +40,12 @@ export default function ProfileScreen ({navigation}) {
                 mode="outlined" 
                 //theme={pageTheme} 
                 color={theme().iconColor} 
-                onPress={() => {}} style={profileStyles().buttonStyle} 
+                onPress={() => navigation.navigate('EditProfile', {
+                    Firstname:data.Firstname,
+                    Lastname:data.Lastname,
+                    Description:data.Description
+                })} 
+                style={profileStyles().buttonStyle} 
             >
                 <Text style={profileStyles().buttonText} >Edit Profile</Text>
             </Button>
@@ -44,7 +54,8 @@ export default function ProfileScreen ({navigation}) {
                 mode="outlined" 
                 //theme={pageTheme} 
                 color={theme().iconColor} 
-                onPress={() => {}} style={profileStyles().buttonStyle}
+                onPress={() => {}} 
+                style={profileStyles().buttonStyle}
             >
             <Text style={profileStyles().buttonText}>Log out</Text>
             </Button>

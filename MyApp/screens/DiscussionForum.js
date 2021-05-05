@@ -13,6 +13,7 @@ import { ViewUserProfileStackSc } from './ViewUserProfileScreen'
 import { DrawerMan } from './DiscussionScreens/DrawerMan'
 import { ThemeProvider } from '../components/Theme'
 import ViewUserProfileScreen from './ViewUserProfileScreen';
+import EditProfile from './EditProfile'
 const MyDrawer = createDrawerNavigator();
 function DiscussionForum () {
     return (
@@ -40,6 +41,9 @@ function DiscussionForum () {
                             gestureEnabled:false
                         }
                     }/>
+                <MyDrawer.Screen 
+                    name="EditProfile" 
+                    component={EditProfile} />
             </MyDrawer.Navigator>
         </NavigationContainer>
     );
