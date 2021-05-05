@@ -6,6 +6,7 @@ import LoginScreen from './screens/LoginScreen'
 import DiscussionForum from './screens/DiscussionForum'
 import Registration from './screens/Registration'
 
+
 export default function App() {
   return (
     // <View style={styles.container}>
@@ -17,6 +18,7 @@ export default function App() {
 
     //<LoginScreen/>
     <DiscussionForum/>
+    //<MyComponent/>
     //<LoginScreen/>
   );
 }

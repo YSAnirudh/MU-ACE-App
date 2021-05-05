@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "expo-cli": "^4.4.2",
-    "expo-linear-gradient": "^9.1.0"
+    "expo-linear-gradient": "^9.1.0",
+    "react-native-dropdown-picker": "^5.0.0"
   }
 }

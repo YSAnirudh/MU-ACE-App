@@ -2,6 +2,7 @@ import React,{useState} from 'react';
 import LoginTxtF from '../components/LoginTxtF'
 import LoginButton from '../components/LoginButton'
 import OutlookBtn from '../components/OutlookBtn'
+import {Picker} from '@react-native-picker/picker';
 import {
     View,
     StyleSheet,
@@ -19,6 +20,9 @@ const Registration = () => {
   
   const [Email,setEmail] = useState('')
   const [pass,setPass] = useState('')
+  const [selectedValue, setSelectedValue] = useState('');
+  const [selectedValue1, setSelectedValue1] = useState('');
+
 
   return(
     <View style={styles.viewContainer}>
@@ -58,6 +62,31 @@ const Registration = () => {
       secureTextEntry={true} 
       onChangeText = {(text) => {setPass(text)}}
       ></LoginTxtF>
+<View style={styles.Tf}>
+      <Picker
+        selectedValue={selectedValue}
+        style={{ height: 50, width: 150 }}
+        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+      >
+        <Picker.Item label="CSE" value="cse" />
+        <Picker.Item label="EEE" value="eee" />
+        <Picker.Item label="MECH" value="mech" />
+        <Picker.Item label="CIVIL" value="civil" />
+      </Picker>
+    </View>
+    <View style={styles.Tf}>
+      <Picker
+        
+        selectedValue1={selectedValue1}
+        style={{ height: 50, width: 150 }}
+        onValueChange={(itemValue, itemIndex) => setSelectedValue1(itemValue)}
+      >
+        <Picker.Item label="Student" value="stu" />
+        <Picker.Item label="Professori" value="prof" />
+      
+      </Picker>
+    </View>
+
 
     <View style={styles.buttonContainer}>
 
@@ -76,7 +105,9 @@ const Registration = () => {
 }
 
 const styles=StyleSheet.create({
-  screen: {
+    
+  
+    screen: {
       flex: 1
     },
     label: {
@@ -119,6 +150,20 @@ const styles=StyleSheet.create({
     forgot: {
       marginVertical: 38,
       alignItems:'center'
+    },
+    Tf:{
+        
+        marginTop:5,
+        marginBottom:10,
+        width:'50%',
+        //height:screenHeight/15,
+        borderColor:Colors.Gold,
+        borderRadius:20,
+        borderWidth:1,
+        //float:Left,
+        flexDirection:'row',
+        alignItems:'center',
+        backgroundColor:Colors.DarkGrey
     },
 });
 
