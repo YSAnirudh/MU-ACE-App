@@ -214,3 +214,47 @@ export const profileStyles=() => ({
       borderRadius:20
   }
 })
+
+
+export const editProfileStyles = ()=>({
+  container:{
+        flex : 1,
+        alignItems:'center',
+        justifyContent: 'center',
+        backgroundColor:'violet'
+    },
+    ti:{
+        
+        borderWidth:2,
+        padding:10,
+        width:'80%',
+        borderRadius:20,
+        borderColor:'lightblue',
+        marginBottom:13
+    },
+    savebtn:{
+        padding:10,
+        marginTop:15,
+        backgroundColor:'yellow',
+        borderRadius:20
+    },
+    img:{
+        marginBottom:20
+    },
+    profilebtn:{
+        marginBottom:15,
+        padding:5,
+        backgroundColor:'red'
+
+    },
+    te:{
+        fontSize: 19,
+        fontWeight: "bold",
+        
+    },
+    blocks:{
+        textAlign: 'left',
+        marginLeft:50, 
+        alignSelf: 'stretch'
+    }
+})
