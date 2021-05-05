@@ -46,7 +46,7 @@ export default function ProfileScreen ({navigation}) {
                 color={theme().iconColor} 
                 onPress={() => {}} style={profileStyles().buttonStyle}
             >
-            <Text style={profileStyles().buttonText}>Logout</Text>
+            <Text style={profileStyles().buttonText}>Log out</Text>
             </Button>
         </View>
     );

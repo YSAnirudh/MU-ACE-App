@@ -17,7 +17,7 @@ export default function AvailabilityScreen ({navigation}) {
     return (
         <View style={styles().container}>
                 <Image source={require('../../assets/logo3.png')} style={styles().backgroundImage}/>
-                <Status/>
+                <Status {...navigation}/>
         </View>
     );
 }
