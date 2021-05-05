@@ -44,6 +44,18 @@ const Status = ({...navigation})=>{
     status:false,
     key:Math.random().toString()
   },
+  {
+    name:"Raghuveer",
+    department:"C.S.E",
+    usertype:"Student",
+    email:"raghbeer@gmail.com",
+    description:"I drink Beer",
+    posts:10,
+    answers:10,
+    karma:10000,
+    status:true, 
+    key:Math.random().toString()
+   },
   //  {
   //    name:"anirudh noob",
   //    department:"EEE",
@@ -100,7 +112,7 @@ const Status = ({...navigation})=>{
  
     return (
       <View style={availabilityStyles().container}>
-          <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center', marginBottom:20}}>
+          <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center', marginBottom:10}}>
             <View style={{width:"70%"}}>
             <Searchbar
               placeholder="Search"
@@ -122,7 +134,7 @@ const Status = ({...navigation})=>{
             </TouchableRipple>
             </View>
           </View>
-          <ScrollView>
+          <ScrollView style={{paddingBottom:0}}>
             {data.filter((val)=>{
                 if(searchQuery == ""){
                     return val
@@ -132,70 +144,70 @@ const Status = ({...navigation})=>{
             }).map((val,key)=>{
                 return (
                   <View style={availabilityStyles().statusEntry} key={key}>
-						<TouchableRipple 
-							onPress={()=>{
-								navigation.navigate(
-									// Need more details from here when we create database for user
-									'ViewUserProfile', 
-									{
-										username:val.name, 
-										department:val.department,
-                    usertype:val.usertype,
-                    email:val.email,
-                    description:val.description,
-                    posts:val.posts,
-                    answers:val.answers,
-                    karma:val.karma
-									}
-								)
-							}}
-						>
-							<View style={availabilityStyles().statusEntry}>
-								<View style={{marginRight:5}}>
-									<ProfilePicture
-									isPicture={true}
-									requirePicture={require('../assets/bulusu.jpeg')}
-									shape='circle'
-									/>
-								</View>
-								<View style={availabilityStyles().personName}>
-									<Text style={{fontSize:18, fontWeight:'bold',marginRight:20, color:theme().text}} textBreakStrategy={'simple'}>{val.name}</Text> 
-								</View> 
-								<View style={availabilityStyles().personDepartment}>
-									<Text style = {{fontSize:13, fontWeight:'bold', color:theme().text}} textBreakStrategy={'simple'}>{val.department}</Text>
-								</View>
-								<View >
-									{val.status &&
-									<View style={availabilityStyles(val.status).statusIcon}>
-										<Icon
-										name="checkmark-circle"
-										size={25}
-										color='green'
-										style={{marginLeft:1.5}}
-										/>
-									</View>
-									}
-									{!val.status &&
-									<View style={availabilityStyles(val.status).statusIcon}>
-										<Icon
-										name="checkmark-circle"
-										size={25}
-										color='red'
-										style={{marginLeft:1.5}}
-										/>
-									</View>
-									}
-								</View>
-							</View>
-						{/* <Svg height="50" width="35">
-							{val.status &&  
-							<Circle cx="25" cy="25" r="10" fill="green" />
-							}
-							{!val.status &&
-							<Circle cx="25" cy="25" r="10" fill="red" />
-							}
-						</Svg> */}
-						</TouchableRipple>
+                      <TouchableRipple
+                        onPress={()=>{
+                          navigation.navigate(
+                            // Need more details from here when we create database for user
+                            'ViewUserProfile', 
+                            {
+                              username:val.name, 
+                              department:val.department,
+                              usertype:val.usertype,
+                              email:val.email,
+                              description:val.description,
+                              posts:val.posts,
+                              answers:val.answers,
+                              karma:val.karma
+                            }
+                          )
+                        }}
+                      >
+                        <View style={availabilityStyles().statusEntry}>
+                          <View style={{marginRight:5}}>
+                            <ProfilePicture
+                            isPicture={true}
+                            requirePicture={require('../assets/bulusu.jpeg')}
+                            shape='circle'
+                            />
+                          </View>
+                          <View style={availabilityStyles().personName}>
+                            <Text style={{fontSize:18, fontWeight:'bold',marginRight:20, color:theme().text}} textBreakStrategy={'simple'}>{val.name}</Text> 
+                          </View> 
+                          <View style={availabilityStyles().personDepartment}>
+                            <Text style = {{fontSize:13, fontWeight:'bold', color:theme().text}} textBreakStrategy={'simple'}>{val.department}</Text>
+                          </View>
+                          <View >
+                            {val.status &&
+                            <View style={availabilityStyles(val.status).statusIcon}>
+                              <Icon
+                              name="checkmark-circle"
+                              size={25}
+                              color='green'
+                              style={{marginLeft:1.5}}
+                              />
+                            </View>
+                            }
+                            {!val.status &&
+                            <View style={availabilityStyles(val.status).statusIcon}>
+                              <Icon
+                              name="checkmark-circle"
+                              size={25}
+                              color='red'
+                              style={{marginLeft:1.5}}
+                              />
+                            </View>
+                            }
+                          </View>
+                        </View>
+                      {/* <Svg height="50" width="35">
+                        {val.status &&  
+                        <Circle cx="25" cy="25" r="10" fill="green" />
+                        }
+                        {!val.status &&
+                        <Circle cx="25" cy="25" r="10" fill="red" />
+                        }
+                      </Svg> */}
+                      </TouchableRipple>
                     </View>
                 );
             })}
