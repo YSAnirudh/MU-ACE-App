@@ -1,111 +1,91 @@
-import React,{useState} from 'react';
-import LoginTxtF from '../components/LoginTxtF'
-import LoginButton from '../components/LoginButton'
-import OutlookBtn from '../components/OutlookBtn'
+import React, {useState} from 'react';
+import LoginTxtF from '../components/LoginTxtF';
+import LoginButton from '../components/LoginButton';
+import OutlookBtn from '../components/OutlookBtn';
 import {
-    View,
-    StyleSheet,
-    Alert,
-    Image,
-    Text,
-    TouchableOpacity
+  View,
+  StyleSheet,
+  Alert,
+  Image,
+  Text,
+  TouchableOpacity,
 } from 'react-native';
-import { ThemeProvider } from '../components/Theme'
-import { styles as noobStyles } from '../constants/Styles'
-import Colors from '../constants/Colors'
-const LoginScreen = () => {
-  const [username,setUsername] = useState('')
-  const [pass,setPass] = useState('')
+import {ThemeProvider} from '../components/Theme';
+import {styles as noobStyles} from '../constants/Styles';
+import Colors from '../constants/Colors';
+const {loginUser} = require('../actions/loginuser');
+const {validateLoginInput} = require('../validation/loginValidation');
+import {koushikBigMistake} from '../constants/Styles';
+const LoginScreen = ({navigation, setIsLogin}) => {
+  const [email, setEmail] = useState('');
+  const [pass, setPass] = useState('');
 
-  return(
-    <View style={styles.viewContainer}>
+  const handleLogin = () => {
+    const userData = {
+      email: email,
+      password: pass,
+    };
+    var validate = validateLoginInput(userData);
+    if (validate.isValid) {
+      loginUser(userData, setIsLogin);
+    } else {
+      alert(validate.message);
+    }
+  };
 
-    <Image source={require('../assets/logo3.png')} style={styles.logo}/>
-    <LoginTxtF 
-      label="Username" 
-      placeholder="Username" 
-      icon="user" 
-      keyboardType="email-address" 
-      autoCapitalize="none" 
-      autoCorrect={false}  
-      onChangeText = {(text) => {setUsername(text)}}
+  return (
+    <View style={koushikBigMistake().viewContainer}>
+      <Image
+        source={require('../assets/logo3.png')}
+        style={koushikBigMistake().logo}
+      />
+      <LoginTxtF
+        label="Email"
+        placeholder="Email"
+        icon="user"
+        keyboardType="email-address"
+        autoCapitalize="none"
+        autoCorrect={false}
+        onChangeText={(text) => {
+          setEmail(text);
+        }}
       ></LoginTxtF>
-    <LoginTxtF 
-      label="Password" 
-      placeholder="Password" 
-      icon="lock" 
-      secureTextEntry={true} 
-      onChangeText = {(text) => {setPass(text)}}
+      <LoginTxtF
+        label="Password"
+        placeholder="Password"
+        icon="lock"
+        secureTextEntry={true}
+        onChangeText={(text) => {
+          setPass(text);
+        }}
       ></LoginTxtF>
 
-    <View style={styles.buttonContainer}>
+      <View style={koushikBigMistake().buttonContainer}>
+        <LoginButton
+          bname="Login"
+          onPress={() => {
+            handleLogin();
+          }}
+        ></LoginButton>
 
-    <LoginButton bname="Login" onPress={()=>{Alert.alert("Login")}} ></LoginButton>
+        <TouchableOpacity
+          style={koushikBigMistake().forgot}
+          onPress={() => {
+            navigation.navigate('Register');
+          }}
+        >
+          <Text style={koushikBigMistake().ForgotTxt}>Not a User? Signup!</Text>
+        </TouchableOpacity>
 
-    <TouchableOpacity style={styles.forgot} onPress={()=>Alert.alert("Forgot?")}>
-    <Text style={styles.ForgotTxt}>Forgot Password?</Text>
-    </TouchableOpacity>
-
-    <OutlookBtn 
+        {/* <OutlookBtn 
       bname="Sign in with Outlook" 
       type="microsoft-outlook" 
       backgroundColor="#0072c6" 
       onPress={()=>{Alert.alert("Outlook")}}
-      ></OutlookBtn>
-
-    </View>
+      ></OutlookBtn> */}
+      </View>
     </View>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1
-  },
-  label: {
-    width: '100%',
-    fontFamily: 'OpenSansBold',
-    marginVertical: 8
-  },
-  viewContainer:{
-    flex:1,
-    backgroundColor:Colors.Grey,
-    alignItems:'center',
-    justifyContent:'center',
-    padding:21,
-    paddingTop:0
-  },
-  logo:{
-    alignSelf:'center',
-    paddingBottom:150,
-    height:120,
-    width:200,
-    resizeMode:'cover'
-  },
-  input: {
-    width: '100%',
-    paddingHorizontal: 2,
-    paddingVertical: 5,
-    borderBottomColor: '#ccc',
-    borderBottomWidth: 1
-  },
-  buttonContainer: {
-    marginTop: 10,
-    alignSelf:'stretch'
-  },
-  ForgotTxt: {
-    fontSize: 14,
-    fontWeight: '500',
-    color: Colors.Gold
-  },
-  forgot: {
-    marginVertical: 38,
-    alignItems:'center'
-  },
-})
-
-export default () => (
-  <ThemeProvider>
-      <LoginScreen/>
-  </ThemeProvider>
-);
+export default LoginScreen;

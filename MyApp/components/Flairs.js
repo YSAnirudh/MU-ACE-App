@@ -1,53 +1,56 @@
-import React, { Component,useState } from 'react';
-import { View,SafeAreaView, StyleSheet, Text } from 'react-native';
+import React, {Component, useState} from 'react';
+import {View, SafeAreaView, StyleSheet, Text} from 'react-native';
 import MultiSelect from 'react-native-multiple-select';
-import Colors from '../constants/Colors'
-import { screenHeight } from '../utils/ScreenParams';
+import Colors from '../constants/Colors';
+import {screenHeight} from '../utils/ScreenParams';
 
-const items = [{
+const items = [
+  {
     id: '1',
-    name: 'CS'
-  }, {
+    name: 'CS',
+  },
+  {
     id: '2',
-    name: 'M E'
-  }, {
+    name: 'M E',
+  },
+  {
     id: '3',
-    name: 'EE'
-  }, {
+    name: 'EE',
+  },
+  {
     id: '4',
-    name: 'CE'
-  }, {
+    name: 'CE',
+  },
+  {
     id: '5',
-    name: 'H S'
-  }, {
+    name: 'H S',
+  },
+  {
     id: '6',
-    name: 'Math'
-  }, {
+    name: 'Math',
+  },
+  {
     id: '7',
-    name: 'Phy'
-  }, {
+    name: 'Phy',
+  },
+  {
     id: '8',
-    name: 'Chem'
-  }, {
+    name: 'Chem',
+  },
+  {
     id: '9',
-    name: 'Arts'
-    }
+    name: 'Arts',
+  },
 ];
 
-const Flairs=()=>{
-   // Data Source for the SearchableDropdown
-  const [selectedItems, setSelectedItems] = useState([]);
+//// SHOULD UPDATE CSS
 
-  const onSelectedItemsChange = (selectedItems) => {
-    // Set Selected Items
-    setSelectedItems(selectedItems);
-  };
+const Flairs = ({selectedItems, onSelectedItemsChange}) => {
+  // Data Source for the SearchableDropdown
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
-        <Text style={styles.titleText}>
-          Flairs
-        </Text>
+        <Text style={styles.titleText}>Flairs</Text>
         <MultiSelect
           hideTags
           items={items}
@@ -67,11 +70,10 @@ const Flairs=()=>{
           searchInputStyle={{color: Colors.DarkGrey}}
           hideSubmitButton
           fixedHeight
-          searchInputStyle={{ color: Colors.DarkGrey }}
-          styleDropdownMenuSubsection={styles.dropMenu} 	
+          searchInputStyle={{color: Colors.DarkGrey}}
+          styleDropdownMenuSubsection={styles.dropMenu}
           styleItemsContainer={styles.dropMenu}
           styleRowList={styles.dropMenu}
-         
         />
       </View>
     </SafeAreaView>
@@ -79,28 +81,26 @@ const Flairs=()=>{
 };
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor:Colors.Grey ,
-      padding: 10,
-      width:'100%',
-      zIndex:10
-     
-    },
-    titleText: {
-      padding: 8,
-      fontSize: 16,
-      textAlign: 'center',
-      fontWeight: 'bold',
-      color:Colors.Gold
-    },
-    headingText: {
-      padding: 8,
-    },
-    dropMenu:{
-        backgroundColor:Colors.Grey,
-       
-    }
-  });
+  container: {
+    flex: 1,
+    backgroundColor: Colors.Grey,
+    padding: 10,
+    width: '100%',
+    zIndex: 10,
+  },
+  titleText: {
+    padding: 8,
+    fontSize: 16,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: Colors.Gold,
+  },
+  headingText: {
+    padding: 8,
+  },
+  dropMenu: {
+    backgroundColor: Colors.Grey,
+  },
+});
 
 export default Flairs;
