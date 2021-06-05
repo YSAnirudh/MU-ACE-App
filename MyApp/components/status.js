@@ -5,6 +5,8 @@ import ProfilePicture from 'react-native-profile-picture'
 import { Searchbar, IconButton, TouchableRipple } from 'react-native-paper';
 import { availabilityStyles, theme } from '../constants/Styles'
 import Icon from 'react-native-vector-icons/Ionicons'
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
 
 const Status = ({...navigation})=>{
   const data = [
@@ -22,7 +24,7 @@ const Status = ({...navigation})=>{
    },
    {
     name:"rohon jioji",
-    department:"M.E.C",
+    department:"M.E.C.H",
     usertype:"Professor",
     email:"jiojio@gmail.com",
     description:"I is Jio",
@@ -56,6 +58,78 @@ const Status = ({...navigation})=>{
     status:true, 
     key:Math.random().toString()
    },
+   {
+    name:"Raghuveer",
+    department:"C.S.E",
+    usertype:"Student",
+    email:"raghbeer@gmail.com",
+    description:"I drink Beer",
+    posts:10,
+    answers:10,
+    karma:10000,
+    status:true, 
+    key:Math.random().toString()
+   },
+   {
+    name:"Raghuveer",
+    department:"C.S.E",
+    usertype:"Student",
+    email:"raghbeer@gmail.com",
+    description:"I drink Beer",
+    posts:10,
+    answers:10,
+    karma:10000,
+    status:true, 
+    key:Math.random().toString()
+   },
+   {
+    name:"Raghuveer",
+    department:"C.S.E",
+    usertype:"Student",
+    email:"raghbeer@gmail.com",
+    description:"I drink Beer",
+    posts:10,
+    answers:10,
+    karma:10000,
+    status:true, 
+    key:Math.random().toString()
+   },
+   {
+    name:"Raghuveer",
+    department:"C.S.E",
+    usertype:"Student",
+    email:"raghbeer@gmail.com",
+    description:"I drink Beer",
+    posts:10,
+    answers:10,
+    karma:10000,
+    status:true, 
+    key:Math.random().toString()
+   },
+   {
+    name:"Raghuveer",
+    department:"C.S.E",
+    usertype:"Student",
+    email:"raghbeer@gmail.com",
+    description:"I drink Beer",
+    posts:10,
+    answers:10,
+    karma:10000,
+    status:true, 
+    key:Math.random().toString()
+   },
+   {
+    name:"Raghuveer",
+    department:"C.S.E",
+    usertype:"Student",
+    email:"raghbeer@gmail.com",
+    description:"I drink Beer",
+    posts:10,
+    answers:10,
+    karma:10000,
+    status:true, 
+    key:Math.random().toString()
+   }
   //  {
   //    name:"anirudh noob",
   //    department:"EEE",
@@ -113,10 +187,10 @@ const Status = ({...navigation})=>{
     return (
       <View style={availabilityStyles().container}>
           <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center', marginBottom:10}}>
-            <View style={{width:"70%"}}>
+            <View style={{width:wp("80%")}}>
             <Searchbar
               placeholder="Search"
-              iconColor={theme().iconColor}
+              iconColor={theme().text}
               onChangeText={onChangeSearch}
               placeholderTextColor={theme().text}
               value={searchQuery}
@@ -129,12 +203,15 @@ const Status = ({...navigation})=>{
                 icon='filter'
                 size={30}
                 borderless={true}
+                color={theme().text}
                 onPress={()=>{}}
+                
               />
             </TouchableRipple>
             </View>
           </View>
           <ScrollView style={{paddingBottom:0}}>
+            
             {data.filter((val)=>{
                 if(searchQuery == ""){
                     return val
@@ -163,18 +240,20 @@ const Status = ({...navigation})=>{
                         }}
                       >
                         <View style={availabilityStyles().statusEntry}>
-                          <View style={{marginRight:5}}>
+                          <View style={{marginHorizontal:wp('3%'),marginRight:wp('4%')}}>
                             <ProfilePicture
                             isPicture={true}
                             requirePicture={require('../assets/bulusu.jpeg')}
                             shape='circle'
+                            width={45}
+                            height={45}
                             />
                           </View>
                           <View style={availabilityStyles().personName}>
-                            <Text style={{fontSize:18, fontWeight:'bold',marginRight:20, color:theme().text}} textBreakStrategy={'simple'}>{val.name}</Text> 
+                            <Text style={{fontSize:16, fontWeight:'400',fontFamily:'Roboto',marginRight:20,paddingLeft:wp('2%'), color:theme().text}} textBreakStrategy={'simple'}>{val.name}</Text> 
                           </View> 
                           <View style={availabilityStyles().personDepartment}>
-                            <Text style = {{fontSize:13, fontWeight:'bold', color:theme().text}} textBreakStrategy={'simple'}>{val.department}</Text>
+                            <Text style = {{fontSize:12, fontWeight:'400',fontFamily:'Roboto', color:theme().text,textAlign: 'center'}} textBreakStrategy={'simple'}>{val.department}</Text>
                           </View>
                           <View >
                             {val.status &&

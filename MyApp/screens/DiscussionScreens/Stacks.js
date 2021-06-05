@@ -6,6 +6,9 @@ import ProfileScreen from "./ProfileScreen"
 import { createStackNavigator } from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from '../../constants/Colors'
+import { color } from 'react-native-reanimated'
+import { theme } from "../../constants/Styles"
+import { ThemeProvider } from '@react-navigation/native'
 
 const CreatePostStack = createStackNavigator();
 const ViewPostStack = createStackNavigator();
@@ -19,7 +22,7 @@ export function ViewPostStackSc ({navigation}) {
             screenOptions={
                 {
                     headerStyle: {
-                        backgroundColor:Colors.DiscussionView
+                        backgroundColor:theme().headerColor
                     },
                     headerTitleAlign:'center',
                 }
@@ -28,7 +31,11 @@ export function ViewPostStackSc ({navigation}) {
                 name="View Post" 
                 component={ViewPostScreen}
                 options={{
-                    headerLeft:() => menuButton(navigation, Colors.DiscussionView)
+                    headerTintColor: theme().header,
+                    // headerTitleStyle: {
+                    //     fontWeight: 'bold',
+                    // },
+                    headerLeft:() => menuButton(navigation, theme().headerColor)
                 }}
             />
         </ViewPostStack.Navigator>
@@ -42,7 +49,7 @@ export function CreatePostStackSc ({navigation}) {
             screenOptions={
                 {
                     headerStyle: {
-                        backgroundColor:Colors.DiscussionCreate
+                        backgroundColor:theme().headerColor
                     },
                     headerTitleAlign:'center',
                 }
@@ -51,7 +58,8 @@ export function CreatePostStackSc ({navigation}) {
                 name="Create" 
                 component={CreatePostScreen}
                 options={{
-                    headerLeft:() => menuButton(navigation, Colors.DiscussionCreate)
+                    headerTintColor: theme().header,
+                    headerLeft:() => menuButton(navigation, theme().headerColor)
                 }}
             />
         </CreatePostStack.Navigator>
@@ -65,7 +73,7 @@ export function AvailabilityStackSc ({navigation}) {
             screenOptions={
                 {
                     headerStyle: {
-                        backgroundColor:Colors.DiscussionAvailability
+                        backgroundColor:theme().headerColor
                     },
                     headerTitleAlign:'center',
                 }
@@ -74,7 +82,8 @@ export function AvailabilityStackSc ({navigation}) {
                 name="Availability" 
                 component={AvailabilityScreen}
                 options={{
-                    headerLeft:() => menuButton(navigation, Colors.DiscussionAvailability)
+                    headerTintColor: theme().header,
+                    headerLeft:() => menuButton(navigation, theme().headerColor)
                 }}
             />
         </AvailabilityStack.Navigator>
@@ -88,7 +97,7 @@ export function ProfileStackSc ({navigation}) {
             screenOptions={
                 {
                     headerStyle: {
-                        backgroundColor:Colors.DiscussionProfile
+                        backgroundColor:theme().headerColor
                     },
                     headerTitleAlign:'center',
                 }
@@ -97,7 +106,8 @@ export function ProfileStackSc ({navigation}) {
                 name="Profile" 
                 component={ProfileScreen}
                 options={{
-                    headerLeft:() => menuButton(navigation, Colors.DiscussionProfile)
+                    headerTintColor: theme().header,
+                    headerLeft:() => menuButton(navigation, theme().headerColor)
                 }}
             />
         </ProfileStack.Navigator>
@@ -110,7 +120,7 @@ function menuButton (navigation, color) {
         name="reorder-three-outline" 
         size={35}
         backgroundColor={color}
-        color={Colors.DarkGrey}
+        color= {theme().header}
         onPress={() => navigation.openDrawer()}/>
     );
 }

@@ -3,6 +3,7 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { ViewPostStackSc, CreatePostStackSc, AvailabilityStackSc, ProfileStackSc } from './Stacks'
 import Icons from 'react-native-vector-icons/Ionicons';
 import Colors from '../../constants/Colors';
+import { theme } from '../../constants/Styles';
 
 var MainTab = createMaterialBottomTabNavigator();
 
@@ -16,21 +17,22 @@ function Tabs (){
         name="Forum"
         component={ViewPostStackSc}
         options={{
-          tabBarLabel: 'Forum',
-          tabBarColor:Colors.DiscussionView,
+          tabBarLabel: '',
+          tabBarColor:theme().footerColor,
           tabBarIcon: () => (
-            <Icons name="chatbubble-ellipses" color={Colors.Gold} size={26} />
+            <Icons name="chatbubble-ellipses" color={theme().footerIcons} size={26} />
           ),
+          
         }}
       />
       <MainTab.Screen
         name="Create Post"
         component={CreatePostStackSc}
         options={{
-          tabBarLabel: 'Create Post',
-          tabBarColor:Colors.DiscussionCreate,
+          tabBarLabel: '',
+          tabBarColor:theme().footerColor,
           tabBarIcon: () => (
-            <Icons name="create" color={Colors.Gold} size={26} />
+            <Icons name="create" color={theme().footerIcons} size={26} />
           ),
         }}
       />
@@ -38,10 +40,10 @@ function Tabs (){
         name="Availability"
         component={AvailabilityStackSc}
         options={{
-          tabBarLabel: 'Availability',
-          tabBarColor:Colors.DiscussionAvailability,
+          tabBarLabel: '',
+          tabBarColor:theme().footerColor,
           tabBarIcon: () => (
-            <Icons name="checkmark-circle" color={Colors.Gold} size={26} />
+            <Icons name="checkmark-circle" color={theme().footerIcons} size={26} />
           ),
         }}
       />
@@ -49,10 +51,10 @@ function Tabs (){
         name="Profile"
         component={ProfileStackSc}
         options={{
-          tabBarLabel: 'Profile',
-          tabBarColor:Colors.DiscussionProfile,
+          tabBarLabel: '',
+          tabBarColor:theme().footerColor,
           tabBarIcon: () => (
-            <Icons name="person" color={Colors.Gold} size={26} />
+            <Icons name="person" color={theme().footerIcons} size={26} />
           ),
         }}
       />

@@ -12,7 +12,7 @@ import {
     TouchableOpacity
 } from 'react-native';
 
-import Colors from '../constants/Colors'
+import {koushikMistake} from '../constants/Styles'
 
 const Registration = () => {
     const [Firstname,setFirstname] = useState('')
@@ -25,11 +25,11 @@ const Registration = () => {
 
 
   return(
-    <View style={styles.viewContainer}>
+    <View style={koushikMistake().viewContainer}>
         
-    <Image source={require('../assets/logo3.png')} style={styles.logo}/>
+    <Image source={require('../assets/logo3.png')} style={koushikMistake().logo}/>
 
-     <Text style={styles.ForgotTxt}>Welcome To MU</Text>
+     <Text style={koushikMistake().ForgotTxt}>Welcome To MU</Text>
     <LoginTxtF 
       label="Firstname" 
       placeholder="Firstname" 
@@ -62,10 +62,10 @@ const Registration = () => {
       secureTextEntry={true} 
       onChangeText = {(text) => {setPass(text)}}
       ></LoginTxtF>
-<View style={styles.Tf}>
+<View style={koushikMistake().Tf}>
       <Picker
         selectedValue={selectedValue}
-        style={{ height: 50, width: 150 }}
+        style={koushikMistake().dept}
         onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
       >
         <Picker.Item label="CSE" value="cse" />
@@ -74,11 +74,11 @@ const Registration = () => {
         <Picker.Item label="CIVIL" value="civil" />
       </Picker>
     </View>
-    <View style={styles.Tf}>
+    <View style={koushikMistake().Tf}>
       <Picker
         
         selectedValue1={selectedValue1}
-        style={{ height: 50, width: 150 }}
+        style={koushikMistake().dept}
         onValueChange={(itemValue, itemIndex) => setSelectedValue1(itemValue)}
       >
         <Picker.Item label="Student" value="stu" />
@@ -88,11 +88,11 @@ const Registration = () => {
     </View>
 
 
-    <View style={styles.buttonContainer}>
+    <View style={koushikMistake().buttonContainer}>
 
     <LoginButton bname="SignUp" onPress={()=>{Alert.alert("SignUp")}} ></LoginButton>
 
-    <TouchableOpacity style={styles.forgot} onPress={()=>Alert.alert("Forgot?")}>
+    <TouchableOpacity style={koushikMistake().forgot} onPress={()=>Alert.alert("Forgot?")}>
    
     </TouchableOpacity>
 
@@ -103,68 +103,4 @@ const Registration = () => {
     </View>
   );
 }
-
-const styles=StyleSheet.create({
-    
-  
-    screen: {
-      flex: 1
-    },
-    label: {
-      width: '100%',
-      fontFamily: 'OpenSansBold',
-      marginVertical: 8
-    },
-    viewContainer:{
-      flex:1,
-      backgroundColor:Colors.Grey,
-      alignItems:'center',
-      justifyContent:'center',
-      padding:21,
-      paddingTop:0
-  },
-    logo:{
-      alignSelf:'center',
-      paddingBottom:150,
-      height:120,
-      width:200,
-      resizeMode:'cover'
-    },
-    input: {
-      width: '100%',
-      paddingHorizontal: 2,
-      paddingVertical: 5,
-      borderBottomColor: '#ccc',
-      borderBottomWidth: 1
-    },
-    
-    buttonContainer: {
-      marginTop: 10,
-      alignSelf:'stretch'
-    },
-    ForgotTxt: {
-      fontSize: 14,
-      fontWeight: '500',
-      color: Colors.Gold
-    },
-    forgot: {
-      marginVertical: 38,
-      alignItems:'center'
-    },
-    Tf:{
-        
-        marginTop:5,
-        marginBottom:10,
-        width:'50%',
-        //height:screenHeight/15,
-        borderColor:Colors.Gold,
-        borderRadius:20,
-        borderWidth:1,
-        //float:Left,
-        flexDirection:'row',
-        alignItems:'center',
-        backgroundColor:Colors.DarkGrey
-    },
-});
-
 export default Registration

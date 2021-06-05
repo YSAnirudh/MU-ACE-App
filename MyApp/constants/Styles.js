@@ -3,31 +3,221 @@ import {StyleSheet} from 'react-native';
 import {ThemeContext} from '../components/Theme';
 import Colors from './Colors';
 import {screenHeight, screenWidth} from '../utils/ScreenParams';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
+
 export const theme = () => {
   const {darkMode} = React.useContext(ThemeContext);
   const dark = darkMode
     ? {
-        background: Colors.Grey,
-        text: Colors.Gold,
+        background: "#121212",
+        text: "white",
         textBoxBack: Colors.DarkGrey,
-        postColor: Colors.DarkerLightGrey,
+        postColor: "#241b19",
         file: require('../assets/logo3_auto_x2.png'),
-        searchBG: Colors.Grey,
-        iconColor: Colors.Red,
+        searchBG: '#17161a',
+        iconColor: 'white',
+        header:"#fff",  
+        headerColor:"#121212",
+        footerIcons: "#fff",
+       // selectedFooterIcon: "#241b19",
+        footerColor: "#121212",
+        //editProfileBackground:"black"
+        epBtn:'#363636',
+        epTextField:'#241b19',
+        epText:"white",
+        createBorder:"white",
+        createBackgroundText: "#241b19",
+        createButton: "white",
+        createBackground: "black",
+        createTextFieldBorder:"#241b19",
+        regBorder: "white",
+        regIcon: "white"
       }
     : {
         background: Colors.White,
-        text: Colors.Grey,
+        text: "black",
         textBoxBack: Colors.LightGrey,
-        postColor: Colors.LightGrey,
+        postColor: "#d4d4d4",
         file: require('../assets/logo3_auto_x2.png'),
-        searchBG: Colors.White,
-        iconColor: Colors.Red,
+        searchBG: "#d4d4d4",
+        iconColor: 'black',
+        header: "black",
+        headerColor:"#EEECEC",
+        footerIcons: "#121212",
+        footerColor: "#d4d4d4",
+       // selectedFooterIcon: "#241b19",
+        //editProfileBackground:"white"
+        epBtn:"black",
+        epTextField:"#b0b0b0",
+        epText:"black",
+        createBorder:"black",
+        createBackgroundText: "#d4d4d4",
+        createButton: "white",
+        createBackground: "black",
+        regBorder: "white",
+        regIcon: "white"
       };
   return dark;
 };
 
+export const koushikMistake = () => ({
+  screen: {
+      flex: 1
+    },
+    label: {
+      width: '100%',
+      fontFamily: 'OpenSansBold',
+      marginVertical: 8
+    },
+    viewContainer:{
+      flex:1,
+      backgroundColor:Colors.Grey,
+      alignItems:'center',
+      justifyContent:'center',
+      padding:21,
+      paddingTop:0
+  },
+    logo:{
+      alignSelf:'center',
+      paddingBottom:150,
+      height:120,
+      width:200,
+      resizeMode:'cover'
+    },
+    input: {
+      width: '100%',
+      paddingHorizontal: 2,
+      paddingVertical: 5,
+      borderBottomColor: '#ccc',
+      borderBottomWidth: 1
+    },
+    
+    buttonContainer: {
+      marginTop: 10,
+      alignSelf:'stretch'
+    },
+    ForgotTxt: {
+      fontSize: 14,
+      fontWeight: '500',
+      color: theme().regIcon
+    },
+    forgot: {
+      marginVertical: 38,
+      alignItems:'center'
+    },
+    dept: { 
+      height: 50, 
+      width: 150,
+      color: theme().regIcon
+    },
+    Tf:{
+        marginTop:5,
+        marginBottom:10,
+        width:'50%',
+        //height:screenHeight/15,
+        borderColor:theme().regBorder,
+        borderRadius:20,
+        borderWidth:1,
+        //float:Left,
+        flexDirection:'row',
+        alignItems:'center',
+        backgroundColor:theme().createBackground
+    },
+  })
+
 export const styles = () => ({
+  buttonStyleLB:{
+      borderWidth:1,
+      marginTop:10,
+      width:'100%',
+      height:screenHeight/15,
+      backgroundColor:theme().createBackground,
+      padding:10,
+      alignItems:'center',
+      justifyContent:'center',
+      borderColor:theme().regBorder,
+      borderRadius:20
+  },
+  buttonTextLB:{
+      fontSize:18,
+      color:theme().createButton
+      
+
+  },
+  TF:{
+    marginTop:5,
+    marginBottom:10,
+    width:'100%',
+    height:screenHeight/15,
+    borderColor:theme().regBorder,
+    borderRadius:20,
+    borderWidth:1,
+    flexDirection:'row',
+    alignItems:'center',
+    backgroundColor:theme().createBackground
+},
+iconStyle:{
+    padding:10,
+    height:'100%',
+    justifyContent:'center',
+    alignItems:'center',
+    borderRightColor:theme().regBorder,
+    color:theme().regIcon,
+    borderRightWidth:1,
+    width:50
+},
+inputField:{
+    padding:10,
+    marginTop:5,
+    marginBottom:10,
+    width:screenWidth/1.5,
+    height:screenHeight/15,
+    fontSize:16,
+    borderRadius:8,
+    borderWidth:1
+},
+input:{
+    padding:10,
+    flex:1,
+    fontSize:16,
+    color:theme().createButton,
+    justifyContent:'center',
+    alignItems:'center'
+},
+  buttonStyle:{
+    borderWidth:1,
+    marginTop:10,
+    width:'50%',
+    margin:3,
+    height:screenHeight/15,
+    backgroundColor:theme().createBackground,
+    padding:10,
+    alignItems:'center',
+    justifyContent:'center',
+    borderColor:theme().createBorder,
+    borderRadius:20,
+    marginBottom:25,
+    marginTop:22
+},
+buttonText:{
+    fontSize:14,
+    color:theme().createButton
+    
+
+},
+  containerTextFieldPs: {
+    marginTop:5,
+    marginBottom:10,
+    width:'100%',
+    
+    borderColor:theme().createTextFieldBorder,
+    borderRadius:8,
+    borderWidth:3,
+    flexDirection:'row',
+    alignItems:'center',
+    backgroundColor:theme().createBackgroundText
+},
   container: {
     flex: 1,
     backgroundColor: theme().background,
@@ -63,33 +253,33 @@ export const styles = () => ({
 export const availabilityStyles = (status) => ({
   container: {
     flex: 1,
-    alignItems: 'center',
+    //alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 20,
+    marginTop: hp('3%'),
   },
   personName: {
-    padding: 10,
-    width: '40%',
-    marginRight: 10,
+    padding: 7,
+    width: wp('40%'),
+    marginRight: wp('4%'),
     elevation: 10,
     backgroundColor: theme().postColor,
-    borderRadius: 15,
+    borderRadius: 20,
   },
   personDepartment: {
-    padding: 10,
-    width: '20%',
-    marginRight: 0,
+    padding: 8,
+    width: wp('15%'),
+    marginRight: wp('2%'),
     elevation: 10,
-    justifyContent: 'center',
+    //justifyContent: 'center',
     backgroundColor: theme().postColor,
-    alignItems: 'center',
-    borderRadius: 10,
-    height: 40,
+    //alignItems: 'center',
+    borderRadius: 20,
+    //height: 40,
   },
   searchBar: {
     borderRadius: 30,
-    borderWidth: 2,
-    borderColor: theme().text,
+    //borderWidth: 1,
+    //borderColor: theme().text,
     backgroundColor: theme().searchBG,
   },
   statusIcon: {
@@ -281,39 +471,48 @@ export const editProfileStyles = () => ({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'violet',
+    //justifyContent: 'center',
+    backgroundColor: theme().background,
+    //paddingHorizontal: wp('5%'),
+    paddingVertical: hp('10.9%')
   },
   ti: {
-    borderWidth: 2,
-    padding: 10,
+    //borderWidth: 2,
+    padding: hp('0.7%'),
     width: '80%',
-    borderRadius: 20,
-    borderColor: 'lightblue',
-    marginBottom: 13,
+    borderRadius: 11,
+    //borderColor: '#241b19',
+    //borderWidth:4,
+    marginBottom: hp('1.7%'),
+    color:theme().epText,
+    backgroundColor:theme().epTextField
   },
   savebtn: {
-    padding: 10,
+    padding: '3%',
     marginTop: 15,
-    backgroundColor: 'yellow',
-    borderRadius: 20,
+    backgroundColor: theme().epBtn,
+    borderRadius: 10,
   },
   img: {
-    marginBottom: 20,
+    marginBottom: hp('1.5%'),
   },
   profilebtn: {
     marginBottom: 15,
-    padding: 5,
-    backgroundColor: 'red',
+    padding: '3%',
+    borderRadius: 15,
+    backgroundColor: theme().epBtn,
+    marginBottom: hp('3.4%')
   },
   te: {
     fontSize: 19,
     fontWeight: 'bold',
+    color:theme().epText
   },
   blocks: {
     textAlign: 'left',
-    marginLeft: 50,
+    marginLeft: wp('11%'),
     alignSelf: 'stretch',
+  
   },
 });
 
@@ -337,8 +536,9 @@ export const createPostStyles = () => ({
     marginTop: '10%',
   },
   textFieldDescription: {
+    flex:1,
     color: theme().text,
-    backgroundColor: theme().background,
+    backgroundColor: theme().createBackgroundText,
     height: screenHeight / 15,
     padding: 9,
     textAlignVertical: 'top',

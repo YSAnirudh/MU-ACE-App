@@ -1,8 +1,8 @@
 import React, { useState,useEffect } from 'react'
-import { View, Text,StyleSheet, TextInput, Button, TouchableOpacity,Image } from 'react-native'
+import { View, Text,StyleSheet, TextInput, Button, TouchableOpacity,Image, ScrollView } from 'react-native'
 import {Avatar} from 'react-native-paper'
 import * as ImagePicker from 'expo-image-picker';
-import {editProfileStyles} from '../constants/Styles'
+import {editProfileStyles, theme} from '../constants/Styles'
 
 
 export default function EditProfile({route}) {
@@ -30,6 +30,7 @@ export default function EditProfile({route}) {
      };
 
     return (
+        <ScrollView>
         <View style={editProfileStyles().container}>
             <View style={editProfileStyles().img}>
             {image&&<Avatar.Image
@@ -44,10 +45,10 @@ export default function EditProfile({route}) {
                 
             </View>
 
-             <View style={{alignItems: 'center'}}>
+             <View>
                 {/* <Button title="Change Profile pic" onPress={pickImage} /> */}
                 <TouchableOpacity style={editProfileStyles().profilebtn} onPress={pickImage}>
-                <Text style={{color:'blue'}}>Change Profile Photo</Text>
+                <Text style={{color:'white',fontSize:13}}>Change Profile Photo</Text>
             </TouchableOpacity>
              </View>    
 
@@ -72,9 +73,11 @@ export default function EditProfile({route}) {
             <Button title = 'Save Changes'/>    
             </View> */}
             <TouchableOpacity style={editProfileStyles().savebtn}>
-                <Text>Save Changes</Text>
+                <Text style={{color:"white",fontSize:16}}>Save Changes</Text>
             </TouchableOpacity>
         </View>
+        </ScrollView>
+        
     )
 }
 
