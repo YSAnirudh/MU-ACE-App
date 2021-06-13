@@ -23,18 +23,23 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import Colors from '../../constants/Colors'
 import { ThemeContext, ThemeProvider } from '../../components/Theme'
 import { theme, drawerStyles as styles } from "../../constants/Styles"
-
+import ProgressCircle from 'react-native-progress-circle'
 
 export function DrawerMan({...props}) {
     const { darkMode, toggleTheme } = React.useContext(ThemeContext)
     // theme.background
     // theme.text
+    // Variables for Indicating user no of posts and comments
+    const posts =2;
+    const comments =5;
+    const karma= 45.5;
     return (
         <View style={{flex:1, backgroundColor:theme().background}}>
             <DrawerContentScrollView {...props}>
                 <View style={styles().drawerContent}>
                         <View style={styles().profile}>
                     <TouchableRipple onPress={()=>props.navigation.navigate('Profile')}>
+                        <View>
                             <View style={styles().profilePic}>
                                 <Avatar.Image
                                     source={require('../../assets/logo2.png')}
@@ -44,13 +49,35 @@ export function DrawerMan({...props}) {
                                     <Caption style={styles().profileCaption}>@bignoobyellisetty</Caption>
                                 </View>
                             </View>
-                    </TouchableRipple>
-                            <View>
-                                <Text style={styles().profileInfo}>
-                                    Maybe we could add something here
+                    
+                            <View style={styles().progressView}>
+                            <Image source={theme().mecFile} style={styles().MECLogo} />
+                                <View style={{marginLeft: 10}}>
+                                <Text style={styles().progText}>
+                                Posts:{posts}
                                 </Text>
+                                <Text style={styles().progText}>
+                                Answers:{comments}
+                                </Text>
+                                </View>
+                                <View style={styles().progressViewBar}>
+                                    <ProgressCircle
+                                        percent={karma}
+                                        // containerStyle={{width}}
+                                        radius={20}
+                                        borderWidth={6}
+                                        color={theme().createBorder}
+                                        shadowColor={theme().background}
+                                        bgColor={theme().background}
+                                    >
+                                        <Text style={styles().progressBarText}>{karma}</Text>
+                                    </ProgressCircle>
+                                </View>
                             </View>
+                            </View>
+                            </TouchableRipple>
                         </View>
+                        
                     <Drawer.Section>
                         <DrawerItem 
                             icon={({size, color}) => gimmeIcon('chatbubble-ellipses', size, theme().iconColor)}

@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {ThemeContext} from '../components/Theme';
 import Colors from './Colors';
+
 import {screenHeight, screenWidth} from '../utils/ScreenParams';
 import {
   widthPercentageToDP as wp,
@@ -17,6 +18,7 @@ export const theme = () => {
         textBoxBack: Colors.DarkGrey,
         postColor: '#241b19',
         file: require('../assets/logo3_auto_x2.png'),
+        mecFile: require('../assets/m.png'),
         searchBG: '#17161a',
         iconColor: 'white',
         header: '#fff',
@@ -42,6 +44,7 @@ export const theme = () => {
         textBoxBack: Colors.LightGrey,
         postColor: '#d4d4d4',
         file: require('../assets/logo3_auto_x2.png'),
+        mecFile: require('../assets/m.png'),
         searchBG: '#d4d4d4',
         iconColor: 'black',
         header: 'black',
@@ -344,6 +347,35 @@ export const availabilityStyles = (status) => ({
 });
 
 export const drawerStyles = () => ({
+  MECLogo: {
+    width: 68,
+    height: 70,
+    marginLeft: 21.5,
+    marginTop: -15,
+  },
+  progressBarText : {
+    fontSize: 9,
+    color:theme().createBorder,
+  },
+  progressView : {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    paddingTop: 10,
+    marginLeft: -10,
+  },
+  progressViewBar : {
+    marginLeft: 12,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  progText : {
+    fontSize: 14,
+    color: theme().text,
+    paddingBottom: 5,
+    fontWeight: 'bold',
+  },
   drawerContent: {
     flex: 1,
   },
@@ -368,8 +400,8 @@ export const drawerStyles = () => ({
     color: theme().text,
   },
   profileInfo: {
-    marginTop: 20,
-    marginBottom: 20,
+    //marginTop: 20,
+   // marginBottom: 20,
     paddingLeft: 20,
     color: theme().text,
   },
@@ -412,7 +444,7 @@ export const profileStyles = () => ({
   },
   myCard: {
     marginTop: 3,
-    padding: 8,
+    padding: screenHeight/80,
     borderColor: theme().text,
     borderWidth: 1,
     backgroundColor: theme().textBoxBack,
@@ -425,14 +457,14 @@ export const profileStyles = () => ({
     justifyContent: 'center',
   },
   myText: {
-    fontSize: 16,
+    fontSize: screenHeight/45,
     marginTop: 3,
     marginLeft: 3,
     color: theme().text,
     fontFamily: 'sans-serif',
   },
   buttonText: {
-    fontSize: 12,
+    fontSize: screenHeight/ 60,
     color: theme().text,
   },
   smolbuttonStyle: {
@@ -443,8 +475,8 @@ export const profileStyles = () => ({
     borderRadius: 20,
   },
   buttonStyle: {
-    margin: 15,
-    marginTop: 20,
+    margin: screenHeight/50,
+    marginTop: screenHeight/60,
     backgroundColor: theme().textBoxBack,
     borderWidth: 1,
     borderColor: theme().text,
@@ -512,6 +544,7 @@ export const userProfileStyles = () => ({
     color: theme().text,
     fontFamily: 'sans-serif',
   },
+ 
 });
 
 export const editProfileStyles = () => ({
@@ -628,3 +661,34 @@ export const createPostStyles = () => ({
     justifyContent: 'flex-start',
   },
 });
+
+export const noobProfile = () => ({
+  progressBarText : {
+    fontSize: screenHeight/40,
+    color:theme().createBorder,
+  },
+  progressView : {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  progressViewBar : {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    paddingTop: screenHeight/80,
+    marginLeft: screenHeight/18,
+  },
+  progText : {
+    display:'flex',
+    justifyContent: 'center',
+    fontSize: screenHeight/40,
+    color: theme().text,
+    fontWeight: 'bold',
+  },
+  alignProf : {
+    display:'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: -screenHeight/30,
+  }
+})
