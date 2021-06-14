@@ -5,6 +5,7 @@ import LoginButton from '../../components/LoginButton';
 import Flairs from '../../components/Flairs';
 import {DrawerContentScrollView} from '@react-navigation/drawer';
 import {validateCreatePostInput} from '../../validation/createPostValidation';
+import {SafeAreaView} from 'react-native';
 import {
     StyleSheet,
     Text,
@@ -15,6 +16,7 @@ import {
     Button,
     Image,
 } from 'react-native';
+import {ScrollView} from 'react-native';
 import {createPostStyles, styles} from '../../constants/Styles';
 import {screenHeight} from '../../utils/ScreenParams';
 
@@ -24,6 +26,8 @@ export default function CreatePostScreen({navigation}) {
     const [tagActive, setActive] = useState(false);
 
     const [selectedItems, setSelectedItems] = useState([]);
+
+    const [imageURI, setImageURI] = useState();
 
     const onSelectedItemsChange = (selectedItems) => {
         // Set Selected Items
@@ -44,88 +48,39 @@ export default function CreatePostScreen({navigation}) {
         }
     };
 
-    if (tagActive == false)
-        return (
-            <KeyboardAvoidingView
-                behavior="padding"
-                keyboardVerticalOffset={50}
-                style={createPostStyles().container3}
-            >
-                <View style={createPostStyles().container3}>
-                    <View style={createPostStyles().container}>
-                        <TextFieldPs
-                            placeholder="Title"
-                            autoCorrect={true}
-                            onChangeText={(title) => {
-                                setTitle(title);
-                            }}
-                            style={createPostStyles().textFieldTitle}
-                        ></TextFieldPs>
+    return (
+        // <ScrollView>
+        // <KeyboardAvoidingView
+        //     behavior="padding"
+        //     keyboardVerticalOffset={0}
+        //     style={createPostStyles().container3}
+        // >
+        <SafeAreaView
+            style={createPostStyles().container3}
+            // showsVerticalScrollIndicator={true}
+        >
+            <View style={createPostStyles().container2}>
+                <TextFieldPs
+                    placeholder="Title"
+                    autoCorrect={true}
+                    onChangeText={(title) => {
+                        setTitle(title);
+                    }}
+                    style={createPostStyles().textFieldTitle}
+                ></TextFieldPs>
 
-                        <TextFieldPs
-                            placeholder="Decription"
-                            autoCorrect={true}
-                            onChangeText={(desc) => {
-                                setDesc(desc);
-                            }}
-                            multiline={true}
-                            style={createPostStyles().textFieldDescription}
-                            numberOfLines={10}
-                        ></TextFieldPs>
-
-                        <View style={createPostStyles().buttonContainer}>
-                            <CreatePostButton
-                                bname="Upload Image"
-                                onPress={() => {
-                                    Alert.alert('Post Clicked');
-                                }}
-                            ></CreatePostButton>
-                            <CreatePostButton
-                                bname="Add Tags"
-                                onPress={() => {
-                                    setActive(true);
-                                }}
-                            ></CreatePostButton>
-                        </View>
-
-                        <LoginButton
-                            bname="Post"
-                            onPress={() => {
-                                handleCreatePost();
-                            }}
-                        ></LoginButton>
-                    </View>
-                </View>
-            </KeyboardAvoidingView>
-        );
-    else {
-        return (
-            <KeyboardAvoidingView
-                behavior="padding"
-                keyboardVerticalOffset={50}
-                style={createPostStyles().container3}
-            >
-                <View style={createPostStyles().container3}>
-                    <View style={createPostStyles().container2}>
-                        <TextFieldPs
-                            placeholder="Title"
-                            autoCorrect={true}
-                            onChangeText={(title) => {
-                                setTitle(title);
-                            }}
-                            style={createPostStyles().textFieldTitle}
-                        ></TextFieldPs>
-
-                        <TextFieldPs
-                            placeholder="Decription"
-                            autoCorrect={true}
-                            onChangeText={(desc) => {
-                                setDesc(desc);
-                            }}
-                            multiline={true}
-                            style={createPostStyles().textFieldDescription}
-                            numberOfLines={10}
-                        ></TextFieldPs>
+                <TextFieldPs
+                    placeholder="Decription"
+                    autoCorrect={true}
+                    onChangeText={(desc) => {
+                        setDesc(desc);
+                    }}
+                    multiline={true}
+                    style={createPostStyles().textFieldDescription}
+                    numberOfLines={10}
+                ></TextFieldPs>
+                {tagActive ? (
+                    <>
                         <View style={createPostStyles().flairC}>
                             <Flairs
                                 selectedItems={selectedItems}
@@ -146,16 +101,46 @@ export default function CreatePostScreen({navigation}) {
                                 }}
                             ></CreatePostButton>
                         </View>
-
-                        <LoginButton
-                            bname="Post"
+                    </>
+                ) : (
+                    <View style={createPostStyles().buttonContainer}>
+                        <CreatePostButton
+                            bname="Upload Image"
                             onPress={() => {
-                                handleCreatePost();
+                                Alert.alert('Post Clicked');
                             }}
-                        ></LoginButton>
+                        ></CreatePostButton>
+                        <CreatePostButton
+                            bname="Add Tags"
+                            onPress={() => {
+                                setActive(true);
+                            }}
+                        ></CreatePostButton>
                     </View>
-                </View>
-            </KeyboardAvoidingView>
-        );
-    }
+                )}
+                {/* <View style={createPostStyles().buttonContainer}>
+                        <CreatePostButton
+                            bname="Upload Image"
+                            onPress={() => {
+                                Alert.alert('Post Clicked');
+                            }}
+                        ></CreatePostButton>
+                        <CreatePostButton
+                            bname="Add Tags"
+                            onPress={() => {
+                                setActive(true);
+                            }}
+                        ></CreatePostButton>
+                    </View> */}
+
+                <LoginButton
+                    bname="Post"
+                    onPress={() => {
+                        handleCreatePost();
+                    }}
+                ></LoginButton>
+            </View>
+        </SafeAreaView>
+        // </KeyboardAvoidingView>
+    );
 }

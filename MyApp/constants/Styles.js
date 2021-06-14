@@ -82,6 +82,7 @@ export const theme = () => {
               createBackgroundText: '#d4d4d4',
               createButton: 'white',
               createBackground: 'black',
+              createTextFieldBorder: '#d4d4d4',
               regBorder: 'white',
               regIcon: 'white',
           };
@@ -182,8 +183,9 @@ export const koushikMistake = () => ({
     },
     dept: {
         height: statusProfPic,
-        width: pad150,
+        width: pad150 * 1.2,
         color: theme().regIcon,
+        // fontSize: 100,
     },
     Tf: {
         marginTop: margin5,
@@ -318,7 +320,24 @@ export const styles = () => ({
         backgroundColor: theme().background,
         color: theme().text,
         width: '90%',
-        marginBottom: margin20,
+    },
+    icon: {
+        fontWeight: 'bold',
+        color: theme().regIcon,
+    },
+    wrapIcon: {
+        width: width10 * 3,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    comm: {
+        flex: 2,
+        backgroundColor: theme().postColor,
+        color: theme().text,
+        marginBottom: margin25,
+        padding: margin10,
+        paddingRight: width10 * 4,
+        borderRadius: margin10,
     },
 });
 
@@ -372,7 +391,7 @@ export const drawerStyles = () => ({
     MECLogo: {
         width: screenWidth / 6,
         height: screenWidth / 6,
-        marginLeft: screenWidth / 40,
+        marginLeft: screenWidth / 17.5,
         marginTop: -margin15,
     },
     progressBarText: {
@@ -452,10 +471,14 @@ export const drawerStyles = () => ({
     },
     postCaption: {
         color: theme().text,
-        marginLeft: width10 * 2,
+        marginLeft: width10,
     },
     postPic: {
         flexDirection: 'row',
+    },
+    postedComment: {
+        color: theme().text,
+        marginLeft: margin20,
     },
 });
 
@@ -655,6 +678,7 @@ export const createPostStyles = () => ({
     container3: {
         flex: 1,
         backgroundColor: theme().background,
+        padding: 5,
     },
     flairC: {
         width: '100%',
@@ -663,6 +687,7 @@ export const createPostStyles = () => ({
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+        // margin: 1000,
     },
     titleC: {
         marginTop: margin20,
@@ -683,6 +708,13 @@ export const createPostStyles = () => ({
     textArea: {
         height: height120,
         justifyContent: 'flex-start',
+    },
+    textFieldComment: {
+        flex: 1,
+        color: theme().text,
+        backgroundColor: theme().createBackgroundText,
+        padding: margin10,
+        textAlignVertical: 'top',
     },
 });
 
@@ -721,9 +753,9 @@ export const flairStyles = () => ({
     container: {
         flex: 1,
         backgroundColor: Colors.Grey,
-        padding: margin10,
+        padding: margin5,
         width: '100%',
-        zIndex: margin10,
+        // zIndex: margin10,
     },
     titleText: {
         padding: margin10 - 2,

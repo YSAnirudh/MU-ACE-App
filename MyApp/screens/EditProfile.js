@@ -20,7 +20,7 @@ export default function EditProfile({route}) {
     const [description, setdescription] = useState(route.params.Description);
     const [password, setpassword] = useState('');
 
-    const [image, setImage] = useState(null);
+    const [imageURI, setImageURI] = useState(null);
 
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -33,22 +33,23 @@ export default function EditProfile({route}) {
         //console.log(result);
 
         if (!result.cancelled) {
-            setImage(result.uri);
+            setImageURI(result.uri);
         }
+        // fetch POST => body uri,
     };
 
     return (
         <ScrollView>
             <View style={editProfileStyles().container}>
                 <View style={editProfileStyles().img}>
-                    {image && (
+                    {imageURI && (
                         <Avatar.Image
-                            source={{uri: image}}
+                            source={{uri: imageURI}}
                             size={profProfPic}
                         />
                     )}
                     {/* {console.log({ uri: image })} */}
-                    {!image && (
+                    {!imageURI && (
                         <Avatar.Image
                             source={require('../assets/bulusu.jpeg')}
                             size={profProfPic}

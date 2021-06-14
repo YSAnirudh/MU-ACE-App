@@ -136,7 +136,7 @@ export function DrawerMan({...props}) {
                                 props.navigation.navigate('Availability');
                             }}
                         />
-                        <DrawerItem
+                        {/* <DrawerItem
                             icon={({size, color}) =>
                                 gimmeIcon('settings', size, theme().iconColor)
                             }
@@ -147,7 +147,7 @@ export function DrawerMan({...props}) {
                             onPress={() => {
                                 props.navigation.navigate('Settings');
                             }}
-                        />
+                        /> */}
                         <DrawerItem
                             icon={({size, color}) =>
                                 gimmeIcon('log-in', size, theme().iconColor)

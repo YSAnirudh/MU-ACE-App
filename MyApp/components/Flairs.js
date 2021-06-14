@@ -51,7 +51,7 @@ const Flairs = ({selectedItems, onSelectedItemsChange}) => {
     return (
         <SafeAreaView style={flairStyles().container}>
             <View style={flairStyles().container}>
-                <Text style={flairStyles().titleText}>Flairs</Text>
+                {/* <Text style={flairStyles().titleText}>Flairs</Text> */}
                 <MultiSelect
                     hideTags
                     items={items}
@@ -70,7 +70,6 @@ const Flairs = ({selectedItems, onSelectedItemsChange}) => {
                     displayKey="name"
                     searchInputStyle={{color: Colors.DarkGrey}}
                     hideSubmitButton
-                    fixedHeight
                     searchInputStyle={{color: Colors.DarkGrey}}
                     styleDropdownMenuSubsection={flairStyles().dropMenu}
                     styleItemsContainer={flairStyles().dropMenu}

@@ -1,5 +1,13 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, TextInput, Button, Image} from 'react-native';
+import {
+    StyleSheet,
+    Text,
+    View,
+    TextInput,
+    Button,
+    Image,
+    TouchableOpacity,
+} from 'react-native';
 import {DrawerContentScrollView} from '@react-navigation/drawer';
 import Post from '../../components/Post';
 import {styles, theme} from '../../constants/Styles';
@@ -10,7 +18,17 @@ export default function ViewPostScreen({navigation}) {
         for (var i = 0; i < 5; i++) {
             var user = 'Nob' + i;
             Posts.push(
-                <Post userName={user} userEmail="@noob1" description="Hello" />
+                <TouchableOpacity
+                    onPress={() => {
+                        navigation.navigate('ViewPost');
+                    }}
+                >
+                    <Post
+                        userName={user}
+                        userEmail="@noob1"
+                        description="Hello"
+                    />
+                </TouchableOpacity>
             );
         }
     };

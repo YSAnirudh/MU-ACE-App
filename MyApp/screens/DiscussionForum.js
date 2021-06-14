@@ -12,6 +12,8 @@ import {DrawerMan} from './DiscussionScreens/DrawerMan';
 import {ThemeProvider} from '../components/Theme';
 import ViewUserProfileScreen from './ViewUserProfileScreen';
 import EditProfile from './EditProfile';
+import ViewPost from './DiscussionScreens/ViewPost';
+
 const MyDrawer = createDrawerNavigator();
 function DiscussionForum() {
     return (
@@ -32,6 +34,7 @@ function DiscussionForum() {
                     }}
                 />
                 <MyDrawer.Screen name="EditProfile" component={EditProfile} />
+                <MyDrawer.Screen name="ViewPost" component={ViewPost} />
             </MyDrawer.Navigator>
         </NavigationContainer>
     );
