@@ -194,6 +194,16 @@ export const styles = () => ({
     fontSize: 18,
     color: theme().createButton,
   },
+  icon:{
+    fontWeight:'bold',
+    color: theme().regIcon,
+
+},
+wrapIcon:{
+    width:30,
+    justifyContent:'center',
+    alignItems:'center'
+},
   TF: {
     marginTop: 5,
     marginBottom: 10,
@@ -286,6 +296,15 @@ export const styles = () => ({
     color: theme().text,
     marginBottom: 25,
     padding: 10,
+    borderRadius: 10,
+  },
+  comm: {
+    flex: 2,
+    backgroundColor: theme().postColor,
+    color: theme().text,
+    marginBottom: 25,
+    padding: 10,
+    paddingRight:70,
     borderRadius: 10,
   },
   postWrapper: {
@@ -391,13 +410,20 @@ export const drawerStyles = () => ({
     color: theme().text,
     marginLeft: 10,
   },
+  
   postTitle: {
     color: theme().text,
     marginLeft: 20,
   },
+
   postCaption: {
     color: theme().text,
     marginLeft: 20,
+  },
+  postedComment: {
+    color: theme().text,
+    marginLeft: 20,
+    
   },
   postPic: {
     flexDirection: 'row',
@@ -586,6 +612,13 @@ export const createPostStyles = () => ({
     color: theme().text,
     backgroundColor: theme().createBackgroundText,
     height: screenHeight / 5,
+    padding: 9,
+    textAlignVertical: 'top',
+  },
+  textFieldComment: {
+    flex: 1,
+    color: theme().text,
+    backgroundColor: theme().createBackgroundText,
     padding: 9,
     textAlignVertical: 'top',
   },

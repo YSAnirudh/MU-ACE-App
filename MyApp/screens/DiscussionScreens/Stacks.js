@@ -9,7 +9,7 @@ import Colors from '../../constants/Colors';
 import {color} from 'react-native-reanimated';
 import {theme} from '../../constants/Styles';
 import {ThemeProvider} from '@react-navigation/native';
-
+import ViewPost from './ViewPost'
 const CreatePostStack = createStackNavigator();
 const ViewPostStack = createStackNavigator();
 const AvailabilityStack = createStackNavigator();
