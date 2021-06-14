@@ -29,6 +29,7 @@ import {
     width15,
     width10,
     titleFont,
+    width5,
 } from './Sizes';
 
 export const theme = () => {
@@ -436,10 +437,12 @@ export const drawerStyles = () => ({
     profileTitle: {
         marginLeft: margin10,
         color: theme().text,
+        width: '100%',
     },
     profileCaption: {
         marginLeft: margin10,
         color: theme().text,
+        width: '100%',
     },
     profileInfo: {
         //marginTop: 20,
@@ -467,11 +470,13 @@ export const drawerStyles = () => ({
     },
     postTitle: {
         color: theme().text,
-        marginLeft: width10 * 2,
+        marginLeft: width10,
+        width: '100%',
     },
     postCaption: {
         color: theme().text,
         marginLeft: width10,
+        width: '100%',
     },
     postPic: {
         flexDirection: 'row',

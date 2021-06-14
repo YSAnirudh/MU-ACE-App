@@ -15,12 +15,14 @@ import {editProfileStyles, theme} from '../constants/Styles';
 import {font12, profProfPic, textFont} from '../constants/Sizes';
 
 export default function EditProfile({route}) {
-    const [firstname, setfirstname] = useState(route.params.Firstname);
-    const [lastname, setlastname] = useState(route.params.Lastname);
-    const [description, setdescription] = useState(route.params.Description);
+    const [firstname, setfirstname] = useState('');
+    const [lastname, setlastname] = useState('');
+    const [description, setdescription] = useState('');
     const [password, setpassword] = useState('');
 
     const [imageURI, setImageURI] = useState(null);
+
+    const handleEditProfile = () => {};
 
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({

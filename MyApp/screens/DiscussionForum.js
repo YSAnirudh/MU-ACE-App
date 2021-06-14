@@ -13,35 +13,72 @@ import {ThemeProvider} from '../components/Theme';
 import ViewUserProfileScreen from './ViewUserProfileScreen';
 import EditProfile from './EditProfile';
 import ViewPost from './DiscussionScreens/ViewPost';
+import {EditProfileSc, ViewStackSc} from './DiscussionScreens/Stacks';
 
 const MyDrawer = createDrawerNavigator();
-function DiscussionForum() {
+function DiscussionForumNoob({isLogin, setIsLogin, userId, setUserId}) {
     return (
         <NavigationContainer>
             <MyDrawer.Navigator
-                drawerContent={(props) => <DrawerMan {...props} />}
+                drawerContent={(props) => (
+                    <DrawerMan
+                        {...props}
+                        userId={userId}
+                        setIsLogin={setIsLogin}
+                        setUserId={setUserId}
+                    />
+                )}
                 initialRouteName="Home"
             >
-                <MyDrawer.Screen name="Home" component={Tabs} />
-                {/* <MyDrawer.Screen name="Settings" component={SettingsScreen} /> */}
-                <MyDrawer.Screen name="Login" component={LoginScreen} />
-                <MyDrawer.Screen name="Register" component={Registration} />
+                <MyDrawer.Screen name="Home">
+                    {(props) => <Tabs {...props} userId={userId} />}
+                </MyDrawer.Screen>
                 <MyDrawer.Screen
                     name="ViewUserProfile"
-                    component={ViewUserProfileStackSc}
                     options={{
                         gestureEnabled: false,
                     }}
-                />
-                <MyDrawer.Screen name="EditProfile" component={EditProfile} />
-                <MyDrawer.Screen name="ViewPost" component={ViewPost} />
+                >
+                    {(props) => (
+                        <ViewUserProfileStackSc {...props} userId={userId} />
+                    )}
+                </MyDrawer.Screen>
+                <MyDrawer.Screen name="EditProfile">
+                    {(props) => (
+                        <EditProfileSc
+                            {...props}
+                            userId={userId}
+                            setIsLogin={setIsLogin}
+                            setUserId={setUId}
+                        />
+                    )}
+                </MyDrawer.Screen>
+                <MyDrawer.Screen name="ViewPost" component={ViewStackSc} />
+                {/* <MyDrawer.Screen name="ViewPost">
+                    {(props) => <ViewStackSc {...props} userId={userId} />}
+                </MyDrawer.Screen> */}
+                {/* <MyDrawer.Screen name="Settings" component={SettingsScreen} /> */}
+                <MyDrawer.Screen name="Login" component={LoginScreen} />
+                <MyDrawer.Screen name="Register" component={Registration} />
             </MyDrawer.Navigator>
         </NavigationContainer>
     );
 }
 
-export default () => (
-    <ThemeProvider>
-        <DiscussionForum />
-    </ThemeProvider>
-);
+export default function DiscussionForum({
+    isLogin,
+    setIsLogin,
+    userId,
+    setUserId,
+}) {
+    return (
+        <ThemeProvider>
+            <DiscussionForumNoob
+                isLogin={isLogin}
+                setIsLogin={setIsLogin}
+                userId={userId}
+                setUserId={setUserId}
+            />
+        </ThemeProvider>
+    );
+}

@@ -7,7 +7,7 @@ import {ThemeProvider} from '../components/Theme';
 import {NavigationContainer} from '@react-navigation/native';
 const LoginRegStack = createStackNavigator();
 
-function LoginRegStackSc() {
+function LoginRegStackSc({isLogin, setIsLogin, setUserId}) {
     return (
         <NavigationContainer>
             <LoginRegStack.Navigator
@@ -21,11 +21,19 @@ function LoginRegStackSc() {
             >
                 <LoginRegStack.Screen
                     name="Login"
-                    component={LoginScreen}
                     options={{
                         headerTintColor: theme().header,
                     }}
-                />
+                >
+                    {(props) => (
+                        <LoginScreen
+                            {...props}
+                            setIsLogin={setIsLogin}
+                            setUserId={setUserId}
+                        />
+                    )}
+                </LoginRegStack.Screen>
+
                 <LoginRegStack.Screen
                     name="Register"
                     component={Registration}
@@ -38,8 +46,14 @@ function LoginRegStackSc() {
     );
 }
 
-export default () => (
-    <ThemeProvider>
-        <LoginRegStackSc />
-    </ThemeProvider>
-);
+export default function BeforeLogin({isLogin, setIsLogin, setUserId}) {
+    return (
+        <ThemeProvider>
+            <LoginRegStackSc
+                isLogin={isLogin}
+                setIsLogin={setIsLogin}
+                setUserId={setUserId}
+            />
+        </ThemeProvider>
+    );
+}

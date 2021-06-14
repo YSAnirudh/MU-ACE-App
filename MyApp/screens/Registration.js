@@ -36,7 +36,7 @@ const Registration = ({navigation}) => {
         };
         var validate = validateRegisterInput(userData);
         if (validate.isValid) {
-            registerUser(userData);
+            registerUser(userData, navigation);
         } else {
             alert(validate.message);
         }

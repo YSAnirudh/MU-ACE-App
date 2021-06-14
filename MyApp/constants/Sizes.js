@@ -23,3 +23,4 @@ export const margin25 = screenHeight / 28;
 export const margin30 = screenHeight / 23.3;
 export const width15 = screenWidth / 15;
 export const width10 = screenWidth / 20;
+export const width5 = screenWidth / 40;

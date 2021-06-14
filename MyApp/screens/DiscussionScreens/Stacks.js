@@ -10,13 +10,66 @@ import {color} from 'react-native-reanimated';
 import {theme} from '../../constants/Styles';
 import {ThemeProvider} from '@react-navigation/native';
 import {iconSize} from '../../constants/Sizes';
+// import ViewPost from './ViewPost';
+import EditProfile from '../EditProfile';
 import ViewPost from './ViewPost';
+
 const CreatePostStack = createStackNavigator();
 const ViewPostStack = createStackNavigator();
 const AvailabilityStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
+const ViewStack = createStackNavigator();
+const EditProfileStack = createStackNavigator();
 
-export function ViewPostStackSc({navigation}) {
+export function ViewStackSc({navigation, userId}) {
+    return (
+        <ViewStack.Navigator
+            headerMode="screen"
+            screenOptions={{
+                headerStyle: {
+                    backgroundColor: theme().headerColor,
+                },
+                headerTitleAlign: 'center',
+            }}
+        >
+            <ViewStack.Screen
+                name="ViewPost"
+                component={ViewPost}
+                options={{
+                    headerTintColor: theme().header,
+                    headerLeft: () =>
+                        backButton(navigation, theme().headerColor),
+                }}
+            />
+        </ViewStack.Navigator>
+    );
+}
+
+export function EditProfileSc({navigation, userId}) {
+    return (
+        <EditProfileStack.Navigator
+            headerMode="screen"
+            screenOptions={{
+                headerStyle: {
+                    backgroundColor: theme().headerColor,
+                },
+                headerTitleAlign: 'center',
+            }}
+        >
+            <EditProfileStack.Screen
+                name="Edit Profile"
+                component={EditProfile}
+                options={{
+                    headerTintColor: theme().header,
+                    headerLeft: () =>
+                        backButton(navigation, theme().headerColor),
+                }}
+            />
+        </EditProfileStack.Navigator>
+    );
+}
+
+export function ViewPostStackSc({navigation, userId}) {
     return (
         <ViewPostStack.Navigator
             headerMode="screen"
@@ -28,8 +81,7 @@ export function ViewPostStackSc({navigation}) {
             }}
         >
             <ViewPostStack.Screen
-                name="View Post"
-                component={ViewPostScreen}
+                name="Forum"
                 options={{
                     headerTintColor: theme().header,
                     // headerTitleStyle: {
@@ -38,12 +90,14 @@ export function ViewPostStackSc({navigation}) {
                     headerLeft: () =>
                         menuButton(navigation, theme().headerColor),
                 }}
-            />
+            >
+                {(props) => <ViewPostScreen {...props} userId={userId} />}
+            </ViewPostStack.Screen>
         </ViewPostStack.Navigator>
     );
 }
 
-export function CreatePostStackSc({navigation}) {
+export function CreatePostStackSc({navigation, userId}) {
     return (
         <CreatePostStack.Navigator
             headerMode="screen"
@@ -56,18 +110,19 @@ export function CreatePostStackSc({navigation}) {
         >
             <CreatePostStack.Screen
                 name="Create"
-                component={CreatePostScreen}
                 options={{
                     headerTintColor: theme().header,
                     headerLeft: () =>
                         menuButton(navigation, theme().headerColor),
                 }}
-            />
+            >
+                {(props) => <CreatePostScreen {...props} userId={userId} />}
+            </CreatePostStack.Screen>
         </CreatePostStack.Navigator>
     );
 }
 
-export function AvailabilityStackSc({navigation}) {
+export function AvailabilityStackSc({navigation, userId}) {
     return (
         <AvailabilityStack.Navigator
             headerMode="screen"
@@ -80,18 +135,19 @@ export function AvailabilityStackSc({navigation}) {
         >
             <AvailabilityStack.Screen
                 name="Availability"
-                component={AvailabilityScreen}
                 options={{
                     headerTintColor: theme().header,
                     headerLeft: () =>
                         menuButton(navigation, theme().headerColor),
                 }}
-            />
+            >
+                {(props) => <AvailabilityScreen {...props} userId={userId} />}
+            </AvailabilityStack.Screen>
         </AvailabilityStack.Navigator>
     );
 }
 
-export function ProfileStackSc({navigation}) {
+export function ProfileStackSc({navigation, userId}) {
     return (
         <ProfileStack.Navigator
             headerMode="screen"
@@ -104,13 +160,14 @@ export function ProfileStackSc({navigation}) {
         >
             <ProfileStack.Screen
                 name="Profile"
-                component={ProfileScreen}
                 options={{
                     headerTintColor: theme().header,
                     headerLeft: () =>
                         menuButton(navigation, theme().headerColor),
                 }}
-            />
+            >
+                {(props) => <ProfileScreen {...props} userId={userId} />}
+            </ProfileStack.Screen>
         </ProfileStack.Navigator>
     );
 }
@@ -123,6 +180,18 @@ function menuButton(navigation, color) {
             backgroundColor={color}
             color={theme().header}
             onPress={() => navigation.openDrawer()}
+        />
+    );
+}
+
+function backButton(navigation, color) {
+    return (
+        <Ionicons.Button
+            name="arrow-back"
+            size={iconSize + 10}
+            backgroundColor={color}
+            color={theme().header}
+            onPress={() => navigation.goBack()}
         />
     );
 }

@@ -13,12 +13,11 @@ import {iconSize} from '../../constants/Sizes';
 
 var MainTab = createMaterialBottomTabNavigator();
 
-function Tabs() {
+function Tabs({userId}) {
     return (
         <MainTab.Navigator initialRouteName="Forum" activeColor={Colors.Grey}>
             <MainTab.Screen
                 name="Forum"
-                component={ViewPostStackSc}
                 options={{
                     tabBarLabel: '',
                     tabBarColor: theme().footerColor,
@@ -31,10 +30,11 @@ function Tabs() {
                         />
                     ),
                 }}
-            />
+            >
+                {(props) => <ViewPostStackSc {...props} userId={userId} />}
+            </MainTab.Screen>
             <MainTab.Screen
                 name="Create Post"
-                component={CreatePostStackSc}
                 options={{
                     tabBarLabel: '',
                     tabBarColor: theme().footerColor,
@@ -47,10 +47,11 @@ function Tabs() {
                         />
                     ),
                 }}
-            />
+            >
+                {(props) => <CreatePostStackSc {...props} userId={userId} />}
+            </MainTab.Screen>
             <MainTab.Screen
                 name="Availability"
-                component={AvailabilityStackSc}
                 options={{
                     tabBarLabel: '',
                     tabBarColor: theme().footerColor,
@@ -63,10 +64,11 @@ function Tabs() {
                         />
                     ),
                 }}
-            />
+            >
+                {(props) => <AvailabilityStackSc {...props} userId={userId} />}
+            </MainTab.Screen>
             <MainTab.Screen
                 name="Profile"
-                component={ProfileStackSc}
                 options={{
                     tabBarLabel: '',
                     tabBarColor: theme().footerColor,
@@ -79,7 +81,9 @@ function Tabs() {
                         />
                     ),
                 }}
-            />
+            >
+                {(props) => <ProfileStackSc {...props} userId={userId} />}
+            </MainTab.Screen>
         </MainTab.Navigator>
     );
 }

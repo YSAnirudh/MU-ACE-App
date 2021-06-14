@@ -20,14 +20,16 @@ import {
 } from '../../constants/Sizes';
 
 export default function ProfileScreen({navigation}) {
-    const data = {
-        Firstname: 'Noob',
-        Lastname: 'Noob',
-        Description: 'Noob',
-    };
-    const posts = 2;
-    const comments = 5;
-    const karma = 45.5;
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [karma, setKarma] = useState(0.0);
+    const [description, setDescription] = useState('');
+    const [posts, setPosts] = useState(0);
+    const [answers, setAnswers] = useState(0);
+
+    const handleGetUserData = () => {};
+
     return (
         <View style={profileStyles().root}>
             <View style={{alignItems: 'center'}}>
@@ -53,9 +55,7 @@ export default function ProfileScreen({navigation}) {
                         size={profIconSize}
                         color={theme().iconColor}
                     />
-                    <Text style={profileStyles().myText}>
-                        koushiky@gmail.com
-                    </Text>
+                    <Text style={profileStyles().myText}>{email}</Text>
                 </View>
             </View>
             <View style={noobProfile().alignProf}>
@@ -73,7 +73,7 @@ export default function ProfileScreen({navigation}) {
                             marginBottom: titleFont,
                         }}
                     >
-                        Koushik Y
+                        {firstName}
                     </Title>
 
                     <View style={noobProfile().progressView}>
@@ -98,7 +98,7 @@ export default function ProfileScreen({navigation}) {
                                     color: theme().text,
                                 }}
                             >
-                                Answers:{comments}
+                                Answers:{answers}
                             </Text>
                         </View>
                     </View>
@@ -144,8 +144,7 @@ export default function ProfileScreen({navigation}) {
                         color: theme().text,
                     }}
                 >
-                    Noobda, Rey, endi ra idi, urke undakunda type cheyamantav,
-                    noobde chal, waste fellow, thu
+                    {description}
                 </Text>
             </View>
 
@@ -156,9 +155,9 @@ export default function ProfileScreen({navigation}) {
                 color={theme().iconColor}
                 onPress={() =>
                     navigation.navigate('EditProfile', {
-                        Firstname: data.Firstname,
-                        Lastname: data.Lastname,
-                        Description: data.Description,
+                        Firstname: firstName,
+                        Lastname: lastName,
+                        Description: description,
                     })
                 }
                 style={profileStyles().buttonStyle}

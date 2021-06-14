@@ -5,14 +5,17 @@ import {Text, Avatar, Title, Caption} from 'react-native-paper';
 import {styles, theme, drawerStyles} from '../constants/Styles';
 import {postImageHeight} from '../constants/Sizes';
 
-const Post = ({userName, userEmail, description}) => {
+const Post = ({userName, userEmail, description, title}) => {
     const hasImage = true;
     return (
         <View style={styles().post}>
             <View style={drawerStyles().postPic}>
                 <Avatar.Image source={require('../assets/logo2.png')} />
                 <View>
-                    <Title style={drawerStyles().postTitle}>{userName}</Title>
+                    <Title style={drawerStyles().postTitle}>{title}</Title>
+                    <Caption style={drawerStyles().postCaption}>
+                        {'By ' + userName}
+                    </Caption>
                     <Caption style={drawerStyles().postCaption}>
                         {userEmail}
                     </Caption>
@@ -28,7 +31,11 @@ const Post = ({userName, userEmail, description}) => {
                 {hasImage && (
                     <Image
                         source={require('../assets/logo3.png')}
-                        style={{height: postImageHeight, width: '100%'}}
+                        style={{
+                            height: postImageHeight,
+                            width: '100%',
+                            margin: 5,
+                        }}
                     />
                 )}
             </View>

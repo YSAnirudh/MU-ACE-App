@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, Alert, Image} from 'react-native';
 import {
     Avatar,
@@ -17,15 +17,55 @@ import {ThemeContext, ThemeProvider} from '../../components/Theme';
 import {theme, drawerStyles as styles} from '../../constants/Styles';
 import ProgressCircle from 'react-native-progress-circle';
 import {margin10, margin20, border6, margin35} from '../../constants/Sizes';
+import {BackendURL} from '../../constants/Backend';
 
-export function DrawerMan({...props}) {
+export function DrawerMan({setIsLogin, userId, setUserId, ...props}) {
     const {darkMode, toggleTheme} = React.useContext(ThemeContext);
-    // theme.background
-    // theme.text
-    // Variables for Indicating user no of posts and comments
-    const posts = 2;
-    const comments = 5;
-    const karma = 45.5;
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [karma, setKarma] = useState(0.0);
+    const [posts, setPosts] = useState(0);
+    const [answers, setAnswers] = useState(0);
+
+    const handleGetData = () => {
+        fetch(BackendURL + 'rest/user/get', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                userId: userId,
+            }),
+        })
+            .then((res) => {
+                if (res.status === 400) {
+                    return 'Error';
+                } else {
+                    return res.json();
+                }
+            })
+            .then((res) => {
+                if (res === 'Error') {
+                    alert('Cannot Get Data');
+                } else {
+                    // console.log(res);
+                    setFirstName(res.firstName);
+                    setLastName(res.lastName);
+                    setEmail(res.email);
+                    setAnswers(parseInt(res.noOfAnswers));
+                    setPosts(parseInt(res.noOfPosts));
+                    setKarma(parseFloat(res.karma));
+                }
+            })
+            .catch((err) => {
+                console.log('errr');
+                console.log(err);
+            });
+    };
+
+    useEffect(() => {
+        handleGetData();
+    }, [firstName, email, karma, answers, posts]);
+
     return (
         <View
             style={{
@@ -46,12 +86,12 @@ export function DrawerMan({...props}) {
                                     />
                                     <View>
                                         <Title style={styles().profileTitle}>
-                                            Koushik Noobde
+                                            {firstName}
                                         </Title>
                                         <Caption
                                             style={styles().profileCaption}
                                         >
-                                            @bignoobyellisetty
+                                            {email}
                                         </Caption>
                                     </View>
                                 </View>
@@ -66,7 +106,7 @@ export function DrawerMan({...props}) {
                                             Posts:{posts}
                                         </Text>
                                         <Text style={styles().progText}>
-                                            Answers:{comments}
+                                            Answers:{answers}
                                         </Text>
                                     </View>
                                     <View style={styles().progressViewBar}>
@@ -136,18 +176,6 @@ export function DrawerMan({...props}) {
                                 props.navigation.navigate('Availability');
                             }}
                         />
-                        {/* <DrawerItem
-                            icon={({size, color}) =>
-                                gimmeIcon('settings', size, theme().iconColor)
-                            }
-                            label="Settings"
-                            labelStyle={{
-                                color: theme().text,
-                            }}
-                            onPress={() => {
-                                props.navigation.navigate('Settings');
-                            }}
-                        /> */}
                         <DrawerItem
                             icon={({size, color}) =>
                                 gimmeIcon('log-in', size, theme().iconColor)
@@ -203,7 +231,10 @@ export function DrawerMan({...props}) {
                     labelStyle={{
                         color: theme().text,
                     }}
-                    onPress={() => {}}
+                    onPress={() => {
+                        setIsLogin(true);
+                        setUserId('');
+                    }}
                 />
             </Drawer.Section>
         </View>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import {View, Text} from 'react-native';
 import {MaterialIcons} from '@expo/vector-icons';
@@ -13,6 +13,12 @@ import {margin10, profProfPic} from '../constants/Sizes';
 export default function ViewUserProfileScreen({navigation, myRoute}) {
     // Should Get more details from here when we create database for user
     const params = myRoute.params;
+    const [userId, setUserId] = useState(params.userId);
+
+    const handleGetStats = () => {};
+
+    const handleGetUserData = () => {};
+
     // const department = route.params.department
     return (
         <View style={userProfileStyles().root}>
@@ -23,13 +29,13 @@ export default function ViewUserProfileScreen({navigation, myRoute}) {
                 />
                 <View style={{marginLeft: margin10}}>
                     <Text style={userProfileStyles().stats}>
-                        Posts Made &#187; {params.posts}
+                        Posts Made &#187; Posts
                     </Text>
                     <Text style={userProfileStyles().stats}>
-                        Answers Given &#187; {params.answers}
+                        Answers Given &#187; Answers
                     </Text>
                     <Text style={userProfileStyles().stats}>
-                        Karma &#187; {params.karma}
+                        Karma &#187; Karma
                     </Text>
                 </View>
             </View>
@@ -43,17 +49,13 @@ export default function ViewUserProfileScreen({navigation, myRoute}) {
                     }}
                 >
                     <Title style={userProfileStyles().userTitle}>
-                        {params.username}
+                        firstName
                     </Title>
                 </View>
                 <View style={{paddingBottom: 9}}></View>
-                <Text style={userProfileStyles().userText}>
-                    {params.usertype}
-                </Text>
-                <Text style={userProfileStyles().userText}>
-                    {params.department}
-                </Text>
-
+                <Text style={userProfileStyles().userText}>UT</Text>
+                <Text style={userProfileStyles().userText}>Dept</Text>
+                <Text style={userProfileStyles().userText}>Status</Text>
                 <View style={userProfileStyles().emailBox}>
                     <MaterialIcons
                         name="email"
@@ -63,18 +65,13 @@ export default function ViewUserProfileScreen({navigation, myRoute}) {
                         size={userProfileStyles().emailIcon.size}
                         color={userProfileStyles().emailIcon.color}
                     />
-                    <Text style={userProfileStyles().myText}>
-                        {params.email}
-                    </Text>
+                    <Text style={userProfileStyles().myText}>Email</Text>
                 </View>
                 <View style={{paddingTop: 10}}>
                     <Text style={userProfileStyles().userText}>
-                        About : {params.description}
+                        About : Desc
                     </Text>
                 </View>
-            </View>
-            <View>
-                <Text>Hello</Text>
             </View>
             {/* <Button 
                 icon="account-edit" 
@@ -101,7 +98,7 @@ export default function ViewUserProfileScreen({navigation, myRoute}) {
 ViewUserProfileStack = createStackNavigator();
 
 export function ViewUserProfileStackSc({navigation, route}) {
-    const name = route.params.username + "'s Profile";
+    const name = route.params.userId + "'s Profile";
     return (
         <ViewUserProfileStack.Navigator
             headerMode="screen"
