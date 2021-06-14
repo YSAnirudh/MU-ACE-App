@@ -8,38 +8,38 @@ import {NavigationContainer} from '@react-navigation/native';
 const LoginRegStack = createStackNavigator();
 
 function LoginRegStackSc() {
-  return (
-    <NavigationContainer>
-      <LoginRegStack.Navigator
-        headerMode="none"
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: theme().headerColor,
-          },
-          headerTitleAlign: 'center',
-        }}
-      >
-        <LoginRegStack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{
-            headerTintColor: theme().header,
-          }}
-        />
-        <LoginRegStack.Screen
-          name="Register"
-          component={Registration}
-          options={{
-            headerTintColor: theme().header,
-          }}
-        />
-      </LoginRegStack.Navigator>
-    </NavigationContainer>
-  );
+    return (
+        <NavigationContainer>
+            <LoginRegStack.Navigator
+                headerMode="none"
+                screenOptions={{
+                    headerStyle: {
+                        backgroundColor: theme().headerColor,
+                    },
+                    headerTitleAlign: 'center',
+                }}
+            >
+                <LoginRegStack.Screen
+                    name="Login"
+                    component={LoginScreen}
+                    options={{
+                        headerTintColor: theme().header,
+                    }}
+                />
+                <LoginRegStack.Screen
+                    name="Register"
+                    component={Registration}
+                    options={{
+                        headerTintColor: theme().header,
+                    }}
+                />
+            </LoginRegStack.Navigator>
+        </NavigationContainer>
+    );
 }
 
 export default () => (
-  <ThemeProvider>
-    <LoginRegStackSc />
-  </ThemeProvider>
+    <ThemeProvider>
+        <LoginRegStackSc />
+    </ThemeProvider>
 );

@@ -5,20 +5,20 @@ import Registration from './screens/Registration';
 import usePersistedState from './persistedState';
 
 function MainRender() {
-  const [isLogin, setIsLogin] = usePersistedState('isLogin', true);
-  const setLogin = (bool) => {
-    setIsLogin(bool);
-  };
-  const renderLogin = () => {
-    console.log(isLogin);
-    if (isLogin) {
-      return <BeforeLogin isLogin={isLogin} setIsLogin={setLogin} />;
-    } else {
-      return <DiscussionForum isLogin={isLogin} setIsLogin={setLogin} />;
-    }
-  };
+    const [isLogin, setIsLogin] = usePersistedState('isLogin', true);
+    const setLogin = (bool) => {
+        setIsLogin(bool);
+    };
+    const renderLogin = () => {
+        console.log(isLogin);
+        if (isLogin) {
+            return <BeforeLogin isLogin={isLogin} setIsLogin={setLogin} />;
+        } else {
+            return <DiscussionForum isLogin={isLogin} setIsLogin={setLogin} />;
+        }
+    };
 
-  return <></>;
+    return <></>;
 }
 
 export default MainRender;

@@ -1,10 +1,5 @@
-import React from 'react'
-import {
-    View,
-    StyleSheet,
-    Alert,
-    Image
-} from 'react-native'
+import React from 'react';
+import {View, StyleSheet, Alert, Image} from 'react-native';
 import {
     Avatar,
     Title,
@@ -13,119 +8,169 @@ import {
     Text,
     Drawer,
     TouchableRipple,
-    Switch
-} from 'react-native-paper'
-import {
-    DrawerContentScrollView,
-    DrawerItem
-} from '@react-navigation/drawer'
-import Icon from 'react-native-vector-icons/Ionicons'
-import Colors from '../../constants/Colors'
-import { ThemeContext, ThemeProvider } from '../../components/Theme'
-import { theme, drawerStyles as styles } from "../../constants/Styles"
-import ProgressCircle from 'react-native-progress-circle'
+    Switch,
+} from 'react-native-paper';
+import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
+import Icon from 'react-native-vector-icons/Ionicons';
+import Colors from '../../constants/Colors';
+import {ThemeContext, ThemeProvider} from '../../components/Theme';
+import {theme, drawerStyles as styles} from '../../constants/Styles';
+import ProgressCircle from 'react-native-progress-circle';
+import {margin10, margin20, border6, margin35} from '../../constants/Sizes';
 
 export function DrawerMan({...props}) {
-    const { darkMode, toggleTheme } = React.useContext(ThemeContext)
+    const {darkMode, toggleTheme} = React.useContext(ThemeContext);
     // theme.background
     // theme.text
     // Variables for Indicating user no of posts and comments
-    const posts =2;
-    const comments =5;
-    const karma= 45.5;
+    const posts = 2;
+    const comments = 5;
+    const karma = 45.5;
     return (
-        <View style={{flex:1, backgroundColor:theme().background}}>
+        <View
+            style={{
+                flex: 1,
+                backgroundColor: theme().background,
+            }}
+        >
             <DrawerContentScrollView {...props}>
                 <View style={styles().drawerContent}>
-                        <View style={styles().profile}>
-                    <TouchableRipple onPress={()=>props.navigation.navigate('Profile')}>
-                        <View>
-                            <View style={styles().profilePic}>
-                                <Avatar.Image
-                                    source={require('../../assets/logo2.png')}
+                    <View style={styles().profile}>
+                        <TouchableRipple
+                            onPress={() => props.navigation.navigate('Profile')}
+                        >
+                            <View>
+                                <View style={styles().profilePic}>
+                                    <Avatar.Image
+                                        source={require('../../assets/logo2.png')}
                                     />
-                                <View >
-                                    <Title style={styles().profileTitle}>Koushik Noobde</Title>
-                                    <Caption style={styles().profileCaption}>@bignoobyellisetty</Caption>
+                                    <View>
+                                        <Title style={styles().profileTitle}>
+                                            Koushik Noobde
+                                        </Title>
+                                        <Caption
+                                            style={styles().profileCaption}
+                                        >
+                                            @bignoobyellisetty
+                                        </Caption>
+                                    </View>
+                                </View>
+
+                                <View style={styles().progressView}>
+                                    <Image
+                                        source={theme().mecFile}
+                                        style={styles().MECLogo}
+                                    />
+                                    <View style={{marginLeft: margin10}}>
+                                        <Text style={styles().progText}>
+                                            Posts:{posts}
+                                        </Text>
+                                        <Text style={styles().progText}>
+                                            Answers:{comments}
+                                        </Text>
+                                    </View>
+                                    <View style={styles().progressViewBar}>
+                                        <ProgressCircle
+                                            percent={karma}
+                                            // containerStyle={{width}}
+                                            radius={margin20}
+                                            borderWidth={border6}
+                                            color={theme().createBorder}
+                                            shadowColor={theme().background}
+                                            bgColor={theme().background}
+                                        >
+                                            <Text
+                                                style={styles().progressBarText}
+                                            >
+                                                {karma}
+                                            </Text>
+                                        </ProgressCircle>
+                                    </View>
                                 </View>
                             </View>
-                    
-                            <View style={styles().progressView}>
-                            <Image source={theme().mecFile} style={styles().MECLogo} />
-                                <View style={{marginLeft: 10}}>
-                                <Text style={styles().progText}>
-                                Posts:{posts}
-                                </Text>
-                                <Text style={styles().progText}>
-                                Answers:{comments}
-                                </Text>
-                                </View>
-                                <View style={styles().progressViewBar}>
-                                    <ProgressCircle
-                                        percent={karma}
-                                        // containerStyle={{width}}
-                                        radius={20}
-                                        borderWidth={6}
-                                        color={theme().createBorder}
-                                        shadowColor={theme().background}
-                                        bgColor={theme().background}
-                                    >
-                                        <Text style={styles().progressBarText}>{karma}</Text>
-                                    </ProgressCircle>
-                                </View>
-                            </View>
-                            </View>
-                            </TouchableRipple>
-                        </View>
-                        
+                        </TouchableRipple>
+                    </View>
+
                     <Drawer.Section>
-                        <DrawerItem 
-                            icon={({size, color}) => gimmeIcon('chatbubble-ellipses', size, theme().iconColor)}
+                        <DrawerItem
+                            icon={({size, color}) =>
+                                gimmeIcon(
+                                    'chatbubble-ellipses',
+                                    size,
+                                    theme().iconColor
+                                )
+                            }
                             label="Forum"
                             labelStyle={{
-                                color:theme().text
+                                color: theme().text,
                             }}
-                            onPress={()=>{props.navigation.navigate('Forum')}}
+                            onPress={() => {
+                                props.navigation.navigate('Forum');
+                            }}
                         />
-                        <DrawerItem 
-                            icon={({size, color}) => gimmeIcon('create', size, theme().iconColor)}
+                        <DrawerItem
+                            icon={({size, color}) =>
+                                gimmeIcon('create', size, theme().iconColor)
+                            }
                             label="Create Post"
                             labelStyle={{
-                                color:theme().text
+                                color: theme().text,
                             }}
-                            onPress={()=>{props.navigation.navigate('Create Post')}}
+                            onPress={() => {
+                                props.navigation.navigate('Create Post');
+                            }}
                         />
-                        <DrawerItem 
-                            icon={({size, color}) => gimmeIcon('checkmark-circle', size, theme().iconColor)}
+                        <DrawerItem
+                            icon={({size, color}) =>
+                                gimmeIcon(
+                                    'checkmark-circle',
+                                    size,
+                                    theme().iconColor
+                                )
+                            }
                             label="Check Availability"
                             labelStyle={{
-                                color:theme().text
+                                color: theme().text,
                             }}
-                            onPress={()=>{props.navigation.navigate('Availability')}}
+                            onPress={() => {
+                                props.navigation.navigate('Availability');
+                            }}
                         />
-                        <DrawerItem 
-                            icon={({size, color}) => gimmeIcon('settings', size, theme().iconColor)}
+                        <DrawerItem
+                            icon={({size, color}) =>
+                                gimmeIcon('settings', size, theme().iconColor)
+                            }
                             label="Settings"
                             labelStyle={{
-                                color:theme().text
+                                color: theme().text,
                             }}
-                            onPress={()=>{props.navigation.navigate('Settings')}}
+                            onPress={() => {
+                                props.navigation.navigate('Settings');
+                            }}
                         />
-                        <DrawerItem 
-                            icon={({size, color}) => gimmeIcon('log-in', size, theme().iconColor)}
+                        <DrawerItem
+                            icon={({size, color}) =>
+                                gimmeIcon('log-in', size, theme().iconColor)
+                            }
                             label="Login"
                             labelStyle={{
-                                color:theme().text
+                                color: theme().text,
                             }}
-                            onPress={()=>{props.navigation.navigate('Login')}}
+                            onPress={() => {
+                                props.navigation.navigate('Login');
+                            }}
                         />
-                        <DrawerItem 
-                            icon={({size, color}) => gimmeIcon('alert', size, theme().iconColor)}
+                        <DrawerItem
+                            icon={({size, color}) =>
+                                gimmeIcon('alert', size, theme().iconColor)
+                            }
                             label="Register"
                             labelStyle={{
-                                color:theme().text
+                                color: theme().text,
                             }}
-                            onPress={()=>{props.navigation.navigate('Register')}}
+                            onPress={() => {
+                                props.navigation.navigate('Register');
+                            }}
                         />
                     </Drawer.Section>
                     <Drawer.Section>
@@ -135,8 +180,14 @@ export function DrawerMan({...props}) {
                                     Dark Mode
                                     {}
                                 </Text>
-                                <View pointerEvents='none'>
-                                <Switch value={darkMode} style={styles().darkText, {marginRight:35}} />
+                                <View pointerEvents="none">
+                                    <Switch
+                                        value={darkMode}
+                                        style={
+                                            (styles().darkText,
+                                            {marginRight: margin35})
+                                        }
+                                    />
                                 </View>
                             </View>
                         </TouchableRipple>
@@ -145,12 +196,14 @@ export function DrawerMan({...props}) {
             </DrawerContentScrollView>
             <Drawer.Section style={styles().bottomDrawer}>
                 <DrawerItem
-                    icon={({size, color}) => gimmeIcon('exit', size, theme().iconColor)}
-                    label='Log Out'
+                    icon={({size, color}) =>
+                        gimmeIcon('exit', size, theme().iconColor)
+                    }
+                    label="Log Out"
                     labelStyle={{
-                        color:theme().text
+                        color: theme().text,
                     }}
-                    onPress={()=>{}} 
+                    onPress={() => {}}
                 />
             </Drawer.Section>
         </View>
@@ -158,11 +211,5 @@ export function DrawerMan({...props}) {
 }
 
 const gimmeIcon = (text, size, color) => {
-    return(
-        <Icon 
-            name={text}
-            size={size}
-            color={color}
-        />
-    );
-}
+    return <Icon name={text} size={size} color={color} />;
+};

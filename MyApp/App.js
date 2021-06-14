@@ -8,5 +8,5 @@ import Registration from './screens/Registration';
 import MainRender from './MainRender';
 
 export default function App() {
-  return <DiscussionForum />;
+    return <DiscussionForum />;
 }
