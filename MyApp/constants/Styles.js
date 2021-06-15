@@ -554,21 +554,25 @@ export const userProfileStyles = () => ({
         margin: 7,
         flexDirection: 'row',
         alignItems: 'center',
+        marginTop:hp('2%'),
+        marginLeft:wp('3%')
     },
     stats: {
         fontSize: textFont,
         color: theme().text,
         fontFamily: 'sans-serif',
-        fontWeight: 'bold',
+        //fontWeight: 'bold',
+        marginLeft: wp('12%')
+        
     },
     profileDetails: {
-        borderBottomWidth: 1,
-        borderBottomColor: theme().text,
+        // borderBottomWidth: 1,
+        // borderBottomColor: theme().text,
         paddingBottom: margin10,
     },
     userTitle: {
-        fontSize: titleFont,
-        marginLeft: margin10,
+        fontSize: textFont,
+        marginLeft: wp('10%'),
         color: theme().text,
         fontFamily: 'sans-serif',
         fontWeight: 'bold',
@@ -581,8 +585,10 @@ export const userProfileStyles = () => ({
     },
     emailBox: {
         flexDirection: 'row',
-        borderBottomWidth: 1,
-        borderBottomColor: theme().text,
+        //borderBottomWidth: 1,
+       // borderBottomColor: theme().text,
+       fontFamily: 'sans-serif',
+       marginLeft: wp('9%'),
         paddingBottom: margin10,
     },
     emailIcon: {
@@ -730,12 +736,14 @@ export const noobProfile = () => ({
     },
     progressView: {
         display: 'flex',
+        marginTop:hp('8%'),
         justifyContent: 'center',
     },
     progressViewBar: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
+        marginTop:hp('5%'),
         paddingTop: screenHeight / 80,
         marginLeft: screenHeight / 18,
     },
