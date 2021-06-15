@@ -1,2 +1,2 @@
 // export const BackendURL = 'https://discussion-forum-backend.herokuapp.com/';
-export const BackendURL = 'https://40f97dc63083.ngrok.io/';
+export const BackendURL = 'http://d93433aa92a2.ngrok.io/';

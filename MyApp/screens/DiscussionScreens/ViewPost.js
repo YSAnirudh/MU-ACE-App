@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {Component, useState, useEffect} from 'react';
 import {
     StyleSheet,
     Text,
@@ -14,36 +14,87 @@ import Comment from '../../components/Comment';
 import TextFieldPs from '../../components/AddCommentField';
 import {createPostStyles, styles, theme} from '../../constants/Styles';
 import AddCommentField from '../../components/AddCommentField';
-export default function ViewPost({route}) {
-    const [posts, setPosts] = useState([]);
+import {BackendURL} from '../../constants/Backend';
+
+export default function ViewPost({navigation, route}) {
+    const [posts, setPosts] = useState(null);
     const [comm, setComm] = useState('');
+    const [answers, setAnswers] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+
     const comments = [];
-    const handleGetPosts = () => {
-        console.log(route);
-        return <Post userName="Hello" userEmail="Hello" description="Hello" />;
+    const setC = () => {
+        setComm('');
+    };
+
+    const handleGetPost = () => {
+        setIsLoading(true);
+        let myParams = route.params;
+        fetch(BackendURL + 'rest/post/get', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                postId: myParams.postId,
+            }),
+        })
+            .then((res) => {
+                if (res.status === 400) {
+                    return 'Error';
+                } else {
+                    // console.log(res);
+                    // console.log(res.status);
+                    return res.json();
+                }
+            })
+            .then((res) => {
+                if (res === 'Error') {
+                    alert('Error Getting Post');
+                } else {
+                    setAnswers(res.comments);
+                    setPosts(
+                        <Post
+                            // key={res[i].postId}
+                            userId={res.userId}
+                            postId={res.postId}
+                            userName={res.firstName}
+                            userEmail={res.email}
+                            description={res.description}
+                            tags={res.tags}
+                            title={res.theTitle}
+                        />
+                    );
+                }
+            })
+            .then((res) => {
+                setIsLoading(false);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     };
 
     const handleGetComments = () => {
-        // get comments
-        for (var i = 0; i < 3; i++) {
-            var user = 'Nob' + i;
+        for (var i = 0; i < answers.length; i++) {
             comments.push(
                 <Comment
-                    user="@noob1"
-                    comment="You cannot declare a specific border directly on the TextInput unless multiline is enabled (For example borderLeftWidth will not work unless multiline={true} is enabled but borderWidth will work), but you can just wrap the TextInput in a View and give it a border."
+                    key={Math.random().toString()}
+                    user={answers[i].firstName}
+                    comment={answers[i].comment}
+                    userCommentId={answers[i].userCommentId}
+                    email={answers[i].email}
                 />
             );
         }
     };
 
-    const viewPosts = () => {
-        handleGetPosts();
-        if (posts.length == 0) {
-            return <Text style={styles().buttonText}>No Posts Found</Text>;
-        } else {
-            return posts.map((item) => item);
-        }
-    };
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            handleGetPost();
+            setComm(comm);
+        });
+
+        return unsubscribe;
+    }, [route]);
 
     const viewComments = () => {
         handleGetComments();
@@ -54,25 +105,63 @@ export default function ViewPost({route}) {
         }
     };
 
+    const handlePostComment = () => {
+        fetch(BackendURL + 'rest/post/comment', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                postId: route.params.postId,
+                userId: route.params.currentUserId,
+                comment: comm,
+            }),
+        })
+            .then((res) => {
+                if (res.status === 400) {
+                    return 'Error';
+                } else {
+                    // console.log(res);
+                    // console.log(res.status);
+                    return res.json();
+                }
+            })
+            .then((res) => {
+                if (res === 'Error') {
+                    alert('Error Getting Post');
+                } else {
+                    handleGetPost();
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
     return (
         <View style={styles().container}>
-            <Image source={theme().file} style={styles().backgroundImage} />
+            {/* <Image source={theme().file} style={styles().backgroundImage} /> */}
+            {!isLoading ? (
+                <DrawerContentScrollView style={styles().postWrapper}>
+                    {posts}
 
-            <DrawerContentScrollView style={styles().postWrapper}>
-                {viewPosts()}
-
-                <AddCommentField
-                    placeholder="Add a comment..."
-                    autoCorrect={true}
-                    onChangeText={(comm) => {
-                        setComm(comm);
-                    }}
-                    multiline={true}
-                    style={createPostStyles().textFieldComment}
-                    numberOfLines={4}
-                ></AddCommentField>
-                {viewComments()}
-            </DrawerContentScrollView>
+                    <AddCommentField
+                        placeholder="Add a comment..."
+                        autoCorrect={true}
+                        onChangeText={(comm) => {
+                            setComm(comm);
+                        }}
+                        onClick={() => {
+                            handlePostComment();
+                            setC();
+                        }}
+                        multiline={true}
+                        style={createPostStyles().textFieldComment}
+                        numberOfLines={4}
+                    ></AddCommentField>
+                    {viewComments()}
+                </DrawerContentScrollView>
+            ) : (
+                <></>
+            )}
         </View>
     );
 }
