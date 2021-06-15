@@ -24,6 +24,7 @@ export default function ViewPostScreen({navigation, userId}) {
 
     const postRespSet = () => {
         let p = [];
+        //console.log("hey")
         for (let i = 0; i < postResponses.length; i++) {
             // console.log('1 : ', postResponses[i]);
             p.push(
