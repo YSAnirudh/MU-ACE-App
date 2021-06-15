@@ -13,16 +13,60 @@ import {Avatar} from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import {editProfileStyles, theme} from '../constants/Styles';
 import {font12, profProfPic, textFont} from '../constants/Sizes';
+import {validateEditProfileInput} from '../validation/editProfileValidation';
+import {BackendURL} from '../constants/Backend';
 
-export default function EditProfile({route}) {
-    const [firstname, setfirstname] = useState('');
-    const [lastname, setlastname] = useState('');
-    const [description, setdescription] = useState('');
+export default function EditProfile({navigation, route, userId}) {
+    const [firstname, setfirstname] = useState(route.params.Firstname);
+    const [lastname, setlastname] = useState(route.params.Lastname);
+    const [description, setdescription] = useState(route.params.Description);
     const [password, setpassword] = useState('');
+    const [Cpassword, setCpassword] = useState('');
 
     const [imageURI, setImageURI] = useState(null);
 
-    const handleEditProfile = () => {};
+    const handleEditProfile = () => {
+        const userData = {
+            userId: userId,
+            firstName: firstname,
+            lastName: lastname,
+            description: description,
+            password: password,
+            confirmPassword: Cpassword,
+        };
+        let validate = validateEditProfileInput(userData);
+
+        if (validate.isValid) {
+            console.log(userData);
+            fetch(BackendURL + 'rest/profile/update', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(userData),
+            })
+                .then((res) => {
+                    if (res.status === 400) {
+                        return 'Error';
+                    } else {
+                        return res.json();
+                    }
+                })
+                .then((res) => {
+                    if (res === 'Error') {
+                        alert('Cannot Update Profile');
+                    } else {
+                        // console.log(res);
+                        alert('Saved Changes Successfully!');
+                        navigation.navigate('Profile');
+                    }
+                })
+                .catch((err) => {
+                    console.log('errr');
+                    console.log(err);
+                });
+        } else {
+            alert(validate.message);
+        }
+    };
 
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -39,6 +83,8 @@ export default function EditProfile({route}) {
         }
         // fetch POST => body uri,
     };
+
+    useEffect(() => {}, []);
 
     return (
         <ScrollView>
@@ -104,11 +150,27 @@ export default function EditProfile({route}) {
                 <TextInput
                     style={editProfileStyles().ti}
                     secureTextEntry={true}
+                    onChangeText={(text) => setpassword(text)}
+                />
+                <View style={editProfileStyles().blocks}>
+                    <Text style={editProfileStyles().te}>
+                        Confirm Change Password
+                    </Text>
+                </View>
+                <TextInput
+                    style={editProfileStyles().ti}
+                    secureTextEntry={true}
+                    onChangeText={(text) => setCpassword(text)}
                 />
                 {/* <View style={editProfileStyles().btn}>
             <Button title = 'Save Changes'/>    
             </View> */}
-                <TouchableOpacity style={editProfileStyles().savebtn}>
+                <TouchableOpacity
+                    onPress={() => {
+                        handleEditProfile();
+                    }}
+                    style={editProfileStyles().savebtn}
+                >
                     <Text style={{color: 'white', fontSize: textFont}}>
                         Save Changes
                     </Text>

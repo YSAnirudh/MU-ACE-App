@@ -14,7 +14,7 @@ import {styles, theme} from '../../constants/Styles';
 import {BackendURL} from '../../constants/Backend';
 import PostClickable from '../../components/PostClickable';
 
-export default function ViewPostScreen({navigation, userId}) {
+export default function ViewUserPostScreen({navigation, userId}) {
     const [posts, setPosts] = useState([]);
     const [postResponses, setPostResponses] = useState([]);
 
@@ -24,7 +24,7 @@ export default function ViewPostScreen({navigation, userId}) {
 
     const postRespSet = () => {
         let p = [];
-        // console.log('Kaa');
+        console.log('Kaa');
         for (let i = 0; i < postResponses.length; i++) {
             // console.log('1 : ', postResponses[i]);
             p.push(
@@ -44,14 +44,16 @@ export default function ViewPostScreen({navigation, userId}) {
     };
 
     const handleGetPosts = async () => {
-        fetch(BackendURL + 'rest/post/get/all', {
-            method: 'GET',
+        fetch(BackendURL + 'rest/post/get/user', {
+            method: 'POST',
             headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                userId: userId,
+            }),
         })
             .then((res) => {
                 if (res.status === 400) {
-                    return 'Error';
-                } else if (res === null) {
+                    console.log('Hallo');
                     return 'Error';
                 } else {
                     return res.json();
@@ -62,21 +64,20 @@ export default function ViewPostScreen({navigation, userId}) {
                 // console.log(res[0].userId);
                 if (res === 'Error') {
                     alert('Cannot Get Posts');
+                } else if (res === 'Done') {
+                    alert('Not Modified');
                 } else {
-                    console.log(res.length);
+                    console.log('Hallo');
                     var p = [];
                     for (var i = 0; i < res.length; i++) {
                         // console.log(res[i]);
                         p.push(res[i]);
                     }
+                    if (res.length !== 0) {
+                        srp(p);
+                    }
                     return p;
                 }
-            })
-            .then((res) => {
-                if (res.length !== 0) {
-                    srp(res);
-                }
-                return res;
             })
             .then((res) => {
                 console.log('Hello');
@@ -95,11 +96,6 @@ export default function ViewPostScreen({navigation, userId}) {
 
         return unsubscribe;
     }, [navigation]);
-
-    // useEffect(() => {
-    //     console.log('hello');
-    //     handleGetPosts();
-    // }, []);
 
     const viewPosts = () => {
         if (posts.length == 0) {

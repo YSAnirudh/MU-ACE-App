@@ -527,7 +527,7 @@ export const profileStyles = () => ({
     },
     buttonStyle: {
         margin: screenHeight / 50,
-        marginTop: screenHeight / 60,
+        marginTop: screenHeight / 500,
         backgroundColor: theme().textBoxBack,
         borderWidth: 1,
         borderColor: theme().text,

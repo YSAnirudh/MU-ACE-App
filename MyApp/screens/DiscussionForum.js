@@ -13,7 +13,11 @@ import {ThemeProvider} from '../components/Theme';
 import ViewUserProfileScreen from './ViewUserProfileScreen';
 import EditProfile from './EditProfile';
 import ViewPost from './DiscussionScreens/ViewPost';
-import {EditProfileSc, ViewStackSc} from './DiscussionScreens/Stacks';
+import {
+    EditProfileSc,
+    ViewStackSc,
+    ViewUserPostsSc,
+} from './DiscussionScreens/Stacks';
 
 const MyDrawer = createDrawerNavigator();
 function DiscussionForumNoob({isLogin, setIsLogin, userId, setUserId}) {
@@ -49,10 +53,20 @@ function DiscussionForumNoob({isLogin, setIsLogin, userId, setUserId}) {
                             {...props}
                             userId={userId}
                             setIsLogin={setIsLogin}
-                            setUserId={setUId}
+                            setUserId={setUserId}
                         />
                     )}
                 </MyDrawer.Screen>
+                <MyDrawer.Screen name="UserPost">
+                    {(props) => (
+                        <ViewUserPostsSc
+                            {...props}
+                            userId={userId}
+                            setUserId={setUserId}
+                        />
+                    )}
+                </MyDrawer.Screen>
+
                 <MyDrawer.Screen name="ViewPost" component={ViewStackSc} />
                 {/* <MyDrawer.Screen name="ViewPost">
                     {(props) => <ViewStackSc {...props} userId={userId} />}

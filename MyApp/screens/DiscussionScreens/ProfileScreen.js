@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, View, Image, ScrollView} from 'react-native';
 import {Title, Card} from 'react-native-paper';
 import {MaterialIcons} from '@expo/vector-icons';
@@ -18,8 +18,9 @@ import {
     titleFont,
     textFont,
 } from '../../constants/Sizes';
+import {BackendURL} from '../../constants/Backend';
 
-export default function ProfileScreen({navigation}) {
+export default function ProfileScreen({navigation, userId}) {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -28,7 +29,49 @@ export default function ProfileScreen({navigation}) {
     const [posts, setPosts] = useState(0);
     const [answers, setAnswers] = useState(0);
 
-    const handleGetUserData = () => {};
+    const handleGetData = () => {
+        fetch(BackendURL + 'rest/user/get', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                userId: userId,
+            }),
+        })
+            .then((res) => {
+                if (res.status === 400) {
+                    return 'Error';
+                } else {
+                    return res.json();
+                }
+            })
+            .then((res) => {
+                if (res === 'Error') {
+                    console.log('Hallo');
+                    alert('Cannot Get Data');
+                } else {
+                    // console.log(res);
+                    setFirstName(res.firstName);
+                    setLastName(res.lastName);
+                    setEmail(res.email);
+                    setAnswers(parseInt(res.noOfAnswers));
+                    setPosts(parseInt(res.noOfPosts));
+                    setKarma(parseFloat(res.karma));
+                    setDescription(res.description);
+                }
+            })
+            .catch((err) => {
+                console.log('errr');
+                console.log(err);
+            });
+    };
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            handleGetData();
+        });
+
+        return unsubscribe;
+    }, [navigation]);
 
     return (
         <View style={profileStyles().root}>
@@ -155,14 +198,27 @@ export default function ProfileScreen({navigation}) {
                 color={theme().iconColor}
                 onPress={() =>
                     navigation.navigate('EditProfile', {
-                        Firstname: firstName,
-                        Lastname: lastName,
-                        Description: description,
+                        screen: 'Edit Profile',
+                        params: {
+                            Firstname: firstName,
+                            Lastname: lastName,
+                            Description: description,
+                        },
                     })
                 }
                 style={profileStyles().buttonStyle}
             >
                 <Text style={profileStyles().buttonText}>Edit Profile</Text>
+            </Button>
+            <Button
+                icon="account-details"
+                mode="outlined"
+                //theme={pageTheme}
+                color={theme().iconColor}
+                onPress={() => navigation.navigate('UserPost')}
+                style={profileStyles().buttonStyle}
+            >
+                <Text style={profileStyles().buttonText}>Your Posts</Text>
             </Button>
             <Button
                 icon="logout"

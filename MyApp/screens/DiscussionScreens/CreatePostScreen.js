@@ -19,8 +19,9 @@ import {
 import {ScrollView} from 'react-native';
 import {createPostStyles, styles} from '../../constants/Styles';
 import {screenHeight} from '../../utils/ScreenParams';
+import {BackendURL} from '../../constants/Backend';
 
-export default function CreatePostScreen({navigation}) {
+export default function CreatePostScreen({navigation, userId}) {
     const [title, setTitle] = useState('');
     const [desc, setDesc] = useState('');
     const [tagActive, setActive] = useState(false);
@@ -36,13 +37,38 @@ export default function CreatePostScreen({navigation}) {
 
     const handleCreatePost = () => {
         const userData = {
+            userId: userId,
             title: title,
             description: desc,
             tags: selectedItems,
         };
         var validate = validateCreatePostInput(userData);
         if (validate.isValid) {
-            console.log(userData);
+            fetch(BackendURL + 'rest/post/create', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(userData),
+            })
+                .then((res) => {
+                    if (res.status === 400) {
+                        return 'Error';
+                    } else {
+                        return res.json();
+                    }
+                })
+                .then((res) => {
+                    if (res === 'Error') {
+                        alert('Cannot Get Posts');
+                    } else {
+                        alert('Post Created');
+                        setTitle('');
+                        setDesc('');
+                        setSelectedItems([]);
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
         } else {
             alert(validate.message);
         }

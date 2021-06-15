@@ -13,9 +13,13 @@ import {iconSize} from '../../constants/Sizes';
 // import ViewPost from './ViewPost';
 import EditProfile from '../EditProfile';
 import ViewPost from './ViewPost';
+import ViewUserPostScreen from './ViewUserPosts';
+import {useState, useEffect} from 'react';
+import {BackendURL} from '../../constants/Backend';
 
 const CreatePostStack = createStackNavigator();
 const ViewPostStack = createStackNavigator();
+const ViewPostUserStack = createStackNavigator();
 const AvailabilityStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
 const ViewStack = createStackNavigator();
@@ -58,14 +62,40 @@ export function EditProfileSc({navigation, userId}) {
         >
             <EditProfileStack.Screen
                 name="Edit Profile"
-                component={EditProfile}
                 options={{
                     headerTintColor: theme().header,
                     headerLeft: () =>
                         backButton(navigation, theme().headerColor),
                 }}
-            />
+            >
+                {(props) => <EditProfile {...props} userId={userId} />}
+            </EditProfileStack.Screen>
         </EditProfileStack.Navigator>
+    );
+}
+
+export function ViewUserPostsSc({navigation, userId}) {
+    return (
+        <ViewPostUserStack.Navigator
+            headerMode="screen"
+            screenOptions={{
+                headerStyle: {
+                    backgroundColor: theme().headerColor,
+                },
+                headerTitleAlign: 'center',
+            }}
+        >
+            <ViewPostUserStack.Screen
+                name={'Your Posts'}
+                options={{
+                    headerTintColor: theme().header,
+                    headerLeft: () =>
+                        backButton(navigation, theme().headerColor),
+                }}
+            >
+                {(props) => <ViewUserPostScreen {...props} userId={userId} />}
+            </ViewPostUserStack.Screen>
+        </ViewPostUserStack.Navigator>
     );
 }
 

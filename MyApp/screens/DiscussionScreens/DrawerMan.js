@@ -19,7 +19,13 @@ import ProgressCircle from 'react-native-progress-circle';
 import {margin10, margin20, border6, margin35} from '../../constants/Sizes';
 import {BackendURL} from '../../constants/Backend';
 
-export function DrawerMan({setIsLogin, userId, setUserId, ...props}) {
+export function DrawerMan({
+    setIsLogin,
+    userId,
+    setUserId,
+    navigation,
+    ...props
+}) {
     const {darkMode, toggleTheme} = React.useContext(ThemeContext);
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -38,6 +44,7 @@ export function DrawerMan({setIsLogin, userId, setUserId, ...props}) {
         })
             .then((res) => {
                 if (res.status === 400) {
+                    console.log(res);
                     return 'Error';
                 } else {
                     return res.json();
@@ -45,6 +52,7 @@ export function DrawerMan({setIsLogin, userId, setUserId, ...props}) {
             })
             .then((res) => {
                 if (res === 'Error') {
+                    console.log('Hallo000000');
                     alert('Cannot Get Data');
                 } else {
                     // console.log(res);
@@ -64,7 +72,7 @@ export function DrawerMan({setIsLogin, userId, setUserId, ...props}) {
 
     useEffect(() => {
         handleGetData();
-    }, [firstName, email, karma, answers, posts]);
+    }, []);
 
     return (
         <View

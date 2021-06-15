@@ -1,5 +1,5 @@
 import {StatusBar} from 'expo-status-bar';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Text, View, ScrollView, FlatList, Button} from 'react-native';
 import ProfilePicture from 'react-native-profile-picture';
 import {Searchbar, IconButton, TouchableRipple} from 'react-native-paper';
@@ -17,9 +17,11 @@ import {
     statusProfPic,
     iconSize,
 } from '../constants/Sizes';
+import {useState} from 'react';
+import {BackendURL} from '../constants/Backend';
 
 const Status = ({...navigation}) => {
-    const data = [
+    const sData = [
         {
             userId: '1',
             firstName: 'Raghuveer',
@@ -61,7 +63,44 @@ const Status = ({...navigation}) => {
         },
     ];
 
-    const handleGetStatus = () => {};
+    const [data, setstatusData] = useState([]);
+    const setStatusData = (arr) => {
+        setstatusData(arr);
+    };
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            handleGetStatus();
+        });
+
+        return unsubscribe;
+    }, [navigation]);
+
+    const handleGetStatus = () => {
+        fetch(BackendURL + 'rest/status/get', {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'},
+        })
+            .then((res) => {
+                if (res.status === 400) {
+                    return 'Error';
+                } else {
+                    return res.json();
+                }
+            })
+            .then((res) => {
+                // console.log(res);
+                // console.log(res[0].userId);
+                if (res === 'Error') {
+                    alert('Cannot Get Posts');
+                } else {
+                    setStatusData(res);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
 
     const [searchQuery, setSearchQuery] = React.useState('');
 
@@ -105,7 +144,7 @@ const Status = ({...navigation}) => {
                         if (searchQuery == '') {
                             return val;
                         } else if (
-                            val.name
+                            val.firstName
                                 .toLowerCase()
                                 .includes(searchQuery.toLowerCase())
                         ) {
@@ -124,7 +163,7 @@ const Status = ({...navigation}) => {
                                             // Need more details from here when we create database for user
                                             'ViewUserProfile',
                                             {
-                                                userId: '1',
+                                                userId: val.userId,
                                             }
                                         );
                                     }}
@@ -162,7 +201,7 @@ const Status = ({...navigation}) => {
                                                 }}
                                                 textBreakStrategy={'simple'}
                                             >
-                                                {val.name}
+                                                {val.firstName}
                                             </Text>
                                         </View>
                                         <View
