@@ -20,8 +20,14 @@ import {ScrollView} from 'react-native';
 import {createPostStyles, styles} from '../../constants/Styles';
 import {screenHeight} from '../../utils/ScreenParams';
 import {BackendURL} from '../../constants/Backend';
+import LoadingScreen from '../LoadingScreen';
 
-export default function CreatePostScreen({navigation, userId}) {
+export default function CreatePostScreen({
+    navigation,
+    userId,
+    setIsLoading,
+    isLoading,
+}) {
     const [title, setTitle] = useState('');
     const [desc, setDesc] = useState('');
     const [tagActive, setActive] = useState(false);
@@ -44,6 +50,7 @@ export default function CreatePostScreen({navigation, userId}) {
         };
         var validate = validateCreatePostInput(userData);
         if (validate.isValid) {
+            setIsLoading(true);
             fetch(BackendURL + 'rest/post/create', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -60,6 +67,7 @@ export default function CreatePostScreen({navigation, userId}) {
                     if (res === 'Error') {
                         alert('Cannot Get Posts');
                     } else {
+                        setIsLoading(false);
                         alert('Post Created');
                         setTitle('');
                         setDesc('');
@@ -73,46 +81,58 @@ export default function CreatePostScreen({navigation, userId}) {
             alert(validate.message);
         }
     };
-
     return (
-        // <ScrollView>
-        // <KeyboardAvoidingView
-        //     behavior="padding"
-        //     keyboardVerticalOffset={0}
-        //     style={createPostStyles().container3}
-        // >
         <SafeAreaView
             style={createPostStyles().container3}
             // showsVerticalScrollIndicator={true}
         >
-            <View style={createPostStyles().container2}>
-                <TextFieldPs
-                    placeholder="Title"
-                    autoCorrect={true}
-                    onChangeText={(title) => {
-                        setTitle(title);
-                    }}
-                    style={createPostStyles().textFieldTitle}
-                ></TextFieldPs>
+            {!isLoading ? (
+                <View style={createPostStyles().container2}>
+                    <TextFieldPs
+                        placeholder="Title"
+                        autoCorrect={true}
+                        onChangeText={(title) => {
+                            setTitle(title);
+                        }}
+                        style={createPostStyles().textFieldTitle}
+                    ></TextFieldPs>
 
-                <TextFieldPs
-                    placeholder="Decription"
-                    autoCorrect={true}
-                    onChangeText={(desc) => {
-                        setDesc(desc);
-                    }}
-                    multiline={true}
-                    style={createPostStyles().textFieldDescription}
-                    numberOfLines={10}
-                ></TextFieldPs>
-                {tagActive ? (
-                    <>
-                        <View style={createPostStyles().flairC}>
-                            <Flairs
-                                selectedItems={selectedItems}
-                                onSelectedItemsChange={onSelectedItemsChange}
-                            />
-                        </View>
+                    <TextFieldPs
+                        placeholder="Decription"
+                        autoCorrect={true}
+                        onChangeText={(desc) => {
+                            setDesc(desc);
+                        }}
+                        multiline={true}
+                        style={createPostStyles().textFieldDescription}
+                        numberOfLines={10}
+                    ></TextFieldPs>
+                    {tagActive ? (
+                        <>
+                            <View style={createPostStyles().flairC}>
+                                <Flairs
+                                    selectedItems={selectedItems}
+                                    onSelectedItemsChange={
+                                        onSelectedItemsChange
+                                    }
+                                />
+                            </View>
+                            <View style={createPostStyles().buttonContainer}>
+                                <CreatePostButton
+                                    bname="Upload Image"
+                                    onPress={() => {
+                                        Alert.alert('Post Clicked');
+                                    }}
+                                ></CreatePostButton>
+                                <CreatePostButton
+                                    bname="Remove Tags"
+                                    onPress={() => {
+                                        setActive(false);
+                                    }}
+                                ></CreatePostButton>
+                            </View>
+                        </>
+                    ) : (
                         <View style={createPostStyles().buttonContainer}>
                             <CreatePostButton
                                 bname="Upload Image"
@@ -121,51 +141,24 @@ export default function CreatePostScreen({navigation, userId}) {
                                 }}
                             ></CreatePostButton>
                             <CreatePostButton
-                                bname="Remove Tags"
+                                bname="Add Tags"
                                 onPress={() => {
-                                    setActive(false);
+                                    setActive(true);
                                 }}
                             ></CreatePostButton>
                         </View>
-                    </>
-                ) : (
-                    <View style={createPostStyles().buttonContainer}>
-                        <CreatePostButton
-                            bname="Upload Image"
-                            onPress={() => {
-                                Alert.alert('Post Clicked');
-                            }}
-                        ></CreatePostButton>
-                        <CreatePostButton
-                            bname="Add Tags"
-                            onPress={() => {
-                                setActive(true);
-                            }}
-                        ></CreatePostButton>
-                    </View>
-                )}
-                {/* <View style={createPostStyles().buttonContainer}>
-                        <CreatePostButton
-                            bname="Upload Image"
-                            onPress={() => {
-                                Alert.alert('Post Clicked');
-                            }}
-                        ></CreatePostButton>
-                        <CreatePostButton
-                            bname="Add Tags"
-                            onPress={() => {
-                                setActive(true);
-                            }}
-                        ></CreatePostButton>
-                    </View> */}
+                    )}
 
-                <LoginButton
-                    bname="Post"
-                    onPress={() => {
-                        handleCreatePost();
-                    }}
-                ></LoginButton>
-            </View>
+                    <LoginButton
+                        bname="Post"
+                        onPress={() => {
+                            handleCreatePost();
+                        }}
+                    ></LoginButton>
+                </View>
+            ) : (
+                <LoadingScreen />
+            )}
         </SafeAreaView>
         // </KeyboardAvoidingView>
     );

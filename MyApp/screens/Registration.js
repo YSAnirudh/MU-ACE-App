@@ -16,7 +16,7 @@ import {
 
 import {koushikMistake, theme} from '../constants/Styles';
 
-const Registration = ({navigation}) => {
+const Registration = ({navigation, isLoading, setIsLoading}) => {
     const [Firstname, setFirstname] = useState('');
     const [Lastname, setLastname] = useState('');
 
@@ -36,7 +36,7 @@ const Registration = ({navigation}) => {
         };
         var validate = validateRegisterInput(userData);
         if (validate.isValid) {
-            registerUser(userData, navigation);
+            registerUser(userData, navigation, isLoading, setIsLoading);
         } else {
             alert(validate.message);
         }

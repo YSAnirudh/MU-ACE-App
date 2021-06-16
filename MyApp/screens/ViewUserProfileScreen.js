@@ -6,19 +6,19 @@ import {Title, Button, Avatar} from 'react-native-paper';
 import {theme} from '../constants/Styles';
 import {createStackNavigator} from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {userProfileStyles,noobProfile} from '../constants/Styles';
+import {
+    userProfileStyles2 as userProfileStyles,
+    noobProfile2 as noobProfile,
+} from '../constants/Styles';
 import Colors from '../constants/Colors';
 import {margin10, profProfPic} from '../constants/Sizes';
 import {screenHeight, screenWidth} from '../utils/ScreenParams';
-import {
-    profIconSize,
-    titleFont,
-    textFont,
-} from '../constants/Sizes';
+import {profIconSize, titleFont, textFont} from '../constants/Sizes';
 import ProgressCircle from 'react-native-progress-circle';
-import {heightPercentageToDP, widthPercentageToDP} from 'react-native-responsive-screen';
-
-
+import {
+    heightPercentageToDP,
+    widthPercentageToDP,
+} from 'react-native-responsive-screen';
 
 export default function ViewUserProfileScreen({navigation, myRoute}) {
     // Should Get more details from here when we create database for user
@@ -40,26 +40,21 @@ export default function ViewUserProfileScreen({navigation, myRoute}) {
                     size={profProfPic}
                 />
                 <View style={{marginTop: widthPercentageToDP('8%')}}>
-                    <Text style={userProfileStyles().stats}>
-                        FirstName
-                    </Text>
-                    <Text style={userProfileStyles().stats}>
-                        User Type
-                    </Text>
-                    <Text style={userProfileStyles().stats}>
-                        Deptarment
-                    </Text>
+                    <Text style={userProfileStyles().stats}>FirstName</Text>
+                    <Text style={userProfileStyles().stats}>User Type</Text>
+                    <Text style={userProfileStyles().stats}>Deptarment</Text>
                     <View style={userProfileStyles().emailBox}>
-                    <MaterialIcons
-                        name="email"
-                        style={{
-                            marginLeft: userProfileStyles().userText.marginLeft,
-                        }}
-                        size={userProfileStyles().emailIcon.size}
-                        color={userProfileStyles().emailIcon.color}
-                    />
-                    <Text style={userProfileStyles().myText}>Email</Text>
-                </View>
+                        <MaterialIcons
+                            name="email"
+                            style={{
+                                marginLeft:
+                                    userProfileStyles().userText.marginLeft,
+                            }}
+                            size={userProfileStyles().emailIcon.size}
+                            color={userProfileStyles().emailIcon.color}
+                        />
+                        <Text style={userProfileStyles().myText}>Email</Text>
+                    </View>
                 </View>
             </View>
 
@@ -71,9 +66,7 @@ export default function ViewUserProfileScreen({navigation, myRoute}) {
                         paddingBottom: 5,
                     }}
                 >
-                    <Text style={userProfileStyles().userTitle}>
-                        Status
-                    </Text>
+                    <Text style={userProfileStyles().userTitle}>Status</Text>
                 </View>
                 {/* <View style={{paddingBottom: 9}}></View>
                 <Text style={userProfileStyles().userText}>Posts: Posts</Text>
@@ -87,89 +80,85 @@ export default function ViewUserProfileScreen({navigation, myRoute}) {
                 </View> */}
 
                 <View style={noobProfile().alignProf}>
-                <View
-                    style={{
-                        alignItems: 'center',
-                        margin: screenHeight / 80,
-                        alignItems: 'flex-start',
-                    }}
-                >
-
-                    <View style={noobProfile().progressView}>
-                        <View style={{alignItems: 'flex-start'}}>
-                            {/* <Text style={noobProfile().progText}>
+                    <View
+                        style={{
+                            alignItems: 'center',
+                            margin: screenHeight / 80,
+                            alignItems: 'flex-start',
+                        }}
+                    >
+                        <View style={noobProfile().progressView}>
+                            <View style={{alignItems: 'flex-start'}}>
+                                {/* <Text style={noobProfile().progText}>
                         
                         </Text> */}
-                            <Text
-                                style={{
-                                    
-                                    fontSize: textFont,
-                                    color: theme().text,
-                                }}
-                            >
-                                Posts:{posts}
-                            </Text>
-                            {/* <Text style={noobProfile().progText}>
+                                <Text
+                                    style={{
+                                        fontSize: textFont,
+                                        color: theme().text,
+                                    }}
+                                >
+                                    Posts:{posts}
+                                </Text>
+                                {/* <Text style={noobProfile().progText}>
                         Answers:{comments}
                         </Text> */}
-                            <Text
-                                style={{
-                                    fontSize: textFont,
-                                    color: theme().text,
-                                }}
-                            >
-                                Answers:{answers}
-                            </Text>
+                                <Text
+                                    style={{
+                                        fontSize: textFont,
+                                        color: theme().text,
+                                    }}
+                                >
+                                    Answers:{answers}
+                                </Text>
+                            </View>
                         </View>
                     </View>
+                    <View style={noobProfile().progressViewBar}>
+                        <ProgressCircle
+                            percent={karma}
+                            // containerStyle={{width}}
+                            radius={screenHeight / 15}
+                            borderWidth={textFont}
+                            color={theme().createBorder}
+                            shadowColor={theme().background}
+                            bgColor={theme().background}
+                        >
+                            <Text style={noobProfile().progressBarText}>
+                                {karma}
+                            </Text>
+                        </ProgressCircle>
+                    </View>
                 </View>
-                <View style={noobProfile().progressViewBar}>
-                    <ProgressCircle
-                        percent={karma}
-                        // containerStyle={{width}}
-                        radius={screenHeight / 15}
-                        borderWidth={textFont}
-                        color={theme().createBorder}
-                        shadowColor={theme().background}
-                        bgColor={theme().background}
+
+                <View
+                    style={{
+                        margin: screenHeight / 30,
+                        display: 'flex',
+                        marginTop: heightPercentageToDP('10%'),
+                        //alignSelf: 'center',
+                        //justifyContent: 'center',
+                        //alignContent: 'center',
+                    }}
+                >
+                    <Title
+                        style={{
+                            fontSize: titleFont,
+                            color: theme().text,
+                            marginBottom: screenHeight / 70,
+                        }}
                     >
-                        <Text style={noobProfile().progressBarText}>
-                            {karma}
-                        </Text>
-                    </ProgressCircle>
+                        About:
+                    </Title>
+                    <Text
+                        style={{
+                            fontSize: textFont,
+                            color: theme().text,
+                        }}
+                    >
+                        shut up you rascal
+                    </Text>
                 </View>
-            </View>
-
-            <View
-                style={{
-                    margin: screenHeight / 30,
-                    display: 'flex',
-                    marginTop:heightPercentageToDP('10%')
-                    //alignSelf: 'center',
-                    //justifyContent: 'center',
-                    //alignContent: 'center',
-                }}
-            >
-                <Title
-                    style={{
-                        fontSize: titleFont,
-                        color: theme().text,
-                        marginBottom: screenHeight / 70,
-                    }}
-                >
-                    About:
-                </Title>
-                <Text
-                    style={{
-                        fontSize: textFont,
-                        color: theme().text,
-                    }}
-                >
-                    shut up you rascal
-                </Text>
-            </View>
-
-
             </View>
             {/* <Button 
                 icon="account-edit" 
@@ -201,9 +190,8 @@ export function ViewUserProfileStackSc({navigation, route}) {
         <ViewUserProfileStack.Navigator
             headerMode="screen"
             screenOptions={{
-                headerShown:true,
+                headerShown: true,
                 headerStyle: {
-                    
                     backgroundColor: theme().headerColor,
                 },
                 headerTitleAlign: 'center',

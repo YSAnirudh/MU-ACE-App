@@ -206,6 +206,12 @@ export const koushikMistake = () => ({
 });
 
 export const styles = () => ({
+    container_1: {
+        backgroundColor: theme().background,
+        paddingHorizontal: 24,
+        paddingVertical: 30,
+        height: screenHeight / 2,
+    },
     buttonStyleLB: {
         borderWidth: 1,
         marginTop: margin10,
@@ -457,8 +463,6 @@ export const drawerStyles = () => ({
     darkText: {
         fontSize: margin15,
         color: theme().text,
-        alignSelf: 'flex-end',
-        marginRight: width15,
     },
     descTitle: {
         color: theme().text,
@@ -554,16 +558,77 @@ export const userProfileStyles = () => ({
         margin: 7,
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop:hp('2%'),
-        marginLeft:wp('3%')
+    },
+    stats: {
+        fontSize: textFont,
+        color: theme().text,
+        fontFamily: 'sans-serif',
+        fontWeight: 'bold',
+    },
+    profileDetails: {
+        borderBottomWidth: 1,
+        borderBottomColor: theme().text,
+        paddingBottom: margin10,
+    },
+    userTitle: {
+        fontSize: titleFont,
+        marginLeft: margin10,
+        color: theme().text,
+        fontFamily: 'sans-serif',
+        fontWeight: 'bold',
+    },
+    userText: {
+        fontSize: textFont,
+        marginLeft: margin10,
+        color: theme().text,
+        fontFamily: 'sans-serif',
+    },
+    emailBox: {
+        flexDirection: 'row',
+        borderBottomWidth: 1,
+        borderBottomColor: theme().text,
+        paddingBottom: margin10,
+    },
+    emailIcon: {
+        size: iconSize,
+        color: theme().iconColor,
+    },
+    myText: {
+        fontSize: textFont,
+        marginLeft: 3,
+        color: theme().text,
+        fontFamily: 'sans-serif',
+    },
+});
+
+export const userProfileStyles2 = () => ({
+    root: {
+        flex: 1,
+        backgroundColor: theme().background,
+    },
+    myCard: {
+        marginTop: 3,
+        padding: margin10,
+        borderColor: theme().text,
+        borderWidth: 1,
+        backgroundColor: theme().textBoxBack,
+    },
+    cardContent: {
+        flexDirection: 'row',
+    },
+    userProfImg: {
+        margin: 7,
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: hp('2%'),
+        marginLeft: wp('3%'),
     },
     stats: {
         fontSize: textFont,
         color: theme().text,
         fontFamily: 'sans-serif',
         //fontWeight: 'bold',
-        marginLeft: wp('12%')
-        
+        marginLeft: wp('12%'),
     },
     profileDetails: {
         // borderBottomWidth: 1,
@@ -586,9 +651,9 @@ export const userProfileStyles = () => ({
     emailBox: {
         flexDirection: 'row',
         //borderBottomWidth: 1,
-       // borderBottomColor: theme().text,
-       fontFamily: 'sans-serif',
-       marginLeft: wp('9%'),
+        // borderBottomColor: theme().text,
+        fontFamily: 'sans-serif',
+        marginLeft: wp('9%'),
         paddingBottom: margin10,
     },
     emailIcon: {
@@ -610,7 +675,7 @@ export const editProfileStyles = () => ({
         //justifyContent: 'center',
         backgroundColor: theme().background,
         //paddingHorizontal: wp('5%'),
-        paddingVertical: hp('10.9%'),
+        paddingVertical: hp('5%'),
     },
     ti: {
         //borderWidth: 2,
@@ -736,14 +801,45 @@ export const noobProfile = () => ({
     },
     progressView: {
         display: 'flex',
-        marginTop:hp('8%'),
         justifyContent: 'center',
     },
     progressViewBar: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
-        marginTop:hp('5%'),
+        paddingTop: screenHeight / 80,
+        marginLeft: screenHeight / 18,
+    },
+    progText: {
+        display: 'flex',
+        justifyContent: 'center',
+        fontSize: screenHeight / 40,
+        color: theme().text,
+        fontWeight: 'bold',
+    },
+    alignProf: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginBottom: -screenHeight / 30,
+    },
+});
+
+export const noobProfile2 = () => ({
+    progressBarText: {
+        fontSize: screenHeight / 40,
+        color: theme().createBorder,
+    },
+    progressView: {
+        display: 'flex',
+        marginTop: hp('8%'),
+        justifyContent: 'center',
+    },
+    progressViewBar: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: hp('5%'),
         paddingTop: screenHeight / 80,
         marginLeft: screenHeight / 18,
     },

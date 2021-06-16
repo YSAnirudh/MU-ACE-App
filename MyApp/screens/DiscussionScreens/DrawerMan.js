@@ -14,16 +14,29 @@ import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../constants/Colors';
 import {ThemeContext, ThemeProvider} from '../../components/Theme';
-import {theme, drawerStyles as styles} from '../../constants/Styles';
+import {
+    theme,
+    drawerStyles as styles,
+    styles as myStyles,
+} from '../../constants/Styles';
 import ProgressCircle from 'react-native-progress-circle';
-import {margin10, margin20, border6, margin35} from '../../constants/Sizes';
+import {
+    margin10,
+    margin20,
+    border6,
+    margin35,
+    iconSize,
+} from '../../constants/Sizes';
 import {BackendURL} from '../../constants/Backend';
+import {screenHeight} from '../../utils/ScreenParams';
 
 export function DrawerMan({
     setIsLogin,
     userId,
     setUserId,
     navigation,
+    isLoading,
+    setIsLoading,
     ...props
 }) {
     const {darkMode, toggleTheme} = React.useContext(ThemeContext);
@@ -33,18 +46,26 @@ export function DrawerMan({
     const [karma, setKarma] = useState(0.0);
     const [posts, setPosts] = useState(0);
     const [answers, setAnswers] = useState(0);
+    const [uid, setUID] = useState(userId);
+    const [status, setStatus] = useState(false);
 
-    const handleGetData = () => {
-        fetch(BackendURL + 'rest/user/get', {
+    const handleUID = (u) => {
+        setStatus(u);
+    };
+
+    const handleUpdateStatus = () => {
+        const userData = {
+            userId: userId,
+            status: !status,
+        };
+        setIsLoading(true);
+        fetch(BackendURL + 'rest/status/update', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                userId: userId,
-            }),
+            body: JSON.stringify(userData),
         })
             .then((res) => {
                 if (res.status === 400) {
-                    console.log(res);
                     return 'Error';
                 } else {
                     return res.json();
@@ -52,7 +73,43 @@ export function DrawerMan({
             })
             .then((res) => {
                 if (res === 'Error') {
-                    console.log('Hallo000000');
+                    alert('Cannot Update Profile');
+                } else {
+                    // console.log(res);
+                    setIsLoading(false);
+                    setStatus(!status);
+                    alert('Updated Your Status');
+                    navigation.closeDrawer();
+                }
+            })
+            .catch((err) => {
+                console.log('errr');
+                console.log(err);
+            });
+    };
+
+    const handleGetData = () => {
+        // handleUID(userId);
+        setIsLoading(true);
+        fetch(BackendURL + 'rest/user/get', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                userId: uid,
+            }),
+        })
+            .then((res) => {
+                if (res.status === 400) {
+                    console.log(res.json());
+                    return 'Error';
+                } else {
+                    return res.json();
+                }
+            })
+            .then((res) => {
+                if (res === 'Error') {
+                    console.log(uid, userId);
+
                     alert('Cannot Get Data');
                 } else {
                     // console.log(res);
@@ -62,17 +119,18 @@ export function DrawerMan({
                     setAnswers(parseInt(res.noOfAnswers));
                     setPosts(parseInt(res.noOfPosts));
                     setKarma(parseFloat(res.karma));
+                    handleUID(res.status);
+                    setIsLoading(false);
                 }
             })
             .catch((err) => {
-                console.log('errr');
                 console.log(err);
             });
     };
 
     useEffect(() => {
         handleGetData();
-    }, []);
+    }, [posts, answers, karma]);
 
     return (
         <View
@@ -84,59 +142,74 @@ export function DrawerMan({
             <DrawerContentScrollView {...props}>
                 <View style={styles().drawerContent}>
                     <View style={styles().profile}>
-                        <TouchableRipple
-                            onPress={() => props.navigation.navigate('Profile')}
-                        >
-                            <View>
-                                <View style={styles().profilePic}>
-                                    <Avatar.Image
-                                        source={require('../../assets/logo2.png')}
-                                    />
-                                    <View>
-                                        <Title style={styles().profileTitle}>
-                                            {firstName}
-                                        </Title>
-                                        <Caption
-                                            style={styles().profileCaption}
-                                        >
-                                            {email}
-                                        </Caption>
-                                    </View>
-                                </View>
-
-                                <View style={styles().progressView}>
-                                    <Image
-                                        source={theme().mecFile}
-                                        style={styles().MECLogo}
-                                    />
-                                    <View style={{marginLeft: margin10}}>
-                                        <Text style={styles().progText}>
-                                            Posts:{posts}
-                                        </Text>
-                                        <Text style={styles().progText}>
-                                            Answers:{answers}
-                                        </Text>
-                                    </View>
-                                    <View style={styles().progressViewBar}>
-                                        <ProgressCircle
-                                            percent={karma}
-                                            // containerStyle={{width}}
-                                            radius={margin20}
-                                            borderWidth={border6}
-                                            color={theme().createBorder}
-                                            shadowColor={theme().background}
-                                            bgColor={theme().background}
-                                        >
-                                            <Text
-                                                style={styles().progressBarText}
+                        {!isLoading ? (
+                            <TouchableRipple
+                                onPress={() => navigation.navigate('Profile')}
+                            >
+                                <View>
+                                    <View style={styles().profilePic}>
+                                        <Avatar.Image
+                                            source={require('../../assets/logo2.png')}
+                                        />
+                                        <View>
+                                            <Title
+                                                style={styles().profileTitle}
                                             >
-                                                {karma}
+                                                {firstName}
+                                            </Title>
+                                            <Caption
+                                                style={styles().profileCaption}
+                                            >
+                                                {email}
+                                            </Caption>
+                                        </View>
+                                    </View>
+
+                                    <View style={styles().progressView}>
+                                        <Image
+                                            source={theme().mecFile}
+                                            style={styles().MECLogo}
+                                        />
+                                        <View style={{marginLeft: margin10}}>
+                                            <Text style={styles().progText}>
+                                                Posts:{posts}
                                             </Text>
-                                        </ProgressCircle>
+                                            <Text style={styles().progText}>
+                                                Answers:{answers}
+                                            </Text>
+                                        </View>
+                                        <View style={styles().progressViewBar}>
+                                            <ProgressCircle
+                                                percent={karma}
+                                                // containerStyle={{width}}
+                                                radius={margin20}
+                                                borderWidth={border6}
+                                                color={theme().createBorder}
+                                                shadowColor={theme().background}
+                                                bgColor={theme().background}
+                                            >
+                                                <Text
+                                                    style={
+                                                        styles().progressBarText
+                                                    }
+                                                >
+                                                    {karma}
+                                                </Text>
+                                            </ProgressCircle>
+                                        </View>
                                     </View>
                                 </View>
-                            </View>
-                        </TouchableRipple>
+                            </TouchableRipple>
+                        ) : (
+                            <Text
+                                style={[
+                                    styles().profileTitle,
+                                    {margin: screenHeight / 12.4},
+                                ]}
+                            >
+                                {'Checking\nfor updates....'}
+                            </Text>
+                        )}
                     </View>
 
                     <Drawer.Section>
@@ -153,7 +226,7 @@ export function DrawerMan({
                                 color: theme().text,
                             }}
                             onPress={() => {
-                                props.navigation.navigate('Forum');
+                                navigation.navigate('Forum');
                             }}
                         />
                         <DrawerItem
@@ -165,7 +238,7 @@ export function DrawerMan({
                                 color: theme().text,
                             }}
                             onPress={() => {
-                                props.navigation.navigate('Create Post');
+                                navigation.navigate('Create Post');
                             }}
                         />
                         <DrawerItem
@@ -181,10 +254,10 @@ export function DrawerMan({
                                 color: theme().text,
                             }}
                             onPress={() => {
-                                props.navigation.navigate('Availability');
+                                navigation.navigate('Availability');
                             }}
                         />
-                        <DrawerItem
+                        {/* <DrawerItem
                             icon={({size, color}) =>
                                 gimmeIcon('log-in', size, theme().iconColor)
                             }
@@ -193,7 +266,7 @@ export function DrawerMan({
                                 color: theme().text,
                             }}
                             onPress={() => {
-                                props.navigation.navigate('Login');
+                                navigation.navigate('Login');
                             }}
                         />
                         <DrawerItem
@@ -205,9 +278,9 @@ export function DrawerMan({
                                 color: theme().text,
                             }}
                             onPress={() => {
-                                props.navigation.navigate('Register');
+                                navigation.navigate('Register');
                             }}
-                        />
+                        /> */}
                     </Drawer.Section>
                     <Drawer.Section>
                         <TouchableRipple onPress={() => toggleTheme()}>
@@ -216,17 +289,46 @@ export function DrawerMan({
                                     Dark Mode
                                     {}
                                 </Text>
-                                <View pointerEvents="none">
-                                    <Switch
-                                        value={darkMode}
-                                        style={
-                                            (styles().darkText,
-                                            {marginRight: margin35})
-                                        }
-                                    />
+                                <View
+                                    pointerEvents="none"
+                                    style={{alignItems: 'flex-start'}}
+                                >
+                                    <Switch value={darkMode} />
                                 </View>
                             </View>
                         </TouchableRipple>
+                        {!isLoading ? (
+                            <TouchableRipple
+                                onPress={() => {
+                                    handleUpdateStatus();
+                                }}
+                            >
+                                <View style={styles().preferences}>
+                                    <Text
+                                        style={
+                                            (styles().darkText,
+                                            {color: status ? 'green' : 'red'})
+                                        }
+                                    >
+                                        {'Your Status\n(Click to toggle)'}
+                                    </Text>
+                                    <Icon
+                                        name="checkmark-circle"
+                                        size={iconSize + 5}
+                                        color={status ? 'green' : 'red'}
+                                        style={{
+                                            marginLeft: 1.5,
+                                        }}
+                                    />
+                                </View>
+                            </TouchableRipple>
+                        ) : (
+                            <Text
+                                style={[styles().profileTitle, {color: 'gold'}]}
+                            >
+                                {'Updating Status....'}
+                            </Text>
+                        )}
                     </Drawer.Section>
                 </View>
             </DrawerContentScrollView>

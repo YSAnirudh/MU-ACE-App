@@ -16,7 +16,13 @@ import Colors from '../constants/Colors';
 const {loginUser} = require('../actions/loginuser');
 const {validateLoginInput} = require('../validation/loginValidation');
 import {koushikBigMistake} from '../constants/Styles';
-const LoginScreen = ({navigation, setIsLogin, setUserId}) => {
+const LoginScreen = ({
+    navigation,
+    setIsLogin,
+    setUserId,
+    isLoading,
+    setIsLoading,
+}) => {
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
     const handleLogin = () => {
@@ -26,7 +32,7 @@ const LoginScreen = ({navigation, setIsLogin, setUserId}) => {
         };
         var validate = validateLoginInput(userData);
         if (validate.isValid) {
-            loginUser(userData, setIsLogin, setUserId);
+            loginUser(userData, setIsLogin, setUserId, isLoading, setIsLoading);
         } else {
             alert(validate.message);
         }

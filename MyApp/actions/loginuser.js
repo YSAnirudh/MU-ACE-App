@@ -1,12 +1,18 @@
 import React from 'react';
 import {BackendURL} from '../constants/Backend';
 
-export const loginUser = (userData, setIsLogin, setUserId) => {
+export const loginUser = (
+    userData,
+    setIsLogin,
+    setUserId,
+    isLoading,
+    setIsLoading
+) => {
     const options = {
         headers: {'Access-Control-Allow-Origin': '*'},
     };
     // console.log(userData);
-
+    setIsLoading(true);
     fetch(BackendURL + 'api/login', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -23,8 +29,10 @@ export const loginUser = (userData, setIsLogin, setUserId) => {
             if (res === 'Error') {
                 alert('Email or Password is Invalid');
             } else {
-                setIsLogin(false);
                 setUserId(res.userId);
+                setTimeout(() => {}, 5000);
+                setIsLoading(false);
+                setIsLogin(false);
             }
         })
         .catch((err) => {

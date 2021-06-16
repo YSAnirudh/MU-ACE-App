@@ -7,7 +7,13 @@ import {ThemeProvider} from '../components/Theme';
 import {NavigationContainer} from '@react-navigation/native';
 const LoginRegStack = createStackNavigator();
 
-function LoginRegStackSc({isLogin, setIsLogin, setUserId}) {
+function LoginRegStackSc({
+    isLogin,
+    setIsLogin,
+    setUserId,
+    isLoading,
+    setIsLoading,
+}) {
     return (
         <NavigationContainer>
             <LoginRegStack.Navigator
@@ -30,29 +36,46 @@ function LoginRegStackSc({isLogin, setIsLogin, setUserId}) {
                             {...props}
                             setIsLogin={setIsLogin}
                             setUserId={setUserId}
+                            isLoading={isLoading}
+                            setIsLoading={setIsLoading}
                         />
                     )}
                 </LoginRegStack.Screen>
 
                 <LoginRegStack.Screen
                     name="Register"
-                    component={Registration}
                     options={{
                         headerTintColor: theme().header,
                     }}
-                />
+                >
+                    {(props) => (
+                        <Registration
+                            {...props}
+                            isLoading={isLoading}
+                            setIsLoading={setIsLoading}
+                        />
+                    )}
+                </LoginRegStack.Screen>
             </LoginRegStack.Navigator>
         </NavigationContainer>
     );
 }
 
-export default function BeforeLogin({isLogin, setIsLogin, setUserId}) {
+export default function BeforeLogin({
+    isLogin,
+    setIsLogin,
+    setUserId,
+    isLoading,
+    setIsLoading,
+}) {
     return (
         <ThemeProvider>
             <LoginRegStackSc
                 isLogin={isLogin}
                 setIsLogin={setIsLogin}
                 setUserId={setUserId}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
             />
         </ThemeProvider>
     );

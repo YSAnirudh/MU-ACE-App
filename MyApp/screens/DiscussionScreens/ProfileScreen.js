@@ -19,8 +19,16 @@ import {
     textFont,
 } from '../../constants/Sizes';
 import {BackendURL} from '../../constants/Backend';
+import LoadingScreen from '../LoadingScreen';
 
-export default function ProfileScreen({navigation, userId}) {
+export default function ProfileScreen({
+    navigation,
+    userId,
+    setUserId,
+    isLoading,
+    setIsLoading,
+    setIsLogin,
+}) {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -30,6 +38,7 @@ export default function ProfileScreen({navigation, userId}) {
     const [answers, setAnswers] = useState(0);
 
     const handleGetData = () => {
+        setIsLoading(true);
         fetch(BackendURL + 'rest/user/get', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -57,6 +66,7 @@ export default function ProfileScreen({navigation, userId}) {
                     setPosts(parseInt(res.noOfPosts));
                     setKarma(parseFloat(res.karma));
                     setDescription(res.description);
+                    setIsLoading(false);
                 }
             })
             .catch((err) => {
@@ -75,161 +85,174 @@ export default function ProfileScreen({navigation, userId}) {
 
     return (
         <View style={profileStyles().root}>
-            <View style={{alignItems: 'center'}}>
-                <Avatar.Image
-                    source={require('../../assets/logo2.png')}
-                    size={profProfPic}
-                />
-                {/* <Image 
+            {!isLoading ? (
+                <>
+                    <View style={{alignItems: 'center'}}>
+                        <Avatar.Image
+                            source={require('../../assets/logo2.png')}
+                            size={profProfPic}
+                        />
+                        {/* <Image 
                      
                     source={require("../../assets/logo2.png")}
                 /> */}
-            </View>
-            <View
-                style={{
-                    alignItems: 'center',
-                    margin: screenHeight / 80,
-                    alignItems: 'center',
-                }}
-            >
-                <View style={profileStyles().emailBox}>
-                    <MaterialIcons
-                        name="email"
-                        size={profIconSize}
-                        color={theme().iconColor}
-                    />
-                    <Text style={profileStyles().myText}>{email}</Text>
-                </View>
-            </View>
-            <View style={noobProfile().alignProf}>
-                <View
-                    style={{
-                        alignItems: 'center',
-                        margin: screenHeight / 80,
-                        alignItems: 'flex-start',
-                    }}
-                >
-                    <Title
+                    </View>
+                    <View
                         style={{
-                            fontSize: titleFont,
-                            color: theme().text,
-                            marginBottom: titleFont,
+                            alignItems: 'center',
+                            margin: screenHeight / 80,
+                            alignItems: 'center',
                         }}
                     >
-                        {firstName}
-                    </Title>
-
-                    <View style={noobProfile().progressView}>
-                        <View style={{alignItems: 'flex-start'}}>
-                            {/* <Text style={noobProfile().progText}>
-                        
-                        </Text> */}
-                            <Text
-                                style={{
-                                    fontSize: textFont,
-                                    color: theme().text,
-                                }}
-                            >
-                                Posts:{posts}
-                            </Text>
-                            {/* <Text style={noobProfile().progText}>
-                        Answers:{comments}
-                        </Text> */}
-                            <Text
-                                style={{
-                                    fontSize: textFont,
-                                    color: theme().text,
-                                }}
-                            >
-                                Answers:{answers}
-                            </Text>
+                        <View style={profileStyles().emailBox}>
+                            <MaterialIcons
+                                name="email"
+                                size={profIconSize}
+                                color={theme().iconColor}
+                            />
+                            <Text style={profileStyles().myText}>{email}</Text>
                         </View>
                     </View>
-                </View>
-                <View style={noobProfile().progressViewBar}>
-                    <ProgressCircle
-                        percent={karma}
-                        // containerStyle={{width}}
-                        radius={screenHeight / 15}
-                        borderWidth={textFont}
-                        color={theme().createBorder}
-                        shadowColor={theme().background}
-                        bgColor={theme().background}
+                    <View style={noobProfile().alignProf}>
+                        <View
+                            style={{
+                                alignItems: 'center',
+                                // margin: screenHeight / 80,
+                                alignItems: 'flex-start',
+                            }}
+                        >
+                            <Title
+                                style={{
+                                    fontSize: titleFont,
+                                    color: theme().text,
+                                    marginBottom: titleFont,
+                                }}
+                            >
+                                {firstName}
+                            </Title>
+
+                            <View style={noobProfile().progressView}>
+                                <View style={{alignItems: 'flex-start'}}>
+                                    {/* <Text style={noobProfile().progText}>
+                        
+                        </Text> */}
+                                    <Text
+                                        style={{
+                                            fontSize: textFont,
+                                            color: theme().text,
+                                        }}
+                                    >
+                                        Posts:{posts}
+                                    </Text>
+                                    {/* <Text style={noobProfile().progText}>
+                        Answers:{comments}
+                        </Text> */}
+                                    <Text
+                                        style={{
+                                            fontSize: textFont,
+                                            color: theme().text,
+                                        }}
+                                    >
+                                        Answers:{answers}
+                                    </Text>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={noobProfile().progressViewBar}>
+                            <ProgressCircle
+                                percent={karma}
+                                // containerStyle={{width}}
+                                radius={screenHeight / 15}
+                                borderWidth={textFont}
+                                color={theme().createBorder}
+                                shadowColor={theme().background}
+                                bgColor={theme().background}
+                            >
+                                <Text style={noobProfile().progressBarText}>
+                                    {karma}
+                                </Text>
+                            </ProgressCircle>
+                        </View>
+                    </View>
+
+                    <View
+                        style={{
+                            margin: screenHeight / 30,
+                            display: 'flex',
+                            alignSelf: 'center',
+                            justifyContent: 'center',
+                            alignContent: 'center',
+                        }}
                     >
-                        <Text style={noobProfile().progressBarText}>
-                            {karma}
+                        <Title
+                            style={{
+                                fontSize: titleFont,
+                                color: theme().text,
+                                marginBottom: screenHeight / 70,
+                            }}
+                        >
+                            About:
+                        </Title>
+                        <Text
+                            style={{
+                                fontSize: textFont,
+                                color: theme().text,
+                            }}
+                        >
+                            {description}
                         </Text>
-                    </ProgressCircle>
-                </View>
-            </View>
+                    </View>
 
-            <View
-                style={{
-                    margin: screenHeight / 30,
-                    display: 'flex',
-                    alignSelf: 'center',
-                    justifyContent: 'center',
-                    alignContent: 'center',
-                }}
-            >
-                <Title
-                    style={{
-                        fontSize: titleFont,
-                        color: theme().text,
-                        marginBottom: screenHeight / 70,
-                    }}
-                >
-                    About:
-                </Title>
-                <Text
-                    style={{
-                        fontSize: textFont,
-                        color: theme().text,
-                    }}
-                >
-                    {description}
-                </Text>
-            </View>
-
-            <Button
-                icon="account-edit"
-                mode="outlined"
-                //theme={pageTheme}
-                color={theme().iconColor}
-                onPress={() =>
-                    navigation.navigate('EditProfile', {
-                        screen: 'Edit Profile',
-                        params: {
-                            Firstname: firstName,
-                            Lastname: lastName,
-                            Description: description,
-                        },
-                    })
-                }
-                style={profileStyles().buttonStyle}
-            >
-                <Text style={profileStyles().buttonText}>Edit Profile</Text>
-            </Button>
-            <Button
-                icon="account-details"
-                mode="outlined"
-                //theme={pageTheme}
-                color={theme().iconColor}
-                onPress={() => navigation.navigate('UserPost')}
-                style={profileStyles().buttonStyle}
-            >
-                <Text style={profileStyles().buttonText}>Your Posts</Text>
-            </Button>
-            <Button
-                icon="logout"
-                mode="outlined"
-                //theme={pageTheme}
-                color={theme().iconColor}
-                onPress={() => {}}
-                style={profileStyles().buttonStyle}
-            >
-                <Text style={profileStyles().buttonText}>Log out</Text>
-            </Button>
+                    <Button
+                        icon="account-edit"
+                        mode="outlined"
+                        //theme={pageTheme}
+                        color={theme().iconColor}
+                        onPress={() =>
+                            navigation.navigate('EditProfile', {
+                                screen: 'Edit Profile',
+                                params: {
+                                    Firstname: firstName,
+                                    Lastname: lastName,
+                                    Description: description,
+                                },
+                            })
+                        }
+                        style={profileStyles().buttonStyle}
+                    >
+                        <Text style={profileStyles().buttonText}>
+                            Edit Profile
+                        </Text>
+                    </Button>
+                    <Button
+                        icon="account-details"
+                        mode="outlined"
+                        //theme={pageTheme}
+                        color={theme().iconColor}
+                        onPress={() => navigation.navigate('UserPost')}
+                        style={profileStyles().buttonStyle}
+                    >
+                        <Text style={profileStyles().buttonText}>
+                            Your Posts
+                        </Text>
+                    </Button>
+                    <Button
+                        icon="logout"
+                        mode="outlined"
+                        //theme={pageTheme}
+                        color={theme().iconColor}
+                        onPress={() => {
+                            setIsLogin(true);
+                            setUserId('');
+                        }}
+                        style={profileStyles().buttonStyle}
+                    >
+                        <Text style={profileStyles().buttonText}>Log out</Text>
+                    </Button>
+                </>
+            ) : (
+                <LoadingScreen />
+            )}
         </View>
     );
 }

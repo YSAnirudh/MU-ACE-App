@@ -1,7 +1,8 @@
 import React from 'react';
 import {BackendURL} from '../constants/Backend';
 
-export const registerUser = (userData, navigation) => {
+export const registerUser = (userData, navigation, isLoading, setIsLoading) => {
+    setIsLoading(true);
     fetch(BackendURL + 'api/signup', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -18,6 +19,7 @@ export const registerUser = (userData, navigation) => {
             if (res === 'Error') {
                 alert('User Already Present');
             } else {
+                setIsLoading(false);
                 navigation.navigate('Login');
                 alert('Registered Successfully!');
             }

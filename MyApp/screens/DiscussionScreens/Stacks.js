@@ -25,7 +25,7 @@ const ProfileStack = createStackNavigator();
 const ViewStack = createStackNavigator();
 const EditProfileStack = createStackNavigator();
 
-export function ViewStackSc({navigation, userId}) {
+export function ViewStackSc({navigation, userId, isLoading, setIsLoading}) {
     return (
         <ViewStack.Navigator
             headerMode="screen"
@@ -49,7 +49,7 @@ export function ViewStackSc({navigation, userId}) {
     );
 }
 
-export function EditProfileSc({navigation, userId}) {
+export function EditProfileSc({navigation, userId, isLoading, setIsLoading}) {
     return (
         <EditProfileStack.Navigator
             headerMode="screen"
@@ -68,13 +68,20 @@ export function EditProfileSc({navigation, userId}) {
                         backButton(navigation, theme().headerColor),
                 }}
             >
-                {(props) => <EditProfile {...props} userId={userId} />}
+                {(props) => (
+                    <EditProfile
+                        {...props}
+                        userId={userId}
+                        isLoading={isLoading}
+                        setIsLoading={setIsLoading}
+                    />
+                )}
             </EditProfileStack.Screen>
         </EditProfileStack.Navigator>
     );
 }
 
-export function ViewUserPostsSc({navigation, userId}) {
+export function ViewUserPostsSc({navigation, userId, isLoading, setIsLoading}) {
     return (
         <ViewPostUserStack.Navigator
             headerMode="screen"
@@ -93,13 +100,20 @@ export function ViewUserPostsSc({navigation, userId}) {
                         backButton(navigation, theme().headerColor),
                 }}
             >
-                {(props) => <ViewUserPostScreen {...props} userId={userId} />}
+                {(props) => (
+                    <ViewUserPostScreen
+                        {...props}
+                        userId={userId}
+                        isLoading={isLoading}
+                        setIsLoading={setIsLoading}
+                    />
+                )}
             </ViewPostUserStack.Screen>
         </ViewPostUserStack.Navigator>
     );
 }
 
-export function ViewPostStackSc({navigation, userId}) {
+export function ViewPostStackSc({navigation, userId, isLoading, setIsLoading}) {
     return (
         <ViewPostStack.Navigator
             headerMode="screen"
@@ -121,13 +135,25 @@ export function ViewPostStackSc({navigation, userId}) {
                         menuButton(navigation, theme().headerColor),
                 }}
             >
-                {(props) => <ViewPostScreen {...props} userId={userId} />}
+                {(props) => (
+                    <ViewPostScreen
+                        {...props}
+                        userId={userId}
+                        isLoading={isLoading}
+                        setIsLoading={setIsLoading}
+                    />
+                )}
             </ViewPostStack.Screen>
         </ViewPostStack.Navigator>
     );
 }
 
-export function CreatePostStackSc({navigation, userId}) {
+export function CreatePostStackSc({
+    navigation,
+    userId,
+    isLoading,
+    setIsLoading,
+}) {
     return (
         <CreatePostStack.Navigator
             headerMode="screen"
@@ -146,13 +172,25 @@ export function CreatePostStackSc({navigation, userId}) {
                         menuButton(navigation, theme().headerColor),
                 }}
             >
-                {(props) => <CreatePostScreen {...props} userId={userId} />}
+                {(props) => (
+                    <CreatePostScreen
+                        {...props}
+                        userId={userId}
+                        isLoading={isLoading}
+                        setIsLoading={setIsLoading}
+                    />
+                )}
             </CreatePostStack.Screen>
         </CreatePostStack.Navigator>
     );
 }
 
-export function AvailabilityStackSc({navigation, userId}) {
+export function AvailabilityStackSc({
+    navigation,
+    userId,
+    isLoading,
+    setIsLoading,
+}) {
     return (
         <AvailabilityStack.Navigator
             headerMode="screen"
@@ -171,13 +209,27 @@ export function AvailabilityStackSc({navigation, userId}) {
                         menuButton(navigation, theme().headerColor),
                 }}
             >
-                {(props) => <AvailabilityScreen {...props} userId={userId} />}
+                {(props) => (
+                    <AvailabilityScreen
+                        {...props}
+                        userId={userId}
+                        isLoading={isLoading}
+                        setIsLoading={setIsLoading}
+                    />
+                )}
             </AvailabilityStack.Screen>
         </AvailabilityStack.Navigator>
     );
 }
 
-export function ProfileStackSc({navigation, userId}) {
+export function ProfileStackSc({
+    navigation,
+    userId,
+    isLoading,
+    setIsLoading,
+    setUserId,
+    setIsLogin,
+}) {
     return (
         <ProfileStack.Navigator
             headerMode="screen"
@@ -196,7 +248,16 @@ export function ProfileStackSc({navigation, userId}) {
                         menuButton(navigation, theme().headerColor),
                 }}
             >
-                {(props) => <ProfileScreen {...props} userId={userId} />}
+                {(props) => (
+                    <ProfileScreen
+                        {...props}
+                        userId={userId}
+                        isLoading={isLoading}
+                        setIsLoading={setIsLoading}
+                        setUserId={setUserId}
+                        setIsLogin={setIsLogin}
+                    />
+                )}
             </ProfileStack.Screen>
         </ProfileStack.Navigator>
     );

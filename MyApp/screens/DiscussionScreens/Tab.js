@@ -13,7 +13,7 @@ import {iconSize} from '../../constants/Sizes';
 
 var MainTab = createMaterialBottomTabNavigator();
 
-function Tabs({userId}) {
+function Tabs({userId, isLoading, setIsLoading, setUserId, setIsLogin}) {
     return (
         <MainTab.Navigator initialRouteName="Forum" activeColor={Colors.Grey}>
             <MainTab.Screen
@@ -31,7 +31,14 @@ function Tabs({userId}) {
                     ),
                 }}
             >
-                {(props) => <ViewPostStackSc {...props} userId={userId} />}
+                {(props) => (
+                    <ViewPostStackSc
+                        {...props}
+                        userId={userId}
+                        isLoading={isLoading}
+                        setIsLoading={setIsLoading}
+                    />
+                )}
             </MainTab.Screen>
             <MainTab.Screen
                 name="Create Post"
@@ -48,7 +55,14 @@ function Tabs({userId}) {
                     ),
                 }}
             >
-                {(props) => <CreatePostStackSc {...props} userId={userId} />}
+                {(props) => (
+                    <CreatePostStackSc
+                        {...props}
+                        userId={userId}
+                        isLoading={isLoading}
+                        setIsLoading={setIsLoading}
+                    />
+                )}
             </MainTab.Screen>
             <MainTab.Screen
                 name="Availability"
@@ -65,7 +79,14 @@ function Tabs({userId}) {
                     ),
                 }}
             >
-                {(props) => <AvailabilityStackSc {...props} userId={userId} />}
+                {(props) => (
+                    <AvailabilityStackSc
+                        {...props}
+                        userId={userId}
+                        isLoading={isLoading}
+                        setIsLoading={setIsLoading}
+                    />
+                )}
             </MainTab.Screen>
             <MainTab.Screen
                 name="Profile"
@@ -82,7 +103,16 @@ function Tabs({userId}) {
                     ),
                 }}
             >
-                {(props) => <ProfileStackSc {...props} userId={userId} />}
+                {(props) => (
+                    <ProfileStackSc
+                        {...props}
+                        userId={userId}
+                        isLoading={isLoading}
+                        setIsLoading={setIsLoading}
+                        setUserId={setUserId}
+                        setIsLogin={setIsLogin}
+                    />
+                )}
             </MainTab.Screen>
         </MainTab.Navigator>
     );

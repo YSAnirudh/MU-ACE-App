@@ -4,6 +4,7 @@ import DiscussionForum from './screens/DiscussionForum';
 import Registration from './screens/Registration';
 import usePersistedState from './persistedState';
 import BeforeLogin from './screens/BeforeLogin';
+import LoadingScreen from './screens/LoadingScreen';
 
 function MainRender() {
     const [isLogin, setIsLogin] = useState(false); //usePersistedState('isLogin', true);
@@ -11,6 +12,7 @@ function MainRender() {
     const setLogin = (bool) => {
         setIsLogin(bool);
     };
+    const [isLoading, setIsLoading] = useState(false);
 
     const setUId = (uId) => {
         setUserId(uId);
@@ -18,11 +20,15 @@ function MainRender() {
     const renderLogin = () => {
         // console.log(userId);
         if (isLogin) {
-            return (
+            return isLoading ? (
+                <LoadingScreen />
+            ) : (
                 <BeforeLogin
                     isLogin={isLogin}
                     setIsLogin={setLogin}
                     setUserId={setUId}
+                    isLoading={isLoading}
+                    setIsLoading={setIsLoading}
                 />
             );
         } else {
@@ -32,6 +38,8 @@ function MainRender() {
                     setIsLogin={setLogin}
                     userId={userId}
                     setUserId={setUId}
+                    isLoading={isLoading}
+                    setIsLoading={setIsLoading}
                 />
             );
         }

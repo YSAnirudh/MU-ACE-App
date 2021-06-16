@@ -13,8 +13,14 @@ import Post from '../../components/Post';
 import {styles, theme} from '../../constants/Styles';
 import {BackendURL} from '../../constants/Backend';
 import PostClickable from '../../components/PostClickable';
+import LoadingScreen from '../LoadingScreen';
 
-export default function ViewUserPostScreen({navigation, userId}) {
+export default function ViewUserPostScreen({
+    navigation,
+    userId,
+    isLoading,
+    setIsLoading,
+}) {
     const [posts, setPosts] = useState([]);
     const [postResponses, setPostResponses] = useState([]);
 
@@ -44,6 +50,7 @@ export default function ViewUserPostScreen({navigation, userId}) {
     };
 
     const handleGetPosts = async () => {
+        setIsLoading(true);
         fetch(BackendURL + 'rest/post/get/user', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -53,7 +60,6 @@ export default function ViewUserPostScreen({navigation, userId}) {
         })
             .then((res) => {
                 if (res.status === 400) {
-                    console.log('Hallo');
                     return 'Error';
                 } else {
                     return res.json();
@@ -64,25 +70,23 @@ export default function ViewUserPostScreen({navigation, userId}) {
                 // console.log(res[0].userId);
                 if (res === 'Error') {
                     alert('Cannot Get Posts');
-                } else if (res === 'Done') {
-                    alert('Not Modified');
                 } else {
-                    console.log('Hallo');
+                    // console.log('Hallo');
                     var p = [];
                     for (var i = 0; i < res.length; i++) {
                         // console.log(res[i]);
-                        p.push(res[i]);
+                        p.push(
+                            <PostClickable
+                                key={Math.random().toString()}
+                                navigation={navigation}
+                                postRes={res[i]}
+                            />
+                        );
                     }
-                    if (res.length !== 0) {
-                        srp(p);
-                    }
+                    setPosts(p);
+                    setIsLoading(false);
                     return p;
                 }
-            })
-            .then((res) => {
-                console.log('Hello');
-                // console.log(postResponses);
-                postRespSet();
             })
             .catch((err) => {
                 console.log(err);
@@ -110,7 +114,7 @@ export default function ViewUserPostScreen({navigation, userId}) {
             <Image source={theme().file} style={styles().backgroundImage} />
 
             <DrawerContentScrollView style={styles().postWrapper}>
-                {viewPosts()}
+                {!isLoading ? viewPosts() : <LoadingScreen />}
             </DrawerContentScrollView>
         </View>
     );

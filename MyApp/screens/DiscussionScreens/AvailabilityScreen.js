@@ -6,14 +6,26 @@ import {styles, theme} from '../../constants/Styles';
 //import { styles } from "../../constants/DiscussionStyles"
 import Status from '../../components/status';
 
-export default function AvailabilityScreen({navigation, userId}) {
+export default function AvailabilityScreen({
+    navigation,
+    userId,
+    isLoading,
+    setIsLoading,
+}) {
+    // setIsLoading(false);
     return (
         <View style={styles().container}>
-            <Image
-                source={require('../../assets/logo3.png')}
-                style={styles().backgroundImage}
+            {/* // <Image
+        //     source={require('../../assets/logo3.png')}
+        //     style={styles().backgroundImage}
+        // /> */}
+
+            <Status
+                {...navigation}
+                userId={userId}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
             />
-            <Status {...navigation} userId={userId} />
         </View>
     );
 }

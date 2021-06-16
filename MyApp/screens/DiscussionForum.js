@@ -20,7 +20,14 @@ import {
 } from './DiscussionScreens/Stacks';
 
 const MyDrawer = createDrawerNavigator();
-function DiscussionForumNoob({isLogin, setIsLogin, userId, setUserId}) {
+function DiscussionForumNoob({
+    isLogin,
+    setIsLogin,
+    userId,
+    setUserId,
+    isLoading,
+    setIsLoading,
+}) {
     return (
         <NavigationContainer>
             <MyDrawer.Navigator
@@ -30,12 +37,23 @@ function DiscussionForumNoob({isLogin, setIsLogin, userId, setUserId}) {
                         userId={userId}
                         setIsLogin={setIsLogin}
                         setUserId={setUserId}
+                        isLoading={isLoading}
+                        setIsLoading={setIsLoading}
                     />
                 )}
                 initialRouteName="Home"
             >
                 <MyDrawer.Screen name="Home">
-                    {(props) => <Tabs {...props} userId={userId} />}
+                    {(props) => (
+                        <Tabs
+                            {...props}
+                            userId={userId}
+                            isLoading={isLoading}
+                            setIsLoading={setIsLoading}
+                            setIsLogin={setIsLogin}
+                            setUserId={setUserId}
+                        />
+                    )}
                 </MyDrawer.Screen>
                 <MyDrawer.Screen
                     name="ViewUserProfile"
@@ -44,7 +62,12 @@ function DiscussionForumNoob({isLogin, setIsLogin, userId, setUserId}) {
                     }}
                 >
                     {(props) => (
-                        <ViewUserProfileStackSc {...props} userId={userId} />
+                        <ViewUserProfileStackSc
+                            {...props}
+                            userId={userId}
+                            isLoading={isLoading}
+                            setIsLoading={setIsLoading}
+                        />
                     )}
                 </MyDrawer.Screen>
                 <MyDrawer.Screen name="EditProfile">
@@ -54,6 +77,8 @@ function DiscussionForumNoob({isLogin, setIsLogin, userId, setUserId}) {
                             userId={userId}
                             setIsLogin={setIsLogin}
                             setUserId={setUserId}
+                            isLoading={isLoading}
+                            setIsLoading={setIsLoading}
                         />
                     )}
                 </MyDrawer.Screen>
@@ -63,6 +88,8 @@ function DiscussionForumNoob({isLogin, setIsLogin, userId, setUserId}) {
                             {...props}
                             userId={userId}
                             setUserId={setUserId}
+                            isLoading={isLoading}
+                            setIsLoading={setIsLoading}
                         />
                     )}
                 </MyDrawer.Screen>
@@ -84,6 +111,8 @@ export default function DiscussionForum({
     setIsLogin,
     userId,
     setUserId,
+    setIsLoading,
+    isLoading,
 }) {
     return (
         <ThemeProvider>
@@ -92,6 +121,8 @@ export default function DiscussionForum({
                 setIsLogin={setIsLogin}
                 userId={userId}
                 setUserId={setUserId}
+                setIsLoading={setIsLoading}
+                isLoading={isLoading}
             />
         </ThemeProvider>
     );
