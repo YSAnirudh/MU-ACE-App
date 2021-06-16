@@ -116,31 +116,10 @@ const Status = ({isLoading, setIsLoading, userId, ...navigation}) => {
                             }
                         })
                         .map((val, key) => {
-                            // return (
-                            //     <View
-                            //         style={availabilityStyles().statusEntry}
-                            //         key={Math.random().toString()}
-                            //     >
-                            //         <View
-                            //             style={{
-                            //                 marginHorizontal: wp('3%'),
-                            //                 marginRight: wp('4%'),
-                            //             }}
-                            //         >
-                            //             <ProfilePicture
-                            //                 isPicture={true}
-                            //                 requirePicture={require('../assets/bulusu.jpeg')}
-                            //                 shape="circle"
-                            //                 width={statusProfPic}
-                            //                 height={statusProfPic}
-                            //             />
-                            //         </View>
-                            //     </View>
-                            // );
                             return userId != val.userId ? (
                                 <View
                                     style={availabilityStyles().statusEntry}
-                                    key={Math.random().toString()}
+                                    key={key}
                                 >
                                     <TouchableRipple
                                         onPress={() => {

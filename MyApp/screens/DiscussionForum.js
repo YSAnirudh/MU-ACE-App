@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {StyleSheet} from 'react-native';
 import Colors from '../constants/Colors';
@@ -27,6 +27,7 @@ function DiscussionForumNoob({
     setUserId,
     isLoading,
     setIsLoading,
+    ...props
 }) {
     return (
         <NavigationContainer>

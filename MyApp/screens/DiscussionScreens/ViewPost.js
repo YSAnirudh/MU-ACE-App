@@ -34,7 +34,6 @@ export default function ViewPost({navigation, route}) {
     };
 
     const handleGetPost = () => {
-        setIsLoading(true);
         let myParams = route.params;
         fetch(BackendURL + 'rest/post/get', {
             method: 'POST',
@@ -112,6 +111,7 @@ export default function ViewPost({navigation, route}) {
     };
 
     const handlePostComment = () => {
+        setIsLoading(true);
         fetch(BackendURL + 'rest/post/comment', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -123,6 +123,7 @@ export default function ViewPost({navigation, route}) {
         })
             .then((res) => {
                 if (res.status === 400) {
+                    // console.log(res);
                     return 'Error';
                 } else {
                     // console.log(res);
@@ -133,6 +134,7 @@ export default function ViewPost({navigation, route}) {
             .then((res) => {
                 if (res === 'Error') {
                     alert('Error Getting Post');
+                    setComm(comm);
                 } else {
                     handleGetPost();
                 }

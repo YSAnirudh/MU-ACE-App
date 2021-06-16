@@ -118,7 +118,7 @@ export function DrawerMan({
                     setEmail(res.email);
                     setAnswers(parseInt(res.noOfAnswers));
                     setPosts(parseInt(res.noOfPosts));
-                    setKarma(parseFloat(res.karma));
+                    setKarma(res.karma);
                     handleUID(res.status);
                     setIsLoading(false);
                 }
