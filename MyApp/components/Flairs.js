@@ -1,48 +1,49 @@
+import { ThemeProvider } from '@react-navigation/native';
 import React, {Component, useState} from 'react';
 import {View, SafeAreaView, StyleSheet, Text} from 'react-native';
-import MultiSelect from 'react-native-multiple-select';
+import CustomMultiPicker from "./MultiPicker";
+import { color } from 'react-native-reanimated';
 import Colors from '../constants/Colors';
-import {flairStyles} from '../constants/Styles';
+import {flairStyles,theme,styles} from '../constants/Styles';
 import {screenHeight} from '../utils/ScreenParams';
 
-const items = [
+const items = 
     {
-        id: '1',
-        name: 'CS',
-    },
-    {
-        id: '2',
-        name: 'M E',
-    },
-    {
-        id: '3',
-        name: 'EE',
-    },
-    {
-        id: '4',
-        name: 'CE',
-    },
-    {
-        id: '5',
-        name: 'H S',
-    },
-    {
-        id: '6',
-        name: 'Math',
-    },
-    {
-        id: '7',
-        name: 'Phy',
-    },
-    {
-        id: '8',
-        name: 'Chem',
-    },
-    {
-        id: '9',
-        name: 'Arts',
-    },
-];
+       
+        1: 'CS',
+    
+    
+    
+        2: 'ME',
+    
+    
+    
+        3: 'EE',
+    
+    
+    
+        4: 'CE',
+    
+    
+    
+        5: 'HS',
+    
+    
+    
+        6: 'Math',
+    
+    
+    
+        7: 'Phy',
+    
+    
+        
+        8: 'Chem',
+    
+    
+    
+        9: 'Arts',
+    }
 
 //// SHOULD UPDATE CSS
 
@@ -52,28 +53,23 @@ const Flairs = ({selectedItems, onSelectedItemsChange}) => {
         <SafeAreaView style={flairStyles().container}>
             <View style={flairStyles().container}>
                 {/* <Text style={flairStyles().titleText}>Flairs</Text> */}
-                <MultiSelect
-                    hideTags
-                    items={items}
-                    uniqueKey="id"
-                    onSelectedItemsChange={onSelectedItemsChange}
-                    selectedItems={selectedItems}
-                    selectText="Choose..."
-                    searchInputPlaceholderText="Search..."
-                    onChangeInput={(text) => console.log(text)}
-                    tagRemoveIconColor={Colors.Gold}
-                    tagBorderColor={Colors.Gold}
-                    tagTextColor="blue"
-                    selectedItemTextColor={Colors.Gold}
-                    selectedItemIconColor={Colors.Gold}
-                    itemTextColor={Colors.Red}
-                    displayKey="name"
-                    searchInputStyle={{color: Colors.DarkGrey}}
-                    hideSubmitButton
-                    searchInputStyle={{color: Colors.DarkGrey}}
-                    styleDropdownMenuSubsection={flairStyles().dropMenu}
-                    styleItemsContainer={flairStyles().dropMenu}
-                    styleRowList={flairStyles().dropMenu}
+                <CustomMultiPicker
+                options={items}
+                search={false} // should show search bar?
+                multiple={true} //
+                placeholder={"Search"}
+                placeholderTextColor={theme().text}
+                returnValue={"label"} // label or value
+                callback={(res)=>{ console.log(res) }} // callback, array of selected items
+                rowBackgroundColor={theme().postColor}
+                labelStyle={{color:"#eee"}}    
+                rowRadius={5}
+                iconColor={theme().iconColor}
+                iconSize={30}
+                selectedIconName={"ios-checkmark-circle-outline"}
+                unselectedIconName={"ios-radio-button-off-outline"}
+                
+                selected={[1,2]} // list of options which are selected by default
                 />
             </View>
         </SafeAreaView>
