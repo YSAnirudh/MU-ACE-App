@@ -1,12 +1,13 @@
-import React, {Component, useState} from 'react';
-import TextFieldPs from '../../components/TextFieldPs';
-import CreatePostButton from '../../components/CreatePostButton';
-import LoginButton from '../../components/LoginButton';
-import Flairs from '../../components/Flairs';
-import {DrawerContentScrollView} from '@react-navigation/drawer';
-import {validateCreatePostInput} from '../../validation/createPostValidation';
-import {SafeAreaView} from 'react-native';
+import React, { Component, useState } from "react";
+import TextFieldPs from "../../components/TextFieldPs";
+import CreatePostButton from "../../components/CreatePostButton";
+import LoginButton from "../../components/LoginButton";
+import Flairs from "../../components/Flairs";
+import { DrawerContentScrollView } from "@react-navigation/drawer";
+import { validateCreatePostInput } from "../../validation/createPostValidation";
+import { SafeAreaView } from "react-native";
 import {
+    Modal,
     StyleSheet,
     Text,
     View,
@@ -15,14 +16,15 @@ import {
     KeyboardAvoidingView,
     Button,
     Image,
-} from 'react-native';
-import {ScrollView} from 'react-native';
-import {createPostStyles, styles} from '../../constants/Styles';
-import {screenHeight} from '../../utils/ScreenParams';
+    Pressable,
+} from "react-native";
+import { ScrollView } from "react-native";
+import { createPostStyles, styles } from "../../constants/Styles";
+import { screenHeight } from "../../utils/ScreenParams";
 
-export default function CreatePostScreen({navigation}) {
-    const [title, setTitle] = useState('');
-    const [desc, setDesc] = useState('');
+export default function CreatePostScreen({ navigation }) {
+    const [title, setTitle] = useState("");
+    const [desc, setDesc] = useState("");
     const [tagActive, setActive] = useState(false);
 
     const [selectedItems, setSelectedItems] = useState([]);
@@ -44,10 +46,13 @@ export default function CreatePostScreen({navigation}) {
         if (validate.isValid) {
             console.log(userData);
         } else {
-            alert(validate.message);
+            setAlertVisible(true);
+            setAlertMessage(validate.message);
         }
     };
+    const [alertVisible, setAlertVisible] = useState(false);
 
+    const [alertMessage, setAlertMessage] = useState("");
     return (
         // <ScrollView>
         // <KeyboardAvoidingView
@@ -91,7 +96,7 @@ export default function CreatePostScreen({navigation}) {
                             <CreatePostButton
                                 bname="Upload Image"
                                 onPress={() => {
-                                    Alert.alert('Post Clicked');
+                                    Alert.alert("Post Clicked");
                                 }}
                             ></CreatePostButton>
                             <CreatePostButton
@@ -107,7 +112,7 @@ export default function CreatePostScreen({navigation}) {
                         <CreatePostButton
                             bname="Upload Image"
                             onPress={() => {
-                                Alert.alert('Post Clicked');
+                                Alert.alert("Post Clicked");
                             }}
                         ></CreatePostButton>
                         <CreatePostButton
@@ -132,6 +137,10 @@ export default function CreatePostScreen({navigation}) {
                             }}
                         ></CreatePostButton>
                     </View> */}
+                <Alert
+                    alertVisible={alertVisible}
+                    alertMessage={alertMessage}
+                />
 
                 <LoginButton
                     bname="Post"
