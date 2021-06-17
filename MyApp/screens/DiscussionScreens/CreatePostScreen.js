@@ -7,6 +7,7 @@ import {DrawerContentScrollView} from '@react-navigation/drawer';
 import {validateCreatePostInput} from '../../validation/createPostValidation';
 import {SafeAreaView} from 'react-native';
 import {
+    Modal,
     StyleSheet,
     Text,
     View,
@@ -15,12 +16,14 @@ import {
     KeyboardAvoidingView,
     Button,
     Image,
+    Pressable,
 } from 'react-native';
 import {ScrollView} from 'react-native';
 import {createPostStyles, styles} from '../../constants/Styles';
 import {screenHeight} from '../../utils/ScreenParams';
 import {BackendURL} from '../../constants/Backend';
 import LoadingScreen from '../LoadingScreen';
+import AlertStyled from '../../components/Alert';
 
 export default function CreatePostScreen({
     navigation,
@@ -39,6 +42,11 @@ export default function CreatePostScreen({
     const onSelectedItemsChange = (selectedItems) => {
         // Set Selected Items
         setSelectedItems(selectedItems);
+    };
+
+    const setAlert = (bool, message) => {
+        setAlertVisible(bool);
+        setAlertMessage(message);
     };
 
     const handleCreatePost = () => {
@@ -78,9 +86,12 @@ export default function CreatePostScreen({
                     console.log(err);
                 });
         } else {
-            alert(validate.message);
+            setAlert(!alertVisible, validate.message);
         }
     };
+    const [alertVisible, setAlertVisible] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
+
     return (
         <SafeAreaView
             style={createPostStyles().container3}
@@ -147,6 +158,15 @@ export default function CreatePostScreen({
                                 }}
                             ></CreatePostButton>
                         </View>
+                    )}
+                    {alertVisible ? (
+                        <AlertStyled
+                            alertVisible={true}
+                            alertMessage={alertMessage}
+                            setAlertVisible={setAlertVisible}
+                        />
+                    ) : (
+                        <></>
                     )}
 
                     <LoginButton

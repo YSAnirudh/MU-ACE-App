@@ -283,52 +283,81 @@ export function DrawerMan({
                         /> */}
                     </Drawer.Section>
                     <Drawer.Section>
-                        <TouchableRipple onPress={() => toggleTheme()}>
-                            <View style={styles().preferences}>
-                                <Text style={styles().darkText}>
-                                    Dark Mode
-                                    {}
-                                </Text>
-                                <View
-                                    pointerEvents="none"
-                                    style={{alignItems: 'flex-start'}}
+                        <View
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                marginRight: 10,
+                            }}
+                        >
+                            {!isLoading ? (
+                                <TouchableRipple
+                                    onPress={() => {
+                                        handleUpdateStatus();
+                                    }}
                                 >
-                                    <Switch value={darkMode} />
-                                </View>
-                            </View>
-                        </TouchableRipple>
-                        {!isLoading ? (
-                            <TouchableRipple
-                                onPress={() => {
-                                    handleUpdateStatus();
-                                }}
-                            >
-                                <View style={styles().preferences}>
-                                    <Text
-                                        style={
-                                            (styles().darkText,
-                                            {color: status ? 'green' : 'red'})
-                                        }
-                                    >
-                                        {'Your Status\n(Click to toggle)'}
+                                    <View style={styles().preferences}>
+                                        <Text
+                                            style={
+                                                (styles().darkText,
+                                                {
+                                                    color: status
+                                                        ? 'green'
+                                                        : 'red',
+                                                })
+                                            }
+                                        >
+                                            {'Your Status\n(Click to toggle)'}
+                                        </Text>
+                                        <Icon
+                                            name={
+                                                !status
+                                                    ? 'close-circle-outline'
+                                                    : 'checkmark-circle'
+                                            }
+                                            size={iconSize + 5}
+                                            color={status ? 'green' : 'red'}
+                                            style={{
+                                                marginLeft: 1.5,
+                                            }}
+                                        />
+                                    </View>
+                                </TouchableRipple>
+                            ) : (
+                                <Text
+                                    style={[
+                                        styles().profileTitle,
+                                        {color: 'gold'},
+                                    ]}
+                                >
+                                    {'Updating Status....'}
+                                </Text>
+                            )}
+                            <TouchableRipple onPress={() => toggleTheme()}>
+                                <View
+                                    style={[
+                                        styles().preferences,
+                                        {
+                                            // position: 'absolute',
+                                            flexGrow: 2,
+                                            display: 'flex',
+                                            alignSelf: 'center',
+                                        },
+                                    ]}
+                                >
+                                    <Text style={styles().darkText}>
+                                        Dark Mode
                                     </Text>
-                                    <Icon
-                                        name="checkmark-circle"
-                                        size={iconSize + 5}
-                                        color={status ? 'green' : 'red'}
-                                        style={{
-                                            marginLeft: 1.5,
-                                        }}
-                                    />
+                                    <View
+                                        pointerEvents="none"
+                                        style={{alignItems: 'flex-start'}}
+                                    >
+                                        <Switch value={darkMode} />
+                                    </View>
                                 </View>
                             </TouchableRipple>
-                        ) : (
-                            <Text
-                                style={[styles().profileTitle, {color: 'gold'}]}
-                            >
-                                {'Updating Status....'}
-                            </Text>
-                        )}
+                        </View>
                     </Drawer.Section>
                 </View>
             </DrawerContentScrollView>
