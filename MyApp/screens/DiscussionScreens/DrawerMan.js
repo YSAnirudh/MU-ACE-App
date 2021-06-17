@@ -180,7 +180,9 @@ export function DrawerMan({
                                         </View>
                                         <View style={styles().progressViewBar}>
                                             <ProgressCircle
-                                                percent={karma}
+                                                percent={parseFloat(
+                                                    karma
+                                                ).toFixed(1)}
                                                 // containerStyle={{width}}
                                                 radius={margin20}
                                                 borderWidth={border6}

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {createPostStyles,styles} from '../constants/Styles';
+import {createPostStyles, styles} from '../constants/Styles';
 import {Modal, Text, View, Alert, Pressable} from 'react-native';
 import Flairs from './Flairs';
 import CreatePostButton from './CreatePostButton';
@@ -20,17 +20,17 @@ const AlertFlair = ({alertVisible, alertMessage, setAlertVisible}) => {
                 }}
             >
                 <View style={createPostStyles().flairAlertBox}>
-                <View style={createPostStyles().flairView}>
-                <View>
-                  <Text style={createPostStyles().textFieldTitle}>Options</Text>
-                  </View>
-                    <Flairs
-                        selectedItems={selectedItems}
-                                    onSelectedItemsChange={
-                                        onSelectedItemsChange
-                                    }
-                                />
-                     <Pressable
+                    <View style={createPostStyles().flairView}>
+                        <View>
+                            <Text style={createPostStyles().textFieldTitle}>
+                                Options
+                            </Text>
+                        </View>
+                        <Flairs
+                            selectedItems={selectedItems}
+                            onSelectedItemsChange={onSelectedItemsChange}
+                        />
+                        <Pressable
                             style={[
                                 createPostStyles().button,
                                 createPostStyles().buttonClose,
@@ -39,9 +39,8 @@ const AlertFlair = ({alertVisible, alertMessage, setAlertVisible}) => {
                         >
                             <Text style={createPostStyles().textStyle}>Ok</Text>
                         </Pressable>
-                       
                     </View>
-                    </View> 
+                </View>
             </Modal>
         </View>
     );

@@ -27,19 +27,17 @@ export const validateEditProfileInput = (userData) => {
     }
 
     // Password checks
-    if (Validator.isEmpty(userData.password)) {
-        errors.password = 'Password field is required\n';
-    } else if (!Validator.isLength(userData.password, {min: 8, max: 100})) {
-        errors.password = 'Password must be at least 8 characters\n';
-    }
+    if (!Validator.isEmpty(userData.password)) {
+        if (!Validator.isLength(userData.password, {min: 8, max: 100})) {
+            errors.password = 'Password must be at least 8 characters\n';
+        }
+        if (Validator.isEmpty(userData.confirmPassword)) {
+            errors.confirmPassword = 'Confirm Password field is required\n';
+        }
 
-    // Password checks
-    if (Validator.isEmpty(userData.confirmPassword)) {
-        errors.confirmPassword = 'Confirm Password field is required\n';
-    }
-
-    if (!Validator.equals(userData.password, userData.confirmPassword)) {
-        errors.confirmPassword = 'Passwords Should Match\n';
+        if (!Validator.equals(userData.password, userData.confirmPassword)) {
+            errors.confirmPassword = 'Passwords Should Match\n';
+        }
     }
     var msg1 = !isEmpty(errors.firstName) ? errors.firstName : '';
     var msg2 = !isEmpty(errors.lastName) ? errors.lastName : '';

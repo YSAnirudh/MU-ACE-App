@@ -62,7 +62,6 @@ const Status = ({isLoading, setIsLoading, userId, ...navigation}) => {
                     alert('Cannot Get Posts');
                 } else {
                     //console.log(res);
-                    setStatusData(res);
                     setStatusDataHook(res);
                     setIsLoading(false);
                 }
