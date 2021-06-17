@@ -20,11 +20,18 @@ import {
 import {useState} from 'react';
 import {BackendURL} from '../constants/Backend';
 import LoadingScreen from '../screens/LoadingScreen';
+import DisplayStatus from './DisplayStatus';
 
 const Status = ({isLoading, setIsLoading, userId, ...navigation}) => {
-    const [data, setstatusData] = useState([]);
-    const setStatusData = (arr) => {
-        setstatusData(arr);
+    const [dataHook, setDataHook] = useState([]);
+
+    const setStatusDataHook = (res) => {
+        let array = [];
+        for (let i = 0; i < res.length; i++) {
+            //console.log(res[i]);
+            array.push(<DisplayStatus val={res[i]} key={i} />);
+        }
+        setDataHook(array);
     };
 
     useEffect(() => {
@@ -54,7 +61,9 @@ const Status = ({isLoading, setIsLoading, userId, ...navigation}) => {
                 if (res === 'Error') {
                     alert('Cannot Get Posts');
                 } else {
+                    //console.log(res);
                     setStatusData(res);
+                    setStatusDataHook(res);
                     setIsLoading(false);
                 }
             })
@@ -103,123 +112,7 @@ const Status = ({isLoading, setIsLoading, userId, ...navigation}) => {
             </View>
             <ScrollView style={{paddingBottom: 0}}>
                 {!isLoading ? (
-                    data
-                        .filter((val) => {
-                            if (searchQuery == '') {
-                                return val;
-                            } else if (
-                                val.firstName
-                                    .toLowerCase()
-                                    .includes(searchQuery.toLowerCase())
-                            ) {
-                                return val;
-                            }
-                        })
-                        .map((val, key) => {
-                            let key1 = Math.random().toString();
-                            return userId != val.userId ? (
-                                <View
-                                    style={availabilityStyles().statusEntry}
-                                    key={key1}
-                                >
-                                    <TouchableRipple
-                                        onPress={() => {
-                                            navigation.navigate(
-                                                // Need more details from here when we create database for user
-                                                'ViewUserProfile',
-                                                {
-                                                    userId: val.userId,
-                                                }
-                                            );
-                                        }}
-                                    >
-                                        <View
-                                            style={
-                                                availabilityStyles().statusEntry
-                                            }
-                                        >
-                                            <View
-                                                style={{
-                                                    marginHorizontal: wp('3%'),
-                                                    marginRight: wp('4%'),
-                                                }}
-                                            >
-                                                <ProfilePicture
-                                                    isPicture={true}
-                                                    requirePicture={require('../assets/bulusu.jpeg')}
-                                                    shape="circle"
-                                                    width={statusProfPic}
-                                                    height={statusProfPic}
-                                                />
-                                            </View>
-                                            <View
-                                                style={
-                                                    availabilityStyles()
-                                                        .personName
-                                                }
-                                            >
-                                                <Text
-                                                    style={{
-                                                        fontSize: textFont,
-                                                        fontWeight: '400',
-                                                        fontFamily: 'Roboto',
-                                                        marginRight: margin20,
-                                                        paddingLeft: wp('2%'),
-                                                        color: theme().text,
-                                                    }}
-                                                    textBreakStrategy={'simple'}
-                                                >
-                                                    {val.firstName}
-                                                </Text>
-                                            </View>
-                                            <View
-                                                style={
-                                                    availabilityStyles()
-                                                        .personDepartment
-                                                }
-                                            >
-                                                <Text
-                                                    style={{
-                                                        fontSize: font12,
-                                                        fontWeight: '400',
-                                                        fontFamily: 'Roboto',
-                                                        color: theme().text,
-                                                        textAlign: 'center',
-                                                    }}
-                                                    textBreakStrategy={'simple'}
-                                                >
-                                                    {val.department}
-                                                </Text>
-                                            </View>
-                                            <View>
-                                                {/* <View
-                                                    style={
-                                                        availabilityStyles(
-                                                            val.status
-                                                        ).statusIcon
-                                                    }
-                                                > */}
-                                                <Icon
-                                                    name="checkmark-circle"
-                                                    size={iconSize + 5}
-                                                    color={
-                                                        val.status
-                                                            ? 'green'
-                                                            : 'red'
-                                                    }
-                                                    style={{
-                                                        marginLeft: 1.5,
-                                                    }}
-                                                />
-                                                {/* </View> */}
-                                            </View>
-                                        </View>
-                                    </TouchableRipple>
-                                </View>
-                            ) : (
-                                <></>
-                            );
-                        })
+                    dataHook
                 ) : (
                     <>
                         <LoadingScreen />
