@@ -2,7 +2,7 @@ import React, {Component, useState} from 'react';
 import TextFieldPs from '../../components/TextFieldPs';
 import CreatePostButton from '../../components/CreatePostButton';
 import LoginButton from '../../components/LoginButton';
-import Flairs from '../../components/Flairs';
+import AlertFlair from '../../components/AlertFlair';
 import {DrawerContentScrollView} from '@react-navigation/drawer';
 import {validateCreatePostInput} from '../../validation/createPostValidation';
 import {SafeAreaView} from 'react-native';
@@ -24,6 +24,7 @@ import {screenHeight} from '../../utils/ScreenParams';
 import {BackendURL} from '../../constants/Backend';
 import LoadingScreen from '../LoadingScreen';
 import AlertStyled from '../../components/Alert';
+import { set } from 'react-native-reanimated';
 
 export default function CreatePostScreen({
     navigation,
@@ -47,6 +48,11 @@ export default function CreatePostScreen({
     const setAlert = (bool, message) => {
         setAlertVisible(bool);
         setAlertMessage(message);
+    };
+
+    const setFlair = (bool, message) => {
+        setFlairVis(bool);
+        setFlairMessage(message);
     };
 
     const handleCreatePost = () => {
@@ -91,7 +97,7 @@ export default function CreatePostScreen({
     };
     const [alertVisible, setAlertVisible] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
-
+    const [flairAlertVis,setFlairVis]= useState(true);
     return (
         <SafeAreaView
             style={createPostStyles().container3}
@@ -120,14 +126,13 @@ export default function CreatePostScreen({
                     ></TextFieldPs>
                     {tagActive ? (
                         <>
-                            <View style={createPostStyles().flairC}>
-                                <Flairs
-                                    selectedItems={selectedItems}
-                                    onSelectedItemsChange={
-                                        onSelectedItemsChange
-                                    }
-                                />
-                            </View>
+                        {flairAlertVis?(
+                            //<View style={createPostStyles().flairC}>
+                                <AlertFlair alertVisible={true} setAlertVisible={setFlairVis} alertMessage={alertMessage}></AlertFlair>
+                            //</View>
+                        ):(
+                            <></>
+                        )}
                             <View style={createPostStyles().buttonContainer}>
                                 <CreatePostButton
                                     bname="Upload Image"
@@ -155,6 +160,7 @@ export default function CreatePostScreen({
                                 bname="Add Tags"
                                 onPress={() => {
                                     setActive(true);
+                                    setFlairVis(true)
                                 }}
                             ></CreatePostButton>
                         </View>

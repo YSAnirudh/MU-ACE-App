@@ -734,6 +734,30 @@ export const createPostStyles = () => ({
         alignItems: "center",
         // marginTop: 22
     },
+    flairAlertBox: {
+        flex: 1,
+        width:"100%",
+        height:"100%",
+        justifyContent: 'center',
+        alignItems: 'center',
+        
+    },
+    flairView: {
+        //margin: 20,
+        flex:1,
+        backgroundColor: theme().postColor,
+        borderRadius: 20,
+        width:"100%",
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        
+    },
     modalView: {
         margin: 20,
         backgroundColor: theme().modalBox,
@@ -931,7 +955,8 @@ export const noobProfile2 = () => ({
 export const flairStyles = () => ({
     container: {
         flex: 1,
-        backgroundColor: Colors.Grey,
+        backgroundColor: theme().background,
+        color:theme().text,
         padding: margin5,
         width: "100%",
         // zIndex: margin10,
