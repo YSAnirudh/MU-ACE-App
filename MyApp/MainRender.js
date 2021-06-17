@@ -8,7 +8,7 @@ import LoadingScreen from './screens/LoadingScreen';
 
 function MainRender() {
     const [isLogin, setIsLogin] = useState(false); //usePersistedState('isLogin', true);
-    const [userId, setUserId] = useState('60c5dd659465cf0ce4497c08');
+    const [userId, setUserId] = useState('60cb2b96f6c7a700228126f6'); //'60c5dd659465cf0ce4497c08'
     const setLogin = (bool) => {
         setIsLogin(bool);
     };
@@ -21,7 +21,8 @@ function MainRender() {
         // console.log(userId);
         if (isLogin) {
             return isLoading ? (
-                <LoadingScreen />
+                // <LoadingScreen />
+                <></>
             ) : (
                 <BeforeLogin
                     isLogin={isLogin}

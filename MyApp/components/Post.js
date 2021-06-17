@@ -5,7 +5,7 @@ import {Text, Avatar, Title, Caption} from 'react-native-paper';
 import {styles, theme, drawerStyles} from '../constants/Styles';
 import {postImageHeight} from '../constants/Sizes';
 
-const Post = ({userName, userEmail, description, title}) => {
+const Post = ({userName, userEmail, description, title, postOpen}) => {
     const hasImage = true;
     return (
         <View style={styles().post}>
@@ -22,10 +22,16 @@ const Post = ({userName, userEmail, description, title}) => {
                 </View>
             </View>
             <View>
-                <Caption style={drawerStyles().descTitle}>
+                {/* <Caption style={drawerStyles().descTitle}>
                     BRIEF DESCRIPTION -{' '}
-                </Caption>
-                <Text style={drawerStyles().description}>{description}</Text>
+                </Caption> */}
+                <Text style={drawerStyles().description}>
+                    {postOpen
+                        ? description
+                        : description.length >= 30
+                        ? description.substring(0, 30) + '...'
+                        : description}
+                </Text>
             </View>
             <View>
                 {hasImage && (

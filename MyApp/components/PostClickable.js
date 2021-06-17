@@ -2,7 +2,7 @@ import React from 'react';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Post from './Post';
 
-export default function PostClickable({navigation, postRes}) {
+export default function PostClickable({navigation, postRes, postOpen}) {
     return (
         <TouchableOpacity
             onPress={() => {
@@ -32,6 +32,7 @@ export default function PostClickable({navigation, postRes}) {
                 description={postRes.description}
                 tags={postRes.tags}
                 title={postRes.theTitle}
+                postOpen={postOpen}
             />
         </TouchableOpacity>
     );

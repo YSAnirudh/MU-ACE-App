@@ -116,10 +116,11 @@ const Status = ({isLoading, setIsLoading, userId, ...navigation}) => {
                             }
                         })
                         .map((val, key) => {
+                            let key1 = Math.random().toString();
                             return userId != val.userId ? (
                                 <View
                                     style={availabilityStyles().statusEntry}
-                                    key={key}
+                                    key={key1}
                                 >
                                     <TouchableRipple
                                         onPress={() => {

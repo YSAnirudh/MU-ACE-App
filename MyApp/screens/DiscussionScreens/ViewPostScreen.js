@@ -56,6 +56,7 @@ export default function ViewPostScreen({
                                 key={Math.random().toString()}
                                 navigation={navigation}
                                 postRes={res[i]}
+                                postOpen={false}
                             />
                         );
                     }
@@ -86,7 +87,7 @@ export default function ViewPostScreen({
         if (posts.length == 0) {
             return <Text style={styles().buttonText}>No Posts Found</Text>;
         } else {
-            return posts;
+            return posts.reverse();
         }
     };
 

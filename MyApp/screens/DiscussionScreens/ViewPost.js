@@ -35,6 +35,7 @@ export default function ViewPost({navigation, route}) {
 
     const handleGetPost = () => {
         let myParams = route.params;
+        setIsLoading(true);
         fetch(BackendURL + 'rest/post/get', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -66,8 +67,10 @@ export default function ViewPost({navigation, route}) {
                             description={res.description}
                             tags={res.tags}
                             title={res.theTitle}
+                            postOpen={true}
                         />
                     );
+                    setIsLoading(false);
                 }
             })
             .then((res) => {
@@ -144,33 +147,33 @@ export default function ViewPost({navigation, route}) {
             });
     };
 
-    return (
+    return !isLoading ? (
         <View style={styles().container}>
             {/* <Image source={theme().file} style={styles().backgroundImage} /> */}
-            {!isLoading ? (
-                <DrawerContentScrollView style={styles().postWrapper}>
-                    {posts}
+            <DrawerContentScrollView style={styles().postWrapper}>
+                {posts}
 
-                    <AddCommentField
-                        placeholder="Add a comment..."
-                        autoCorrect={true}
-                        onChangeText={(comm) => {
-                            setComm(comm);
-                        }}
-                        onClick={() => {
-                            handlePostComment();
-                            setC();
-                        }}
-                        multiline={true}
-                        style={createPostStyles().textFieldComment}
-                        numberOfLines={4}
-                    ></AddCommentField>
-                    {viewComments()}
-                </DrawerContentScrollView>
-            ) : (
-                <LoadingScreen />
-                // <></>
-            )}
+                <AddCommentField
+                    placeholder="Add a comment..."
+                    autoCorrect={true}
+                    onChangeText={(comm) => {
+                        setComm(comm);
+                    }}
+                    onClick={() => {
+                        handlePostComment();
+                        setC();
+                    }}
+                    multiline={true}
+                    style={createPostStyles().textFieldComment}
+                    numberOfLines={4}
+                ></AddCommentField>
+                {viewComments()}
+            </DrawerContentScrollView>
         </View>
+    ) : (
+        <View style={styles().container}>
+            <LoadingScreen />
+        </View>
+        // <></>
     );
 }
