@@ -218,10 +218,12 @@ export const koushikMistake = () => ({
 
 export const styles = () => ({
     container_1: {
+        flex:1,
         backgroundColor: theme().background,
         paddingHorizontal: 24,
         paddingVertical: 30,
-        height: screenHeight / 2,
+        height: '100%',
+        width:'100%'
     },
     buttonStyleLB: {
         borderWidth: 1,
