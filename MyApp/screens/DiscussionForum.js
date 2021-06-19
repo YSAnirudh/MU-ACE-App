@@ -7,7 +7,6 @@ import Tabs from './DiscussionScreens/Tab';
 import SettingsScreen from './SettingsScreen';
 import LoginScreen from '../screens/LoginScreen';
 import Registration from '../screens/Registration';
-import {ViewUserProfileStackSc} from './ViewUserProfileScreen';
 import {DrawerMan} from './DiscussionScreens/DrawerMan';
 import {ThemeProvider} from '../components/Theme';
 import ViewUserProfileScreen from './ViewUserProfileScreen';
@@ -17,6 +16,7 @@ import {
     EditProfileSc,
     ViewStackSc,
     ViewUserPostsSc,
+    ViewUserProfileStackSc,
 } from './DiscussionScreens/Stacks';
 
 const MyDrawer = createDrawerNavigator();

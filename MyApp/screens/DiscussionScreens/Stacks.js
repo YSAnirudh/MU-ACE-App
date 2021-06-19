@@ -16,6 +16,7 @@ import ViewPost from './ViewPost';
 import ViewUserPostScreen from './ViewUserPosts';
 import {useState, useEffect} from 'react';
 import {BackendURL} from '../../constants/Backend';
+import ViewUserProfileScreen from '../ViewUserProfileScreen';
 
 const CreatePostStack = createStackNavigator();
 const ViewPostStack = createStackNavigator();
@@ -24,6 +25,50 @@ const AvailabilityStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
 const ViewStack = createStackNavigator();
 const EditProfileStack = createStackNavigator();
+
+ViewUserProfileStack = createStackNavigator();
+
+export function ViewUserProfileStackSc({
+    navigation,
+    route,
+    isLoading,
+    setIsLoading,
+}) {
+    const [name, setName] = useState('');
+    return (
+        <ViewUserProfileStack.Navigator
+            headerMode="screen"
+            screenOptions={{
+                headerShown: true,
+                headerStyle: {
+                    backgroundColor: theme().headerColor,
+                },
+                headerTitleAlign: 'center',
+            }}
+        >
+            <ViewUserProfileStack.Screen
+                name="User Profile"
+                options={() => ({
+                    headerTintColor: theme().header,
+                    headerLeft: () =>
+                        backButton(navigation, theme().headerColor),
+                    headerRight: () =>
+                        forumButton(navigation, theme().headerColor),
+                })}
+            >
+                {(props) => (
+                    <ViewUserProfileScreen
+                        {...props}
+                        myRoute={route}
+                        isLoading={isLoading}
+                        setIsLoading={setIsLoading}
+                        setName={setName}
+                    />
+                )}
+            </ViewUserProfileStack.Screen>
+        </ViewUserProfileStack.Navigator>
+    );
+}
 
 export function ViewStackSc({navigation, userId, isLoading, setIsLoading}) {
     return (
@@ -133,6 +178,8 @@ export function ViewPostStackSc({navigation, userId, isLoading, setIsLoading}) {
                     // },
                     headerLeft: () =>
                         menuButton(navigation, theme().headerColor),
+                    // headerRight: () =>
+                    //     refresh(navigation, theme().headerColor, 'Forum'),
                 }}
             >
                 {(props) => (
@@ -283,6 +330,34 @@ function backButton(navigation, color) {
             backgroundColor={color}
             color={theme().header}
             onPress={() => navigation.goBack()}
+        />
+    );
+}
+
+function refresh(navigation, color, screenName) {
+    return (
+        <Ionicons.Button
+            name="arrow-back"
+            size={iconSize + 10}
+            backgroundColor={color}
+            color={theme().header}
+            onPress={() => {
+                navigation.navigate('Availability');
+                setTimeout(() => {}, 10);
+                navigation.navigate(screenName);
+            }}
+        />
+    );
+}
+
+function forumButton(navigation, color) {
+    return (
+        <Ionicons.Button
+            name="chatbubble-ellipses"
+            size={iconSize + 10}
+            backgroundColor={color}
+            color={theme().text}
+            onPress={() => navigation.navigate('Forum')}
         />
     );
 }

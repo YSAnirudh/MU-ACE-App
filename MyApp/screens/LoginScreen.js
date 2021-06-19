@@ -16,6 +16,7 @@ import Colors from '../constants/Colors';
 const {loginUser} = require('../actions/loginuser');
 const {validateLoginInput} = require('../validation/loginValidation');
 import {koushikBigMistake} from '../constants/Styles';
+import AlertStyled from '../components/Alert';
 const LoginScreen = ({
     navigation,
     setIsLogin,
@@ -32,11 +33,30 @@ const LoginScreen = ({
         };
         var validate = validateLoginInput(userData);
         if (validate.isValid) {
-            loginUser(userData, setIsLogin, setUserId, isLoading, setIsLoading);
+            loginUser(
+                userData,
+                setIsLogin,
+                setUserId,
+                isLoading,
+                setIsLoading,
+                alerti
+            );
         } else {
-            alert(validate.message);
+            setAlert(!alertVisible, validate.message);
         }
     };
+
+    const alerti = () => {
+        setAlert(true, 'Email or Password is Invalid');
+    };
+
+    const setAlert = (bool, message) => {
+        setAlertVisible(bool);
+        setAlertMessage(message);
+    };
+
+    const [alertVisible, setAlertVisible] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
 
     return (
         <View style={koushikBigMistake().viewContainer}>
@@ -83,7 +103,15 @@ const LoginScreen = ({
                         Not a User? Signup!
                     </Text>
                 </TouchableOpacity>
-
+                {alertVisible ? (
+                    <AlertStyled
+                        alertVisible={true}
+                        alertMessage={alertMessage}
+                        setAlertVisible={setAlertVisible}
+                    />
+                ) : (
+                    <></>
+                )}
                 {/* <OutlookBtn 
       bname="Sign in with Outlook" 
       type="microsoft-outlook" 

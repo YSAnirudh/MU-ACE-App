@@ -1,4 +1,5 @@
 import React, {Component, useState, useEffect} from 'react';
+import {IconButton, Searchbar, TouchableRipple} from 'react-native-paper';
 import {
     StyleSheet,
     Text,
@@ -10,10 +11,17 @@ import {
 } from 'react-native';
 import {DrawerContentScrollView} from '@react-navigation/drawer';
 import Post from '../../components/Post';
-import {styles, theme} from '../../constants/Styles';
+import {styles, theme, availabilityStyles} from '../../constants/Styles';
 import {BackendURL} from '../../constants/Backend';
 import PostClickable from '../../components/PostClickable';
 import LoadingScreen from '../LoadingScreen';
+import {
+    widthPercentageToDP as wp,
+    heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+import {iconSize, margin10} from '../../constants/Sizes';
+import AlertFilters from '../../components/AlertFilters';
+import AlertStyled from '../../components/Alert';
 
 export default function ViewUserPostScreen({
     navigation,
@@ -30,7 +38,6 @@ export default function ViewUserPostScreen({
 
     const postRespSet = () => {
         let p = [];
-        console.log('Kaa');
         for (let i = 0; i < postResponses.length; i++) {
             // console.log('1 : ', postResponses[i]);
             p.push(
@@ -70,22 +77,12 @@ export default function ViewUserPostScreen({
                 // console.log(res);
                 // console.log(res[0].userId);
                 if (res === 'Error') {
-                    alert('Cannot Get Posts');
+                    setAlert(true, 'Cannot Get Posts');
                 } else {
-                    // console.log('Hallo');
+                    // console.log(res.length);
                     var p = [];
-                    for (var i = 0; i < res.length; i++) {
-                        // console.log(res[i]);
-                        p.push(
-                            <PostClickable
-                                key={Math.random().toString()}
-                                navigation={navigation}
-                                postRes={res[i]}
-                                postOpen={false}
-                            />
-                        );
-                    }
-                    setPosts(p);
+
+                    setPostResponses(res);
                     setIsLoading(false);
                     return p;
                 }
@@ -95,6 +92,14 @@ export default function ViewUserPostScreen({
             });
     };
 
+    const setAlert = (bool, message) => {
+        setAlertVisible(bool);
+        setAlertMessage(message);
+    };
+
+    const [alertVisible, setAlertVisible] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
+
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
             handleGetPosts();
@@ -103,18 +108,119 @@ export default function ViewUserPostScreen({
         return unsubscribe;
     }, [navigation]);
 
+    const [filters, setFilters] = useState([]);
+    const [flairAlertVis, setFlairVis] = useState(false);
+    const onFiltersChange = (res) => {
+        setFilters(res);
+    };
+
     const viewPosts = () => {
-        if (posts.length == 0) {
+        let filter = postResponses.filter((val) => {
+            if (searchQuery === '') {
+                return val;
+            } else if (
+                val.theTitle.toLowerCase().substr(0, searchQuery.length) ===
+                searchQuery.toLowerCase()
+            ) {
+                return val;
+            }
+        });
+        let p = [];
+        let filtered = filter.filter((val) => {
+            if (filters.length === 0) {
+                return val;
+            } else {
+                if (val.tags.length !== 0) {
+                    for (let i = 0; i < filters.length; i++) {
+                        for (let j = 0; j < val.tags.length; j++) {
+                            if (filters[i] === val.tags[j]) {
+                                return val;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        for (var i = 0; i < filtered.length; i++) {
+            // console.log(res[i]);
+            p.push(
+                <PostClickable
+                    key={Math.random().toString()}
+                    navigation={navigation}
+                    postRes={filtered[i]}
+                    postOpen={false}
+                />
+            );
+        }
+        if (p.length == 0) {
             return <Text style={styles().buttonText}>No Posts Found</Text>;
         } else {
-            return posts.reverse();
+            return p.reverse();
         }
     };
+
+    const [searchQuery, setSearchQuery] = React.useState('');
+
+    const onChangeSearch = (query) => setSearchQuery(query);
 
     return (
         <View style={styles().container}>
             <Image source={theme().file} style={styles().backgroundImage} />
-
+            <View
+                style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginBottom: margin10,
+                }}
+            >
+                <View style={{width: wp('80%')}}>
+                    <Searchbar
+                        placeholder="Search"
+                        iconColor={theme().text}
+                        onChangeText={onChangeSearch}
+                        placeholderTextColor={theme().text}
+                        col
+                        value={searchQuery}
+                        style={availabilityStyles().searchBar}
+                        theme={{colors: {text: theme().text}}}
+                    />
+                </View>
+                <View>
+                    <TouchableRipple>
+                        <IconButton
+                            icon="filter"
+                            size={iconSize + 4}
+                            borderless={true}
+                            color={theme().text}
+                            onPress={() => {
+                                setFlairVis(!flairAlertVis);
+                            }}
+                        />
+                    </TouchableRipple>
+                </View>
+            </View>
+            {flairAlertVis ? (
+                //<View style={createPostStyles().flairC}>
+                <AlertFilters
+                    alertVisible={true}
+                    setAlertVisible={setFlairVis}
+                    onSelectedItemsChange={onFiltersChange}
+                    selectedItems={filters}
+                ></AlertFilters>
+            ) : (
+                //</View>
+                <></>
+            )}
+            {alertVisible ? (
+                <AlertStyled
+                    alertVisible={true}
+                    alertMessage={alertMessage}
+                    setAlertVisible={setAlertVisible}
+                />
+            ) : (
+                <></>
+            )}
             <DrawerContentScrollView style={styles().postWrapper}>
                 {!isLoading ? viewPosts() : <LoadingScreen />}
             </DrawerContentScrollView>

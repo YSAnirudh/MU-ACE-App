@@ -21,17 +21,20 @@ import {useState} from 'react';
 import {BackendURL} from '../constants/Backend';
 import LoadingScreen from '../screens/LoadingScreen';
 import DisplayStatus from './DisplayStatus';
+import AlertFlair from './AlertFlair';
+import AlertFilters from './AlertFilters';
+import AlertStyled from './Alert';
 
 const Status = ({isLoading, setIsLoading, userId, ...navigation}) => {
     const [dataHook, setDataHook] = useState([]);
+    const [filters, setFilters] = useState([]);
+    const [flairAlertVis, setFlairVis] = useState(false);
+    const onFiltersChange = (res) => {
+        setFilters(res);
+    };
 
     const setStatusDataHook = (res) => {
-        let array = [];
-        for (let i = 0; i < res.length; i++) {
-            //console.log(res[i]);
-            array.push(<DisplayStatus val={res[i]} key={i} />);
-        }
-        setDataHook(array);
+        setDataHook(res);
     };
 
     useEffect(() => {
@@ -59,7 +62,7 @@ const Status = ({isLoading, setIsLoading, userId, ...navigation}) => {
                 // console.log(res);
                 // console.log(res[0].userId);
                 if (res === 'Error') {
-                    alert('Cannot Get Posts');
+                    setAlert(!alertVisible, 'Cannot Get Posts');
                 } else {
                     //console.log(res);
                     setStatusDataHook(res);
@@ -69,6 +72,64 @@ const Status = ({isLoading, setIsLoading, userId, ...navigation}) => {
             .catch((err) => {
                 console.log(err);
             });
+    };
+
+    const setAlert = (bool, message) => {
+        setAlertVisible(bool);
+        setAlertMessage(message);
+    };
+
+    const [alertVisible, setAlertVisible] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
+
+    const viewStatus = () => {
+        let array = [];
+        let filter = dataHook.filter((val) => {
+            if (searchQuery === '') {
+                return val;
+            } else if (
+                val.firstName.toLowerCase().substr(0, searchQuery.length) ===
+                    searchQuery.toLowerCase() ||
+                val.department.toLowerCase().substr(0, searchQuery.length) ===
+                    searchQuery.toLowerCase()
+            ) {
+                return val;
+            }
+        });
+        let filtery = filter.filter((val) => {
+            if (filters.length === 0) {
+                return val;
+            } else {
+                for (let i = 0; i < filters.length; i++) {
+                    if (filters[i] === val.department) {
+                        return val;
+                    }
+                }
+            }
+        });
+        let filtered = filtery.filter((val) => {
+            // console.log(val);
+            if (val.userType === 'Professor') {
+                return val;
+            }
+        });
+        for (let i = 0; i < filtered.length; i++) {
+            // console.log(filtered[i].userId);
+            if (filtered[i].userId === userId) {
+                continue;
+            }
+            array.push(
+                <DisplayStatus
+                    val={filtered[i]}
+                    key={i}
+                    navigation={navigation}
+                    setIsLoading={setIsLoading}
+                    isLoading={isLoading}
+                    userId={filtered[i].userId}
+                />
+            );
+        }
+        return array;
     };
 
     const [searchQuery, setSearchQuery] = React.useState('');
@@ -104,14 +165,37 @@ const Status = ({isLoading, setIsLoading, userId, ...navigation}) => {
                             size={iconSize + 4}
                             borderless={true}
                             color={theme().text}
-                            onPress={() => {}}
+                            onPress={() => {
+                                setFlairVis(!flairAlertVis);
+                            }}
                         />
                     </TouchableRipple>
                 </View>
             </View>
+            {alertVisible ? (
+                <AlertStyled
+                    alertVisible={true}
+                    alertMessage={alertMessage}
+                    setAlertVisible={setAlertVisible}
+                />
+            ) : (
+                <></>
+            )}
+            {flairAlertVis ? (
+                //<View style={createPostStyles().flairC}>
+                <AlertFilters
+                    alertVisible={true}
+                    setAlertVisible={setFlairVis}
+                    onSelectedItemsChange={onFiltersChange}
+                    selectedItems={filters}
+                ></AlertFilters>
+            ) : (
+                //</View>
+                <></>
+            )}
             <ScrollView style={{paddingBottom: 0}}>
                 {!isLoading ? (
-                    dataHook
+                    viewStatus()
                 ) : (
                     <>
                         <LoadingScreen />

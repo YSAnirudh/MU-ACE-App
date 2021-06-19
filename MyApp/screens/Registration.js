@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 
 import {koushikMistake, theme} from '../constants/Styles';
+import AlertStyled from '../components/Alert';
 
 const Registration = ({navigation, isLoading, setIsLoading}) => {
     const [Firstname, setFirstname] = useState('');
@@ -38,9 +39,17 @@ const Registration = ({navigation, isLoading, setIsLoading}) => {
         if (validate.isValid) {
             registerUser(userData, navigation, isLoading, setIsLoading);
         } else {
-            alert(validate.message);
+            setAlert(true, validate.message);
         }
     };
+
+    const setAlert = (bool, message) => {
+        setAlertVisible(bool);
+        setAlertMessage(message);
+    };
+
+    const [alertVisible, setAlertVisible] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
 
     return (
         <View style={koushikMistake().viewContainer}>
@@ -100,10 +109,14 @@ const Registration = ({navigation, isLoading, setIsLoading}) => {
                             setDept(itemValue)
                         }
                     >
-                        <Picker.Item label="CSE" value="cse" />
-                        <Picker.Item label="EEE" value="eee" />
-                        <Picker.Item label="MECH" value="mech" />
-                        <Picker.Item label="CIVIL" value="civil" />
+                        <Picker.Item label="CSE" value="CSE" />
+                        <Picker.Item label="MECH" value="MECH" />
+                        <Picker.Item label="EEE" value="EEE" />
+                        <Picker.Item label="CE" value="CE" />
+                        <Picker.Item label="HS" value="HS" />
+                        <Picker.Item label="MATH" value="MATH" />
+                        <Picker.Item label="PHY" value="PHY" />
+                        <Picker.Item label="CHEM" value="CHEM" />
                     </Picker>
                 </View>
                 <View style={koushikMistake().Tf}>
@@ -115,8 +128,8 @@ const Registration = ({navigation, isLoading, setIsLoading}) => {
                             setUserType(itemValue)
                         }
                     >
-                        <Picker.Item label="Student" value="stu" />
-                        <Picker.Item label="Professor" value="prof" />
+                        <Picker.Item label="Student" value="Student" />
+                        <Picker.Item label="Professor" value="Professor" />
                     </Picker>
                 </View>
             </View>
@@ -139,6 +152,15 @@ const Registration = ({navigation, isLoading, setIsLoading}) => {
                         Already a User? Login!
                     </Text>
                 </TouchableOpacity>
+                {alertVisible ? (
+                    <AlertStyled
+                        alertVisible={true}
+                        alertMessage={alertMessage}
+                        setAlertVisible={setAlertVisible}
+                    />
+                ) : (
+                    <></>
+                )}
             </View>
         </View>
     );

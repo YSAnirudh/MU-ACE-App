@@ -6,7 +6,8 @@ export const loginUser = (
     setIsLogin,
     setUserId,
     isLoading,
-    setIsLoading
+    setIsLoading,
+    alerti
 ) => {
     const options = {
         headers: {'Access-Control-Allow-Origin': '*'},

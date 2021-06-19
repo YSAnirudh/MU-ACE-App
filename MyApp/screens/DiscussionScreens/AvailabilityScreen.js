@@ -15,10 +15,10 @@ export default function AvailabilityScreen({
     // setIsLoading(false);
     return (
         <View style={styles().container}>
-            {/* // <Image
-        //     source={require('../../assets/logo3.png')}
-        //     style={styles().backgroundImage}
-        // /> */}
+            <Image
+                source={require('../../assets/logo3.png')}
+                style={[styles().backgroundImage, {height: 500}]}
+            />
 
             <Status
                 {...navigation}

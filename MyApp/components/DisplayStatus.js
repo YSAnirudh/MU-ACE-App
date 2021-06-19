@@ -4,9 +4,7 @@ import ProfilePicture from 'react-native-profile-picture';
 import {TouchableRipple} from 'react-native-paper';
 import {availabilityStyles, theme} from '../constants/Styles';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {
-    widthPercentageToDP as wp,
-} from 'react-native-responsive-screen';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {
     textFont,
     font12,
@@ -15,109 +13,90 @@ import {
     iconSize,
 } from '../constants/Sizes';
 
-
-const DisplayStatus = ({val}) =>{
+const DisplayStatus = ({val, navigation, setIsLoading, isLoading, userId}) => {
+    // console.log(val.userId);
     return (
         <View
-                style={availabilityStyles().statusEntry}
-                //key={keyVal}
+            style={availabilityStyles().statusEntry}
+            //key={keyVal}
+        >
+            <TouchableRipple
+                onPress={() => {
+                    let x = val;
+                    navigation.navigate('ViewUserProfile', {
+                        screen: 'User Profile',
+                        params: {
+                            userId: userId,
+                        },
+                    });
+                }}
             >
-                <TouchableRipple
-                    onPress={() => {
-                        navigation.navigate(
-                            // Need more details from here when we create database for user
-                            'ViewUserProfile',
-                            {
-                                userId: val.userId,
-                            }
-                        );
-                    }}
-                >
+                <View style={availabilityStyles().statusEntry}>
                     <View
-                        style={
-                            availabilityStyles().statusEntry
-                        }
+                        style={{
+                            marginHorizontal: wp('3%'),
+                            marginRight: wp('4%'),
+                        }}
                     >
-                        <View
+                        <ProfilePicture
+                            isPicture={true}
+                            requirePicture={require('../assets/bulusu.jpeg')}
+                            shape="circle"
+                            width={statusProfPic}
+                            height={statusProfPic}
+                        />
+                    </View>
+                    <View style={availabilityStyles().personName}>
+                        <Text
                             style={{
-                                marginHorizontal: wp('3%'),
-                                marginRight: wp('4%'),
+                                fontSize: textFont,
+                                fontWeight: '400',
+                                fontFamily: 'Roboto',
+                                marginRight: margin20,
+                                paddingLeft: wp('2%'),
+                                color: theme().text,
                             }}
+                            textBreakStrategy={'simple'}
                         >
-                            <ProfilePicture
-                                isPicture={true}
-                                requirePicture={require('../assets/bulusu.jpeg')}
-                                shape="circle"
-                                width={statusProfPic}
-                                height={statusProfPic}
-                            />
-                        </View>
-                        <View
-                            style={
-                                availabilityStyles()
-                                    .personName
-                            }
+                            {val.firstName}
+                        </Text>
+                    </View>
+                    <View style={availabilityStyles().personDepartment}>
+                        <Text
+                            style={{
+                                fontSize: font12,
+                                fontWeight: '400',
+                                fontFamily: 'Roboto',
+                                color: theme().text,
+                                textAlign: 'center',
+                            }}
+                            textBreakStrategy={'simple'}
                         >
-                            <Text
-                                style={{
-                                    fontSize: textFont,
-                                    fontWeight: '400',
-                                    fontFamily: 'Roboto',
-                                    marginRight: margin20,
-                                    paddingLeft: wp('2%'),
-                                    color: theme().text,
-                                }}
-                                textBreakStrategy={'simple'}
-                            >
-                                {val.firstName}
-                            </Text>
-                        </View>
-                        <View
-                            style={
-                                availabilityStyles()
-                                    .personDepartment
-                            }
-                        >
-                            <Text
-                                style={{
-                                    fontSize: font12,
-                                    fontWeight: '400',
-                                    fontFamily: 'Roboto',
-                                    color: theme().text,
-                                    textAlign: 'center',
-                                }}
-                                textBreakStrategy={'simple'}
-                            >
-                                {val.department}
-                            </Text>
-                        </View>
-                        <View>
-                            {/* <View
+                            {val.department}
+                        </Text>
+                    </View>
+                    <View>
+                        {/* <View
                                 style={
                                     availabilityStyles(
                                         val.status
                                     ).statusIcon
                                 }
                             > */}
-                            <Icon
-                                name="checkmark-circle"
-                                size={iconSize + 5}
-                                color={
-                                    val.status
-                                        ? 'green'
-                                        : 'red'
-                                }
-                                style={{
-                                    marginLeft: 1.5,
-                                }}
-                            />
-                            {/* </View> */}
-                        </View>
+                        <Icon
+                            name="checkmark-circle"
+                            size={iconSize + 5}
+                            color={val.status ? 'green' : 'red'}
+                            style={{
+                                marginLeft: 1.5,
+                            }}
+                        />
+                        {/* </View> */}
                     </View>
-                </TouchableRipple>
-            </View>
-    )
-}
-
+                </View>
+            </TouchableRipple>
+        </View>
+    );
+};
 
 export default DisplayStatus;

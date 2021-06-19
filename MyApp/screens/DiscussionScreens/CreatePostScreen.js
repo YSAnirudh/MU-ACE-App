@@ -24,7 +24,7 @@ import {screenHeight} from '../../utils/ScreenParams';
 import {BackendURL} from '../../constants/Backend';
 import LoadingScreen from '../LoadingScreen';
 import AlertStyled from '../../components/Alert';
-import { set } from 'react-native-reanimated';
+import {set} from 'react-native-reanimated';
 
 export default function CreatePostScreen({
     navigation,
@@ -37,12 +37,17 @@ export default function CreatePostScreen({
     const [tagActive, setActive] = useState(false);
 
     const [selectedItems, setSelectedItems] = useState([]);
+    const [typeChange, setTypeChange] = useState([]);
 
     const [imageURI, setImageURI] = useState();
 
     const onSelectedItemsChange = (selectedItems) => {
         // Set Selected Items
         setSelectedItems(selectedItems);
+    };
+    const onTypeChange = (selectedItems) => {
+        // Set Selected Items
+        setTypeChange(selectedItems);
     };
 
     const setAlert = (bool, message) => {
@@ -60,7 +65,7 @@ export default function CreatePostScreen({
             userId: userId,
             title: title,
             description: desc,
-            tags: selectedItems,
+            tags: selectedItems + typeChange,
         };
         var validate = validateCreatePostInput(userData);
         if (validate.isValid) {
@@ -79,10 +84,10 @@ export default function CreatePostScreen({
                 })
                 .then((res) => {
                     if (res === 'Error') {
-                        alert('Cannot Get Posts');
+                        setAlert(true, 'Cannot Get Posts');
                     } else {
                         setIsLoading(false);
-                        alert('Post Created');
+                        setAlert(true, 'Post Created');
                         setTitle('');
                         setDesc('');
                         setSelectedItems([]);
@@ -95,9 +100,10 @@ export default function CreatePostScreen({
             setAlert(!alertVisible, validate.message);
         }
     };
+
     const [alertVisible, setAlertVisible] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
-    const [flairAlertVis,setFlairVis]= useState(true);
+    const [flairAlertVis, setFlairVis] = useState(false);
     return (
         <SafeAreaView
             style={createPostStyles().container3}
@@ -124,47 +130,43 @@ export default function CreatePostScreen({
                         style={createPostStyles().textFieldDescription}
                         numberOfLines={10}
                     ></TextFieldPs>
-                    {tagActive ? (
-                        <>
-                        {flairAlertVis?(
-                            //<View style={createPostStyles().flairC}>
-                                <AlertFlair alertVisible={true} setAlertVisible={setFlairVis} alertMessage={alertMessage}></AlertFlair>
-                            //</View>
-                        ):(
-                            <></>
-                        )}
-                            <View style={createPostStyles().buttonContainer}>
-                                <CreatePostButton
-                                    bname="Upload Image"
-                                    onPress={() => {
-                                        Alert.alert('Post Clicked');
-                                    }}
-                                ></CreatePostButton>
-                                <CreatePostButton
-                                    bname="Remove Tags"
-                                    onPress={() => {
-                                        setActive(false);
-                                    }}
-                                ></CreatePostButton>
-                            </View>
-                        </>
+                    {flairAlertVis ? (
+                        //<View style={createPostStyles().flairC}>
+                        <AlertFlair
+                            alertVisible={true}
+                            setAlertVisible={setFlairVis}
+                            alertMessage={alertMessage}
+                            onSelectedItemsChange={onSelectedItemsChange}
+                            selectedItems={selectedItems}
+                            onTypeChange={onTypeChange}
+                            typeChange={typeChange}
+                        ></AlertFlair>
                     ) : (
-                        <View style={createPostStyles().buttonContainer}>
-                            <CreatePostButton
-                                bname="Upload Image"
-                                onPress={() => {
-                                    Alert.alert('Post Clicked');
-                                }}
-                            ></CreatePostButton>
-                            <CreatePostButton
-                                bname="Add Tags"
-                                onPress={() => {
-                                    setActive(true);
-                                    setFlairVis(true)
-                                }}
-                            ></CreatePostButton>
-                        </View>
+                        //</View>
+                        <></>
                     )}
+                    <View style={createPostStyles().buttonContainer}>
+                        <CreatePostButton
+                            bname="Upload Image"
+                            onPress={() => {
+                                Alert.alert('Post Clicked');
+                            }}
+                        ></CreatePostButton>
+                        <CreatePostButton
+                            bname={
+                                selectedItems.length + typeChange.length === 0
+                                    ? 'Add Tags - 0 Picked'
+                                    : 'Modify Tags - ' +
+                                      (selectedItems.length +
+                                          typeChange.length) +
+                                      ' Picked'
+                            }
+                            onPress={() => {
+                                setFlairVis(true);
+                            }}
+                        ></CreatePostButton>
+                    </View>
+
                     {alertVisible ? (
                         <AlertStyled
                             alertVisible={true}

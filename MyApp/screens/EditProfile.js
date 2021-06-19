@@ -16,6 +16,7 @@ import {font12, profProfPic, textFont} from '../constants/Sizes';
 import {validateEditProfileInput} from '../validation/editProfileValidation';
 import {BackendURL} from '../constants/Backend';
 import LoadingScreen from './LoadingScreen';
+import AlertStyled from '../components/Alert';
 
 export default function EditProfile({
     navigation,
@@ -59,11 +60,12 @@ export default function EditProfile({
                 })
                 .then((res) => {
                     if (res === 'Error') {
-                        alert('Cannot Update Profile');
+                        setAlert(true, 'Cannot Update Profile');
                     } else {
                         // console.log(res);
                         setIsLoading(false);
-                        alert(
+                        setAlert(
+                            true,
                             'Saved Changes Successfully!\nCheck After edit profile turning white'
                         );
                         navigation.navigate('Profile');
@@ -74,9 +76,17 @@ export default function EditProfile({
                     console.log(err);
                 });
         } else {
-            alert(validate.message);
+            setAlert(true, validate.message);
         }
     };
+
+    const setAlert = (bool, message) => {
+        setAlertVisible(bool);
+        setAlertMessage(message);
+    };
+
+    const [alertVisible, setAlertVisible] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
 
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -86,7 +96,7 @@ export default function EditProfile({
             quality: 1,
         });
 
-        //console.log(result);
+        console.log(result);
 
         if (!result.cancelled) {
             setImageURI(result.uri);
@@ -196,6 +206,15 @@ export default function EditProfile({
                             </Text>
                         </TouchableOpacity>
                     </>
+                    {alertVisible ? (
+                        <AlertStyled
+                            alertVisible={true}
+                            alertMessage={alertMessage}
+                            setAlertVisible={setAlertVisible}
+                        />
+                    ) : (
+                        <></>
+                    )}
                 </View>
             ) : (
                 <View style={editProfileStyles().container}>

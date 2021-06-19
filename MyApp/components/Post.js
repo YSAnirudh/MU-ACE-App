@@ -5,7 +5,14 @@ import {Text, Avatar, Title, Caption} from 'react-native-paper';
 import {styles, theme, drawerStyles} from '../constants/Styles';
 import {postImageHeight} from '../constants/Sizes';
 
-const Post = ({userName, userEmail, description, title, postOpen}) => {
+const Post = ({
+    userName,
+    userEmail,
+    description,
+    title,
+    postOpen,
+    userType,
+}) => {
     const hasImage = true;
     return (
         <View style={styles().post}>

@@ -21,6 +21,7 @@ import {createPostStyles, styles, theme} from '../../constants/Styles';
 import AddCommentField from '../../components/AddCommentField';
 import {BackendURL} from '../../constants/Backend';
 import LoadingScreen from '../LoadingScreen';
+import AlertStyled from '../../components/Alert';
 
 export default function ViewPost({navigation, route}) {
     const [posts, setPosts] = useState(null);
@@ -54,7 +55,7 @@ export default function ViewPost({navigation, route}) {
             })
             .then((res) => {
                 if (res === 'Error') {
-                    alert('Error Getting Post');
+                    setAlert(true, 'Error Getting Post');
                 } else {
                     setAnswers(res.comments);
                     setPosts(
@@ -136,16 +137,25 @@ export default function ViewPost({navigation, route}) {
             })
             .then((res) => {
                 if (res === 'Error') {
-                    alert('Error Getting Post');
+                    setAlert(true, 'Error Getting Post');
                     setComm(comm);
                 } else {
                     handleGetPost();
+                    setAlert(true, 'Commented');
                 }
             })
             .catch((err) => {
                 console.log(err);
             });
     };
+
+    const setAlert = (bool, message) => {
+        setAlertVisible(bool);
+        setAlertMessage(message);
+    };
+
+    const [alertVisible, setAlertVisible] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
 
     return !isLoading ? (
         <View style={styles().container}>
@@ -169,6 +179,15 @@ export default function ViewPost({navigation, route}) {
                 ></AddCommentField>
                 {viewComments()}
             </DrawerContentScrollView>
+            {alertVisible ? (
+                <AlertStyled
+                    alertVisible={true}
+                    alertMessage={alertMessage}
+                    setAlertVisible={setAlertVisible}
+                />
+            ) : (
+                <></>
+            )}
         </View>
     ) : (
         <View style={styles().container}>

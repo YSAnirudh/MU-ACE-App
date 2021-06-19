@@ -29,6 +29,7 @@ import {
 } from '../../constants/Sizes';
 import {BackendURL} from '../../constants/Backend';
 import {screenHeight} from '../../utils/ScreenParams';
+import AlertStyled from '../../components/Alert';
 
 export function DrawerMan({
     setIsLogin,
@@ -48,6 +49,7 @@ export function DrawerMan({
     const [answers, setAnswers] = useState(0);
     const [uid, setUID] = useState(userId);
     const [status, setStatus] = useState(false);
+    const [userType, setUserType] = useState('');
 
     const handleUID = (u) => {
         setStatus(u);
@@ -73,12 +75,12 @@ export function DrawerMan({
             })
             .then((res) => {
                 if (res === 'Error') {
-                    alert('Cannot Update Profile');
+                    setAlert(true, 'Cannot Update Profile');
                 } else {
                     // console.log(res);
                     setIsLoading(false);
                     setStatus(!status);
-                    alert('Updated Your Status');
+                    setAlert(true, 'Updated Your Status');
                     navigation.closeDrawer();
                 }
             })
@@ -87,6 +89,14 @@ export function DrawerMan({
                 console.log(err);
             });
     };
+
+    const setAlert = (bool, message) => {
+        setAlertVisible(bool);
+        setAlertMessage(message);
+    };
+
+    const [alertVisible, setAlertVisible] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
 
     const handleGetData = () => {
         // handleUID(userId);
@@ -110,7 +120,7 @@ export function DrawerMan({
                 if (res === 'Error') {
                     console.log(uid, userId);
 
-                    alert('Cannot Get Data');
+                    setAlert(true, 'Cannot Get Data');
                 } else {
                     // console.log(res);
                     setFirstName(res.firstName);
@@ -120,6 +130,7 @@ export function DrawerMan({
                     setPosts(parseInt(res.noOfPosts));
                     setKarma(res.karma);
                     handleUID(res.status);
+                    setUserType(res.userType);
                     setIsLoading(false);
                 }
             })
@@ -293,48 +304,54 @@ export function DrawerMan({
                                 marginRight: 10,
                             }}
                         >
-                            {!isLoading ? (
-                                <TouchableRipple
-                                    onPress={() => {
-                                        handleUpdateStatus();
-                                    }}
-                                >
-                                    <View style={styles().preferences}>
-                                        <Text
-                                            style={
-                                                (styles().darkText,
+                            {userType === 'Professor' ? (
+                                !isLoading ? (
+                                    <TouchableRipple
+                                        onPress={() => {
+                                            handleUpdateStatus();
+                                        }}
+                                    >
+                                        <View style={styles().preferences}>
+                                            <Text
+                                                style={
+                                                    (styles().darkText,
+                                                    {
+                                                        color: status
+                                                            ? 'green'
+                                                            : 'red',
+                                                    })
+                                                }
+                                            >
                                                 {
-                                                    color: status
-                                                        ? 'green'
-                                                        : 'red',
-                                                })
-                                            }
-                                        >
-                                            {'Your Status\n(Click to toggle)'}
-                                        </Text>
-                                        <Icon
-                                            name={
-                                                !status
-                                                    ? 'close-circle-outline'
-                                                    : 'checkmark-circle'
-                                            }
-                                            size={iconSize + 5}
-                                            color={status ? 'green' : 'red'}
-                                            style={{
-                                                marginLeft: 1.5,
-                                            }}
-                                        />
-                                    </View>
-                                </TouchableRipple>
+                                                    'Your Status\n(Click to toggle)'
+                                                }
+                                            </Text>
+                                            <Icon
+                                                name={
+                                                    !status
+                                                        ? 'close-circle-outline'
+                                                        : 'checkmark-circle'
+                                                }
+                                                size={iconSize + 5}
+                                                color={status ? 'green' : 'red'}
+                                                style={{
+                                                    marginLeft: 1.5,
+                                                }}
+                                            />
+                                        </View>
+                                    </TouchableRipple>
+                                ) : (
+                                    <Text
+                                        style={[
+                                            styles().profileTitle,
+                                            {color: 'gold'},
+                                        ]}
+                                    >
+                                        {'Updating Status....'}
+                                    </Text>
+                                )
                             ) : (
-                                <Text
-                                    style={[
-                                        styles().profileTitle,
-                                        {color: 'gold'},
-                                    ]}
-                                >
-                                    {'Updating Status....'}
-                                </Text>
+                                <></>
                             )}
                             <TouchableRipple onPress={() => toggleTheme()}>
                                 <View
@@ -361,6 +378,15 @@ export function DrawerMan({
                             </TouchableRipple>
                         </View>
                     </Drawer.Section>
+                    {alertVisible ? (
+                        <AlertStyled
+                            alertVisible={true}
+                            alertMessage={alertMessage}
+                            setAlertVisible={setAlertVisible}
+                        />
+                    ) : (
+                        <></>
+                    )}
                 </View>
             </DrawerContentScrollView>
             <Drawer.Section style={styles().bottomDrawer}>

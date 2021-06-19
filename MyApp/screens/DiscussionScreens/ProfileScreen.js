@@ -20,6 +20,7 @@ import {
 } from '../../constants/Sizes';
 import {BackendURL} from '../../constants/Backend';
 import LoadingScreen from '../LoadingScreen';
+import AlertStyled from '../../components/Alert';
 
 export default function ProfileScreen({
     navigation,
@@ -56,7 +57,7 @@ export default function ProfileScreen({
             .then((res) => {
                 if (res === 'Error') {
                     console.log('Hallo');
-                    alert('Cannot Get Data');
+                    setAlert(true, 'Cannot Get Data');
                 } else {
                     // console.log(res);
                     setFirstName(res.firstName);
@@ -74,6 +75,14 @@ export default function ProfileScreen({
                 console.log(err);
             });
     };
+
+    const setAlert = (bool, message) => {
+        setAlertVisible(bool);
+        setAlertMessage(message);
+    };
+
+    const [alertVisible, setAlertVisible] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
@@ -249,6 +258,15 @@ export default function ProfileScreen({
                     >
                         <Text style={profileStyles().buttonText}>Log out</Text>
                     </Button>
+                    {alertVisible ? (
+                        <AlertStyled
+                            alertVisible={true}
+                            alertMessage={alertMessage}
+                            setAlertVisible={setAlertVisible}
+                        />
+                    ) : (
+                        <></>
+                    )}
                 </>
             ) : (
                 <LoadingScreen />

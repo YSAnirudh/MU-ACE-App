@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import {View, Text} from 'react-native';
 import {MaterialIcons} from '@expo/vector-icons';
@@ -11,7 +11,7 @@ import {
     noobProfile2 as noobProfile,
 } from '../constants/Styles';
 import Colors from '../constants/Colors';
-import {margin10, profProfPic} from '../constants/Sizes';
+import {font12, margin10, margin20, profProfPic} from '../constants/Sizes';
 import {screenHeight, screenWidth} from '../utils/ScreenParams';
 import {profIconSize, titleFont, textFont} from '../constants/Sizes';
 import ProgressCircle from 'react-native-progress-circle';
@@ -19,20 +19,91 @@ import {
     heightPercentageToDP,
     widthPercentageToDP,
 } from 'react-native-responsive-screen';
+import {BackendURL} from '../constants/Backend';
+import LoadingScreen from './LoadingScreen';
+import AlertStyled from '../components/Alert';
 
-export default function ViewUserProfileScreen({navigation, myRoute}) {
+export default function ViewUserProfileScreen({
+    navigation,
+    route,
+    setIsLoading,
+    isLoading,
+    setName,
+    userId,
+}) {
     // Should Get more details from here when we create database for user
-    const params = myRoute.params;
-    const [userId, setUserId] = useState(params.userId);
+
+    // const [userId, setUserId] = useState(params.userId);
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [userType, setUserType] = useState('');
+    const [department, setDepartment] = useState('');
+    const [email, setEmail] = useState('');
+    const [status, setStatus] = useState(false);
+    const [description, setDescription] = useState('');
     const [karma, setKarma] = useState(0.0);
     const [posts, setPosts] = useState(0);
     const [answers, setAnswers] = useState(0);
-    const handleGetStats = () => {};
 
-    const handleGetUserData = () => {};
+    const handleGetUserData = () => {
+        setIsLoading(true);
+        fetch(BackendURL + 'rest/user/get', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                userId: route.params.userId,
+            }),
+        })
+            .then((res) => {
+                if (res.status === 400) {
+                    return 'Error';
+                } else {
+                    return res.json();
+                }
+            })
+            .then((res) => {
+                if (res === 'Error') {
+                    setAlert(true, 'Cannot Get Data');
+                } else {
+                    // console.log(res);
+                    setUserType(res.userType);
+                    setDepartment(res.department);
+                    setStatus(res.status);
+                    setFirstName(res.firstName);
+                    setLastName(res.lastName);
+                    setEmail(res.email);
+                    setAnswers(parseInt(res.noOfAnswers));
+                    setPosts(parseInt(res.noOfPosts));
+                    setKarma(parseFloat(res.karma));
+                    setDescription(res.description);
+                    setName(res.firstName);
+                    setIsLoading(false);
+                }
+            })
+            .catch((err) => {
+                console.log('errr');
+                console.log(err);
+            });
+    };
+
+    const setAlert = (bool, message) => {
+        setAlertVisible(bool);
+        setAlertMessage(message);
+    };
+
+    const [alertVisible, setAlertVisible] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            handleGetUserData();
+        });
+        return unsubscribe;
+        // handleGetUserData();
+    }, [navigation, route]);
 
     // const department = route.params.department
-    return (
+    return !isLoading ? (
         <View style={userProfileStyles().root}>
             <View style={userProfileStyles().userProfImg}>
                 <Avatar.Image
@@ -40,9 +111,19 @@ export default function ViewUserProfileScreen({navigation, myRoute}) {
                     size={profProfPic}
                 />
                 <View style={{marginTop: widthPercentageToDP('8%')}}>
-                    <Text style={userProfileStyles().stats}>FirstName</Text>
-                    <Text style={userProfileStyles().stats}>User Type</Text>
-                    <Text style={userProfileStyles().stats}>Deptarment</Text>
+                    <Text style={userProfileStyles().stats}>
+                        <Text style={{fontWeight: 'bold', fontSize: margin20}}>
+                            {userType}
+                        </Text>
+                    </Text>
+                    <Text style={userProfileStyles().stats}>
+                        <Text style={{fontWeight: 'bold'}}>Name:</Text>{' '}
+                        {firstName + ' ' + lastName}
+                    </Text>
+                    <Text style={userProfileStyles().stats}>
+                        <Text style={{fontWeight: 'bold'}}>Department:</Text>{' '}
+                        {department}
+                    </Text>
                     <View style={userProfileStyles().emailBox}>
                         <MaterialIcons
                             name="email"
@@ -53,7 +134,7 @@ export default function ViewUserProfileScreen({navigation, myRoute}) {
                             size={userProfileStyles().emailIcon.size}
                             color={userProfileStyles().emailIcon.color}
                         />
-                        <Text style={userProfileStyles().myText}>Email</Text>
+                        <Text style={userProfileStyles().myText}>{email}</Text>
                     </View>
                 </View>
             </View>
@@ -66,18 +147,14 @@ export default function ViewUserProfileScreen({navigation, myRoute}) {
                         paddingBottom: 5,
                     }}
                 >
-                    <Text style={userProfileStyles().userTitle}>Status</Text>
-                </View>
-                {/* <View style={{paddingBottom: 9}}></View>
-                <Text style={userProfileStyles().userText}>Posts: Posts</Text>
-                <Text style={userProfileStyles().userText}>Answers: Answers</Text>
-                <Text style={userProfileStyles().userText}>Karma</Text>
-                
-                <View style={{paddingTop: 10}}>
-                    <Text style={userProfileStyles().userText}>
-                        About : Desc
+                    <Text style={userProfileStyles().userTitle}>
+                        {userType == 'Professor'
+                            ? status
+                                ? 'Insert Icon for status True'
+                                : 'Insert Icon for status false'
+                            : ''}
                     </Text>
-                </View> */}
+                </View>
 
                 <View style={noobProfile().alignProf}>
                     <View
@@ -156,10 +233,19 @@ export default function ViewUserProfileScreen({navigation, myRoute}) {
                             color: theme().text,
                         }}
                     >
-                        shut up you rascal
+                        {description}
                     </Text>
                 </View>
             </View>
+            {alertVisible ? (
+                <AlertStyled
+                    alertVisible={true}
+                    alertMessage={alertMessage}
+                    setAlertVisible={setAlertVisible}
+                />
+            ) : (
+                <></>
+            )}
             {/* <Button 
                 icon="account-edit" 
                 mode="outlined" 
@@ -179,39 +265,8 @@ export default function ViewUserProfileScreen({navigation, myRoute}) {
             <Text style={userProfileStyles().buttonText}>Log out</Text>
             </Button> */}
         </View>
-    );
-}
-
-ViewUserProfileStack = createStackNavigator();
-
-export function ViewUserProfileStackSc({navigation, route}) {
-    const name = route.params.userId + "'s Profile";
-    return (
-        <ViewUserProfileStack.Navigator
-            headerMode="screen"
-            screenOptions={{
-                headerShown: true,
-                headerStyle: {
-                    backgroundColor: theme().headerColor,
-                },
-                headerTitleAlign: 'center',
-            }}
-        >
-            <ViewUserProfileStack.Screen
-                name="User Profile"
-                options={() => ({
-                    headerTintColor: theme().header,
-                    headerLeft: () =>
-                        backButton(navigation, theme().headerColor),
-                    headerRight: () =>
-                        forumButton(navigation, theme().headerColor),
-                })}
-            >
-                {(props) => (
-                    <ViewUserProfileScreen {...props} myRoute={route} />
-                )}
-            </ViewUserProfileStack.Screen>
-        </ViewUserProfileStack.Navigator>
+    ) : (
+        <LoadingScreen />
     );
 }
 
@@ -223,18 +278,6 @@ function backButton(navigation, color) {
             backgroundColor={color}
             color={theme().text}
             onPress={() => navigation.goBack()}
-        />
-    );
-}
-
-function forumButton(navigation, color) {
-    return (
-        <Icon.Button
-            name="chatbubble-ellipses"
-            size={30}
-            backgroundColor={color}
-            color={theme().text}
-            onPress={() => navigation.navigate('Forum')}
         />
     );
 }
