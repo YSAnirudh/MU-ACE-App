@@ -16,7 +16,7 @@ export default function AvailabilityScreen({
     return (
         <View style={styles().container}>
             <Image
-                source={require('../../assets/logo3.png')}
+                source={require('../../assets/rohai.png')}
                 style={[styles().backgroundImage, {height: 500}]}
             />
 

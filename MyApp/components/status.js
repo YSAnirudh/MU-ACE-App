@@ -3,7 +3,7 @@ import React, {useEffect} from 'react';
 import {Text, View, ScrollView, FlatList, Button} from 'react-native';
 import ProfilePicture from 'react-native-profile-picture';
 import {Searchbar, IconButton, TouchableRipple} from 'react-native-paper';
-import {availabilityStyles, theme} from '../constants/Styles';
+import {availabilityStyles, styles, theme} from '../constants/Styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {
     widthPercentageToDP as wp,
@@ -193,15 +193,13 @@ const Status = ({isLoading, setIsLoading, userId, ...navigation}) => {
                 //</View>
                 <></>
             )}
-            <ScrollView style={{paddingBottom: 0}}>
-                {!isLoading ? (
-                    viewStatus()
-                ) : (
-                    <>
-                        <LoadingScreen />
-                    </>
-                )}
-            </ScrollView>
+            {!isLoading ? (
+                <ScrollView style={{paddingBottom: 0}}>
+                    {viewStatus()}
+                </ScrollView>
+            ) : (
+                <LoadingScreen />
+            )}
         </View>
     );
 };

@@ -19,7 +19,7 @@ import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {iconSize, margin10} from '../../constants/Sizes';
+import {iconSize, margin10, margin20} from '../../constants/Sizes';
 import AlertFilters from '../../components/AlertFilters';
 import AlertStyled from '../../components/Alert';
 
@@ -171,7 +171,7 @@ export default function ViewUserPostScreen({
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    marginBottom: margin10,
+                    marginTop: margin20,
                 }}
             >
                 <View style={{width: wp('80%')}}>

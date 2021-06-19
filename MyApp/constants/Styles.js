@@ -40,7 +40,7 @@ export const theme = () => {
               text: 'white',
               textBoxBack: Colors.DarkGrey,
               postColor: '#241b19',
-              file: require('../assets/logo3_auto_x2.png'),
+              file: require('../assets/rohai.png'),
               mecFile: require('../assets/m.png'),
               searchBG: '#17161a',
               iconColor: 'white',
@@ -72,7 +72,7 @@ export const theme = () => {
               text: 'black',
               textBoxBack: Colors.LightGrey,
               postColor: '#d4d4d4',
-              file: require('../assets/logo3_auto_x2.png'),
+              file: require('../assets/rohai.png'),
               mecFile: require('../assets/m.png'),
               searchBG: '#d4d4d4',
               iconColor: 'black',
@@ -218,12 +218,15 @@ export const koushikMistake = () => ({
 
 export const styles = () => ({
     container_1: {
-        flex:1,
+        display: 'flex',
+        flex: 1,
         backgroundColor: theme().background,
         paddingHorizontal: 24,
         paddingVertical: 30,
         height: '100%',
-        width:'100%'
+        width: '100%',
+        alignSelf: 'center',
+        justifyContent: 'center',
     },
     buttonStyleLB: {
         borderWidth: 1,
