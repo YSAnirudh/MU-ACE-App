@@ -193,7 +193,7 @@ export default function ViewUserProfileScreen({
                     </View>
                     <View style={noobProfile().progressViewBar}>
                         <ProgressCircle
-                            percent={karma}
+                            percent={karma.toString()}
                             // containerStyle={{width}}
                             radius={screenHeight / 15}
                             borderWidth={textFont}

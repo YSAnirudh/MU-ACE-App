@@ -10,6 +10,7 @@ import {
     noobProfile,
 } from '../../constants/Styles';
 import {widthPercentageToDP} from 'react-native-responsive-screen';
+import * as ImagePicker from 'expo-image-picker';
 import ProgressCircle from 'react-native-progress-circle';
 import {screenHeight, screenWidth} from '../../utils/ScreenParams';
 import {
@@ -37,6 +38,7 @@ export default function ProfileScreen({
     const [description, setDescription] = useState('');
     const [posts, setPosts] = useState(0);
     const [answers, setAnswers] = useState(0);
+    const [image, setImage] = useState('');
 
     const handleGetData = () => {
         setIsLoading(true);
@@ -67,6 +69,7 @@ export default function ProfileScreen({
                     setPosts(parseInt(res.noOfPosts));
                     setKarma(parseFloat(res.karma));
                     setDescription(res.description);
+                    setImage(res.profileImgURI);
                     setIsLoading(false);
                 }
             })
@@ -97,10 +100,21 @@ export default function ProfileScreen({
             {!isLoading ? (
                 <>
                     <View style={{alignItems: 'center'}}>
-                        <Avatar.Image
+                        {image !== '' ? (
+                            <Avatar.Image
+                                source={{uri: image}}
+                                size={profProfPic}
+                            />
+                        ) : (
+                            <Avatar.Image
+                                source={require('../../assets/bulusu.jpeg')}
+                                size={profProfPic}
+                            />
+                        )}
+                        {/* <Avatar.Image
                             source={require('../../assets/logo2.png')}
                             size={profProfPic}
-                        />
+                        /> */}
                         {/* <Image 
                      
                     source={require("../../assets/logo2.png")}

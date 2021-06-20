@@ -5,6 +5,7 @@ import {TouchableRipple} from 'react-native-paper';
 import {availabilityStyles, theme} from '../constants/Styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {Avatar} from 'react-native-paper';
 import {
     textFont,
     font12,
@@ -38,13 +39,18 @@ const DisplayStatus = ({val, navigation, setIsLoading, isLoading, userId}) => {
                             marginRight: wp('4%'),
                         }}
                     >
-                        <ProfilePicture
-                            isPicture={true}
-                            requirePicture={require('../assets/bulusu.jpeg')}
-                            shape="circle"
-                            width={statusProfPic}
-                            height={statusProfPic}
-                        />
+                        {console.log(val.profileImgURI)}
+                        {typeof val.profileImgURI !== 'undefined' ? (
+                            <Avatar.Image
+                                source={{uri: val.profileImgURI}}
+                                size={statusProfPic}
+                            />
+                        ) : (
+                            <Avatar.Image
+                                source={require('../assets/bulusu.jpeg')}
+                                size={statusProfPic}
+                            />
+                        )}
                     </View>
                     <View style={availabilityStyles().personName}>
                         <Text

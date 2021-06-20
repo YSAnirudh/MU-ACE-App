@@ -30,8 +30,22 @@ export default function EditProfile({
     const [description, setdescription] = useState(route.params.Description);
     const [password, setpassword] = useState('');
     const [Cpassword, setCpassword] = useState('');
+    const [image, setImage] = useState(null);
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [1, 1],
+            quality: 1,
+        });
 
-    const [imageURI, setImageURI] = useState(null);
+        // console.log(result);
+
+        if (!result.cancelled) {
+            setImage(result.uri);
+        }
+        // fetch POST => body uri,
+    };
 
     const handleEditProfile = () => {
         const userData = {
@@ -41,6 +55,7 @@ export default function EditProfile({
             description: description,
             password: password,
             confirmPassword: Cpassword,
+            profileImgURI: image,
         };
         let validate = validateEditProfileInput(userData);
 
@@ -88,22 +103,6 @@ export default function EditProfile({
     const [alertVisible, setAlertVisible] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
 
-    const pickImage = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
-            allowsEditing: true,
-            aspect: [4, 3],
-            quality: 1,
-        });
-
-        console.log(result);
-
-        if (!result.cancelled) {
-            setImageURI(result.uri);
-        }
-        // fetch POST => body uri,
-    };
-
     useEffect(() => {}, []);
 
     return (
@@ -112,14 +111,13 @@ export default function EditProfile({
                 <View style={editProfileStyles().container}>
                     <>
                         <View style={editProfileStyles().img}>
-                            {imageURI && (
+                            {image && (
                                 <Avatar.Image
-                                    source={{uri: imageURI}}
+                                    source={{uri: image}}
                                     size={profProfPic}
                                 />
                             )}
-                            {/* {console.log({ uri: image })} */}
-                            {!imageURI && (
+                            {!image && (
                                 <Avatar.Image
                                     source={require('../assets/bulusu.jpeg')}
                                     size={profProfPic}

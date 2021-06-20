@@ -30,6 +30,7 @@ import {
 import {BackendURL} from '../../constants/Backend';
 import {screenHeight} from '../../utils/ScreenParams';
 import AlertStyled from '../../components/Alert';
+import DrawerStatus from '../../components/DrawerStatus';
 
 export function DrawerMan({
     setIsLogin,
@@ -191,9 +192,9 @@ export function DrawerMan({
                                         </View>
                                         <View style={styles().progressViewBar}>
                                             <ProgressCircle
-                                                percent={parseFloat(
-                                                    karma
-                                                ).toFixed(1)}
+                                                percent={Number(
+                                                    Number(karma).toFixed(1)
+                                                )}
                                                 // containerStyle={{width}}
                                                 radius={margin20}
                                                 borderWidth={border6}
@@ -270,30 +271,6 @@ export function DrawerMan({
                                 navigation.navigate('Availability');
                             }}
                         />
-                        {/* <DrawerItem
-                            icon={({size, color}) =>
-                                gimmeIcon('log-in', size, theme().iconColor)
-                            }
-                            label="Login"
-                            labelStyle={{
-                                color: theme().text,
-                            }}
-                            onPress={() => {
-                                navigation.navigate('Login');
-                            }}
-                        />
-                        <DrawerItem
-                            icon={({size, color}) =>
-                                gimmeIcon('alert', size, theme().iconColor)
-                            }
-                            label="Register"
-                            labelStyle={{
-                                color: theme().text,
-                            }}
-                            onPress={() => {
-                                navigation.navigate('Register');
-                            }}
-                        /> */}
                     </Drawer.Section>
                     <Drawer.Section>
                         <View
@@ -306,40 +283,10 @@ export function DrawerMan({
                         >
                             {userType === 'Professor' ? (
                                 !isLoading ? (
-                                    <TouchableRipple
-                                        onPress={() => {
-                                            handleUpdateStatus();
-                                        }}
-                                    >
-                                        <View style={styles().preferences}>
-                                            <Text
-                                                style={
-                                                    (styles().darkText,
-                                                    {
-                                                        color: status
-                                                            ? 'green'
-                                                            : 'red',
-                                                    })
-                                                }
-                                            >
-                                                {
-                                                    'Your Status\n(Click to toggle)'
-                                                }
-                                            </Text>
-                                            <Icon
-                                                name={
-                                                    !status
-                                                        ? 'close-circle-outline'
-                                                        : 'checkmark-circle'
-                                                }
-                                                size={iconSize + 5}
-                                                color={status ? 'green' : 'red'}
-                                                style={{
-                                                    marginLeft: 1.5,
-                                                }}
-                                            />
-                                        </View>
-                                    </TouchableRipple>
+                                    <DrawerStatus
+                                        status={status}
+                                        handleUpdateStatus={handleUpdateStatus}
+                                    />
                                 ) : (
                                     <Text
                                         style={[
@@ -349,10 +296,14 @@ export function DrawerMan({
                                     >
                                         {'Updating Status....'}
                                     </Text>
+
+                                    // ) : (
+                                    //     <></>
                                 )
                             ) : (
                                 <></>
                             )}
+
                             <TouchableRipple onPress={() => toggleTheme()}>
                                 <View
                                     style={[
