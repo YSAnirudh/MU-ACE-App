@@ -136,12 +136,11 @@ const Status = ({isLoading, setIsLoading, userId, ...navigation}) => {
 
     const onChangeSearch = (query) => setSearchQuery(query);
 
-    return (
+    return !isLoading ? (
         <View style={availabilityStyles().container}>
             <View
                 style={{
                     flexDirection: 'row',
-                    justifyContent: 'space-between',
                     alignItems: 'center',
                     marginBottom: margin10,
                 }}
@@ -193,14 +192,10 @@ const Status = ({isLoading, setIsLoading, userId, ...navigation}) => {
                 //</View>
                 <></>
             )}
-            {!isLoading ? (
-                <ScrollView style={{paddingBottom: 0}}>
-                    {viewStatus()}
-                </ScrollView>
-            ) : (
-                <LoadingScreen />
-            )}
+            <ScrollView style={{paddingBottom: 0}}>{viewStatus()}</ScrollView>
         </View>
+    ) : (
+        <LoadingScreen />
     );
 };
 

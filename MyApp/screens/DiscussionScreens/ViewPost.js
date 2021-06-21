@@ -144,7 +144,7 @@ export default function ViewPost({navigation, route}) {
                     setComm(comm);
                 } else {
                     handleGetPost();
-                    setAlert(true, 'Commented');
+                    setAlert(true, 'Comment Registered');
                 }
             })
             .catch((err) => {
@@ -181,16 +181,16 @@ export default function ViewPost({navigation, route}) {
                     numberOfLines={4}
                 ></AddCommentField>
                 {viewComments()}
+                {alertVisible ? (
+                    <AlertStyled
+                        alertVisible={true}
+                        alertMessage={alertMessage}
+                        setAlertVisible={setAlertVisible}
+                    />
+                ) : (
+                    <></>
+                )}
             </DrawerContentScrollView>
-            {alertVisible ? (
-                <AlertStyled
-                    alertVisible={true}
-                    alertMessage={alertMessage}
-                    setAlertVisible={setAlertVisible}
-                />
-            ) : (
-                <></>
-            )}
         </View>
     ) : (
         <View style={styles().container}>

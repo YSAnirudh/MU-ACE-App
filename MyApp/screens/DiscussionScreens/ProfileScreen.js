@@ -40,6 +40,7 @@ export default function ProfileScreen({
     const [posts, setPosts] = useState(0);
     const [answers, setAnswers] = useState(0);
     const [image, setImage] = useState('');
+    const [URL, setURL] = useState('');
 
     const handleGetData = () => {
         setIsLoading(true);
@@ -69,7 +70,7 @@ export default function ProfileScreen({
                     setPosts(parseInt(res.noOfPosts));
                     setKarma(parseFloat(res.karma));
                     setDescription(res.description);
-                    setImage(res.profileImgURI);
+                    setURL(res.profileImgURI);
                     setIsLoading(false);
                 }
             })
@@ -99,9 +100,9 @@ export default function ProfileScreen({
             {!isLoading ? (
                 <>
                     <View style={{alignItems: 'center'}}>
-                        {image !== '' ? (
+                        {URL !== '' ? (
                             <Avatar.Image
-                                source={{uri: image}}
+                                source={{uri: URL}}
                                 size={profProfPic}
                             />
                         ) : (
@@ -110,14 +111,6 @@ export default function ProfileScreen({
                                 size={profProfPic}
                             />
                         )}
-                        {/* <Avatar.Image
-                            source={require('../../assets/logo2.png')}
-                            size={profProfPic}
-                        /> */}
-                        {/* <Image 
-                     
-                    source={require("../../assets/logo2.png")}
-                /> */}
                     </View>
                     <View
                         style={{
@@ -166,9 +159,6 @@ export default function ProfileScreen({
                                     >
                                         Posts:{posts}
                                     </Text>
-                                    {/* <Text style={noobProfile().progText}>
-                        Answers:{comments}
-                        </Text> */}
                                     <Text
                                         style={{
                                             fontSize: textFont,
@@ -237,7 +227,7 @@ export default function ProfileScreen({
                                     Firstname: firstName,
                                     Lastname: lastName,
                                     Description: description,
-                                    imageURL: image,
+                                    imageURL: URL,
                                 },
                             })
                         }

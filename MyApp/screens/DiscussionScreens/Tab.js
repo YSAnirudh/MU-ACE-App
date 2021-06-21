@@ -15,7 +15,10 @@ var MainTab = createMaterialBottomTabNavigator();
 
 function Tabs({userId, isLoading, setIsLoading, setUserId, setIsLogin}) {
     return (
-        <MainTab.Navigator initialRouteName="Forum" activeColor={Colors.Grey}>
+        <MainTab.Navigator
+            initialRouteName="Create Post"
+            activeColor={Colors.Grey}
+        >
             <MainTab.Screen
                 name="Forum"
                 options={{

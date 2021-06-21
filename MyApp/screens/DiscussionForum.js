@@ -4,7 +4,6 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import {StyleSheet} from 'react-native';
 import Colors from '../constants/Colors';
 import Tabs from './DiscussionScreens/Tab';
-import SettingsScreen from './SettingsScreen';
 import LoginScreen from '../screens/LoginScreen';
 import Registration from '../screens/Registration';
 import {DrawerMan} from './DiscussionScreens/DrawerMan';

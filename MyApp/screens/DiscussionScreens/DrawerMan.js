@@ -10,7 +10,11 @@ import {
     TouchableRipple,
     Switch,
 } from 'react-native-paper';
-import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
+import {
+    DrawerContentScrollView,
+    DrawerItem,
+    useIsDrawerOpen,
+} from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../constants/Colors';
 import {ThemeContext, ThemeProvider} from '../../components/Theme';
@@ -18,6 +22,7 @@ import {
     theme,
     drawerStyles as styles,
     styles as myStyles,
+    defaultProfilePicture,
 } from '../../constants/Styles';
 import ProgressCircle from 'react-native-progress-circle';
 import {
@@ -51,6 +56,8 @@ export function DrawerMan({
     const [uid, setUID] = useState(userId);
     const [status, setStatus] = useState(false);
     const [userType, setUserType] = useState('');
+    const [image, setImage] = useState('');
+    const isDrawerOpen = useIsDrawerOpen();
 
     const handleUID = (u) => {
         setStatus(u);
@@ -132,6 +139,7 @@ export function DrawerMan({
                     setKarma(res.karma);
                     handleUID(res.status);
                     setUserType(res.userType);
+                    setImage(res.profileImgURI);
                     setIsLoading(false);
                 }
             })
@@ -143,6 +151,12 @@ export function DrawerMan({
     useEffect(() => {
         handleGetData();
     }, [posts, answers, karma]);
+
+    useEffect(() => {
+        if (isDrawerOpen) {
+            handleGetData();
+        }
+    }, [isDrawerOpen]);
 
     return (
         <View
@@ -160,9 +174,17 @@ export function DrawerMan({
                             >
                                 <View>
                                     <View style={styles().profilePic}>
-                                        <Avatar.Image
-                                            source={require('../../assets/logo2.png')}
-                                        />
+                                        {image !== '' ? (
+                                            <Avatar.Image
+                                                source={{uri: image}}
+                                            />
+                                        ) : (
+                                            <Avatar.Image
+                                                source={{
+                                                    uri: defaultProfilePicture,
+                                                }}
+                                            />
+                                        )}
                                         <View>
                                             <Title
                                                 style={styles().profileTitle}

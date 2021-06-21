@@ -88,57 +88,7 @@ export default function CreatePostScreen({
             // if (image !== '') {
             //     await uploadImage(postId);
             // }
-            let a = await uploadImage(postId);
-            await fetch(BackendURL + 'rest/post/create', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body:
-                    image !== ''
-                        ? JSON.stringify({
-                              postId: postId,
-                              userId: userId,
-                              title: title,
-                              description: desc,
-                              tags: selectedItems,
-                              typeTags: typeChange,
-                              postImg: URL,
-                          })
-                        : JSON.stringify({
-                              postId: postId,
-                              userId: userId,
-                              title: title,
-                              description: desc,
-                              tags: selectedItems,
-                              typeTags: typeChange,
-                          }),
-            })
-                .then((res) => {
-                    if (res.status === 400) {
-                        return 'Error';
-                    } else {
-                        return res.json();
-                    }
-                })
-                .then((res) => {
-                    if (res === 'Error') {
-                        setAlert(true, 'Cannot Get Posts');
-                    } else {
-                        setIsLoading(false);
-                        setAlert(true, 'Post Created');
-                        setTitle('');
-                        setDesc('');
-                        setSelectedItems([]);
-                        setTypeChange([]);
-                        setImage('');
-                        setURL('');
-                    }
-                })
-                .then((res) => {
-                    navigation.navigate('Forum');
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
+            uploadImage(postId);
         } else {
             setAlert(!alertVisible, validate.message);
         }
@@ -173,6 +123,45 @@ export default function CreatePostScreen({
 
     const uploadImage = async (postId) => {
         if (image === '') {
+            fetch(BackendURL + 'rest/post/create', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    postId: postId,
+                    userId: userId,
+                    title: title,
+                    description: desc,
+                    tags: selectedItems,
+                    typeTags: typeChange,
+                }),
+            })
+                .then((res) => {
+                    if (res.status === 400) {
+                        return 'Error';
+                    } else {
+                        return res.json();
+                    }
+                })
+                .then((res) => {
+                    if (res === 'Error') {
+                        setAlert(true, 'Cannot Get Posts');
+                    } else {
+                        setIsLoading(false);
+                        setAlert(true, 'Post Created');
+                        setTitle('');
+                        setDesc('');
+                        setSelectedItems([]);
+                        setTypeChange([]);
+                        setImage('');
+                        setURL('');
+                    }
+                })
+                .then((res) => {
+                    navigation.navigate('Forum');
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
             return postId;
         }
         const blob = await new Promise((resolve, reject) => {
@@ -191,7 +180,7 @@ export default function CreatePostScreen({
         const ref = FBStorage.ref().child('post/' + postId);
         const snapshot = ref.put(blob);
 
-        snapshot.on(
+        return await snapshot.on(
             firebase.storage.TaskEvent.STATE_CHANGED,
             () => {
                 setIsLoading(true);
@@ -205,13 +194,62 @@ export default function CreatePostScreen({
             () => {
                 snapshot.snapshot.ref.getDownloadURL().then((url) => {
                     // console.log('Hello');
-                    setMyURL(url);
+                    fetch(BackendURL + 'rest/post/create', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body:
+                            url !== ''
+                                ? JSON.stringify({
+                                      postId: postId,
+                                      userId: userId,
+                                      title: title,
+                                      description: desc,
+                                      tags: selectedItems,
+                                      typeTags: typeChange,
+                                      postImg: url,
+                                  })
+                                : JSON.stringify({
+                                      postId: postId,
+                                      userId: userId,
+                                      title: title,
+                                      description: desc,
+                                      tags: selectedItems,
+                                      typeTags: typeChange,
+                                  }),
+                    })
+                        .then((res) => {
+                            console.log(URL);
+                            if (res.status === 400) {
+                                return 'Error';
+                            } else {
+                                return res.json();
+                            }
+                        })
+                        .then((res) => {
+                            if (res === 'Error') {
+                                setAlert(true, 'Cannot Get Posts');
+                            } else {
+                                setIsLoading(false);
+                                setAlert(true, 'Post Created');
+                                setTitle('');
+                                setDesc('');
+                                setSelectedItems([]);
+                                setTypeChange([]);
+                                setImage('');
+                                setURL('');
+                            }
+                        })
+                        .then((res) => {
+                            navigation.navigate('Forum');
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        });
                     blob.close();
                     return url;
                 });
             }
         );
-        return postId;
     };
 
     const [alertVisible, setAlertVisible] = useState(false);

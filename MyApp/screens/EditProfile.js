@@ -18,6 +18,7 @@ import {
     createPostStyles,
     profileStyles,
     defaultProfilePicture,
+    styles,
 } from '../constants/Styles';
 import {font12, profProfPic, textFont} from '../constants/Sizes';
 import {validateEditProfileInput} from '../validation/editProfileValidation';
@@ -109,18 +110,53 @@ export default function EditProfile({
 
     const handleImage = async () => {
         if (image !== '') {
-            await FBStorage.ref()
-                .child(userId)
-                .delete()
-                .then(() => {
-                    console.log('Existing Profile Image deleted');
+            await uploadImage().then((res) => {
+                fetch(BackendURL + 'rest/profile/update', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body:
+                        image !== ''
+                            ? JSON.stringify({
+                                  userId: userId,
+                                  firstName: firstname,
+                                  lastName: lastname,
+                                  description: description,
+                                  password: password,
+                                  confirmPassword: Cpassword,
+                                  profileImgURI: URL,
+                              })
+                            : JSON.stringify({
+                                  userId: userId,
+                                  firstName: firstname,
+                                  lastName: lastname,
+                                  description: description,
+                                  password: password,
+                                  confirmPassword: Cpassword,
+                              }),
                 })
-                .catch((err) => {
-                    console.log('Error deleting Existing Profile Image');
-                });
-        }
-        if (image !== '') {
-            await uploadImage();
+                    .then((res) => {
+                        console.log(URL);
+                        if (res.status === 400) {
+                            return 'Error';
+                        } else {
+                            return res.json();
+                        }
+                    })
+                    .then((res) => {
+                        if (res === 'Error') {
+                            setAlert(true, 'Cannot Update Profile');
+                        } else {
+                            setIsLoading(false);
+                            setAlert(true, 'Saved Changes Successfully!');
+                        }
+                    })
+                    .then((res) => {
+                        navigation.navigate('Profile');
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+            });
         }
     };
 
@@ -136,7 +172,9 @@ export default function EditProfile({
         let validate = validateEditProfileInput(userData);
 
         if (validate.isValid) {
-            handleImage().then((res) => {
+            if (image !== '') {
+                handleImage();
+            } else {
                 fetch(BackendURL + 'rest/profile/update', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
@@ -172,10 +210,7 @@ export default function EditProfile({
                             setAlert(true, 'Cannot Update Profile');
                         } else {
                             setIsLoading(false);
-                            setAlert(
-                                true,
-                                'Saved Changes Successfully!\nCheck After edit profile turning white'
-                            );
+                            setAlert(true, 'Saved Changes Successfully!');
                         }
                     })
                     .then((res) => {
@@ -184,7 +219,7 @@ export default function EditProfile({
                     .catch((err) => {
                         console.log(err);
                     });
-            });
+            }
         } else {
             setAlert(true, validate.message);
         }
@@ -210,124 +245,114 @@ export default function EditProfile({
         })();
     }, []);
 
-    return (
+    return !isLoading ? (
         <ScrollView>
-            {!isLoading ? (
-                <View style={editProfileStyles().container}>
-                    <>
-                        <View style={editProfileStyles().img}>
-                            {image !== '' ? (
-                                <Avatar.Image
-                                    source={{uri: image}}
-                                    size={profProfPic}
-                                />
-                            ) : route.params.imageURL !== '' ? (
-                                <Avatar.Image
-                                    source={{uri: route.params.imageURL}}
-                                    size={profProfPic}
-                                />
-                            ) : (
-                                <Avatar.Image
-                                    source={{uri: defaultProfilePicture}}
-                                    size={profProfPic}
-                                />
-                            )}
-                        </View>
+            <View style={editProfileStyles().container}>
+                <>
+                    <View style={editProfileStyles().img}>
+                        {image !== '' ? (
+                            <Avatar.Image
+                                source={{uri: image}}
+                                size={profProfPic}
+                            />
+                        ) : route.params.imageURL !== '' ? (
+                            <Avatar.Image
+                                source={{uri: route.params.imageURL}}
+                                size={profProfPic}
+                            />
+                        ) : (
+                            <Avatar.Image
+                                source={{uri: defaultProfilePicture}}
+                                size={profProfPic}
+                            />
+                        )}
+                    </View>
 
-                        <View>
-                            {/* <Button title="Change Profile pic" onPress={pickImage} /> */}
-                            <TouchableOpacity
-                                style={editProfileStyles().profilebtn}
-                                onPress={pickImage}
-                            >
-                                <Text
-                                    style={{color: 'white', fontSize: font12}}
-                                >
-                                    Change Profile Photo
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
-
-                        <View style={editProfileStyles().blocks}>
-                            <Text style={editProfileStyles().te}>
-                                First Name
-                            </Text>
-                        </View>
-                        <TextInput
-                            style={editProfileStyles().ti}
-                            defaultValue={firstname}
-                            onChangeText={(text) => setfirstname(text)}
-                        />
-
-                        <View style={editProfileStyles().blocks}>
-                            <Text style={editProfileStyles().te}>
-                                Last Name
-                            </Text>
-                        </View>
-                        <TextInput
-                            style={editProfileStyles().ti}
-                            defaultValue={lastname}
-                            onChangeText={(text) => setlastname(text)}
-                        />
-                        <View style={editProfileStyles().blocks}>
-                            <Text style={editProfileStyles().te}>
-                                Description
-                            </Text>
-                        </View>
-                        <TextInput
-                            style={editProfileStyles().ti}
-                            multiline={true}
-                            numberOfLines={4}
-                            defaultValue={description}
-                            onChangeText={(text) => setdescription(text)}
-                        />
-                        <View style={editProfileStyles().blocks}>
-                            <Text style={editProfileStyles().te}>
-                                Change Password
-                            </Text>
-                        </View>
-                        <TextInput
-                            style={editProfileStyles().ti}
-                            secureTextEntry={true}
-                            onChangeText={(text) => setpassword(text)}
-                        />
-                        <View style={editProfileStyles().blocks}>
-                            <Text style={editProfileStyles().te}>
-                                Confirm Change Password
-                            </Text>
-                        </View>
-                        <TextInput
-                            style={editProfileStyles().ti}
-                            secureTextEntry={true}
-                            onChangeText={(text) => setCpassword(text)}
-                        />
-
+                    <View>
+                        {/* <Button title="Change Profile pic" onPress={pickImage} /> */}
                         <TouchableOpacity
-                            onPress={() => {
-                                handleEditProfile();
-                            }}
-                            style={editProfileStyles().savebtn}
+                            style={editProfileStyles().profilebtn}
+                            onPress={pickImage}
                         >
-                            <Text style={{color: 'white', fontSize: textFont}}>
-                                Save Changes
+                            <Text style={{color: 'white', fontSize: font12}}>
+                                Change Profile Photo
                             </Text>
                         </TouchableOpacity>
-                    </>
-                    {alertVisible ? (
-                        <AlertStyled
-                            alertVisible={true}
-                            alertMessage={alertMessage}
-                            setAlertVisible={setAlertVisible}
-                        />
-                    ) : (
-                        <></>
-                    )}
-                </View>
-            ) : (
-                <View style={profileStyles().root}>
-                    <LoadingScreen />
-                </View>
-            )}
+                    </View>
+
+                    <View style={editProfileStyles().blocks}>
+                        <Text style={editProfileStyles().te}>First Name</Text>
+                    </View>
+                    <TextInput
+                        style={editProfileStyles().ti}
+                        defaultValue={firstname}
+                        onChangeText={(text) => setfirstname(text)}
+                    />
+
+                    <View style={editProfileStyles().blocks}>
+                        <Text style={editProfileStyles().te}>Last Name</Text>
+                    </View>
+                    <TextInput
+                        style={editProfileStyles().ti}
+                        defaultValue={lastname}
+                        onChangeText={(text) => setlastname(text)}
+                    />
+                    <View style={editProfileStyles().blocks}>
+                        <Text style={editProfileStyles().te}>Description</Text>
+                    </View>
+                    <TextInput
+                        style={editProfileStyles().ti}
+                        multiline={true}
+                        numberOfLines={4}
+                        defaultValue={description}
+                        onChangeText={(text) => setdescription(text)}
+                    />
+                    <View style={editProfileStyles().blocks}>
+                        <Text style={editProfileStyles().te}>
+                            Change Password
+                        </Text>
+                    </View>
+                    <TextInput
+                        style={editProfileStyles().ti}
+                        secureTextEntry={true}
+                        onChangeText={(text) => setpassword(text)}
+                    />
+                    <View style={editProfileStyles().blocks}>
+                        <Text style={editProfileStyles().te}>
+                            Confirm Change Password
+                        </Text>
+                    </View>
+                    <TextInput
+                        style={editProfileStyles().ti}
+                        secureTextEntry={true}
+                        onChangeText={(text) => setCpassword(text)}
+                    />
+
+                    <TouchableOpacity
+                        onPress={() => {
+                            handleEditProfile();
+                        }}
+                        style={editProfileStyles().savebtn}
+                    >
+                        <Text style={{color: 'white', fontSize: textFont}}>
+                            Save Changes
+                        </Text>
+                    </TouchableOpacity>
+                </>
+                {alertVisible ? (
+                    <AlertStyled
+                        alertVisible={true}
+                        alertMessage={alertMessage}
+                        setAlertVisible={setAlertVisible}
+                    />
+                ) : (
+                    <></>
+                )}
+            </View>
         </ScrollView>
+    ) : (
+        <View style={styles().container}>
+            <LoadingScreen />
+        </View>
     );
 }

@@ -163,7 +163,7 @@ export default function ViewUserPostScreen({
 
     const onChangeSearch = (query) => setSearchQuery(query);
 
-    return (
+    return !isLoading ? (
         <View style={styles().container}>
             <Image source={theme().file} style={styles().backgroundImage} />
             <View
@@ -222,8 +222,10 @@ export default function ViewUserPostScreen({
                 <></>
             )}
             <DrawerContentScrollView style={styles().postWrapper}>
-                {!isLoading ? viewPosts() : <LoadingScreen />}
+                {viewPosts()}
             </DrawerContentScrollView>
         </View>
+    ) : (
+        <LoadingScreen />
     );
 }
