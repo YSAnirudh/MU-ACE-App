@@ -68,6 +68,8 @@ export default function ViewPost({navigation, route}) {
                             description={res.description}
                             tags={res.tags}
                             title={res.theTitle}
+                            postImg={res.postImg}
+                            profileImg={res.profileImg}
                             postOpen={true}
                         />
                     );
@@ -91,6 +93,7 @@ export default function ViewPost({navigation, route}) {
                     comment={answers[i].comment}
                     userCommentId={answers[i].userCommentId}
                     email={answers[i].email}
+                    profileImg={answers[i].profileImg}
                 />
             );
         }

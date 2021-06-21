@@ -2,7 +2,12 @@ import React from 'react';
 
 import {View, Image} from 'react-native';
 import {Text, Avatar, Title, Caption} from 'react-native-paper';
-import {styles, theme, drawerStyles} from '../constants/Styles';
+import {
+    styles,
+    theme,
+    drawerStyles,
+    defaultProfilePicture,
+} from '../constants/Styles';
 import {margin10, postImageHeight} from '../constants/Sizes';
 
 const Post = ({
@@ -22,7 +27,7 @@ const Post = ({
                 {typeof profileImg !== 'undefined' && profileImg !== '' ? (
                     <Avatar.Image source={{uri: profileImg}} />
                 ) : (
-                    <Avatar.Image source={require('../assets/bulusu.jpeg')} />
+                    <Avatar.Image source={{uri: defaultProfilePicture}} />
                 )}
 
                 <View>
@@ -50,7 +55,7 @@ const Post = ({
                     <Image
                         source={{uri: postImg}}
                         style={{
-                            height: 'auto',
+                            height: postImageHeight * 2,
                             width: '100%',
                             margin: 5,
                         }}

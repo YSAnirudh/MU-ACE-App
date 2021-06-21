@@ -3,6 +3,9 @@ import {StyleSheet} from 'react-native';
 import {ThemeContext} from '../components/Theme';
 import Colors from './Colors';
 
+export const defaultProfilePicture =
+    'https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg';
+
 import {screenHeight, screenWidth} from '../utils/ScreenParams';
 import {
     widthPercentageToDP as wp,

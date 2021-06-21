@@ -17,6 +17,7 @@ import {
     theme,
     createPostStyles,
     profileStyles,
+    defaultProfilePicture,
 } from '../constants/Styles';
 import {font12, profProfPic, textFont} from '../constants/Sizes';
 import {validateEditProfileInput} from '../validation/editProfileValidation';
@@ -227,7 +228,7 @@ export default function EditProfile({
                                 />
                             ) : (
                                 <Avatar.Image
-                                    source={require('../assets/bulusu.jpeg')}
+                                    source={{uri: defaultProfilePicture}}
                                     size={profProfPic}
                                 />
                             )}

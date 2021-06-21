@@ -8,6 +8,7 @@ import {
     theme,
     profileStyles,
     noobProfile,
+    defaultProfilePicture,
 } from '../../constants/Styles';
 import {widthPercentageToDP} from 'react-native-responsive-screen';
 import * as ImagePicker from 'expo-image-picker';
@@ -105,7 +106,7 @@ export default function ProfileScreen({
                             />
                         ) : (
                             <Avatar.Image
-                                source={require('../../assets/bulusu.jpeg')}
+                                source={{uri: defaultProfilePicture}}
                                 size={profProfPic}
                             />
                         )}

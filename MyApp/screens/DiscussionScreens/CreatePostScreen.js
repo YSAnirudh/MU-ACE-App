@@ -25,6 +25,21 @@ import {BackendURL} from '../../constants/Backend';
 import LoadingScreen from '../LoadingScreen';
 import AlertStyled from '../../components/Alert';
 import {set} from 'react-native-reanimated';
+import * as ImagePicker from 'expo-image-picker';
+import * as Firebase from 'firebase';
+import {FBStorage} from '../../firebase';
+import firebase from 'firebase';
+import 'firebase/storage';
+import {LogBox} from 'react-native';
+import _ from 'lodash';
+LogBox.ignoreLogs(['Setting a timer']);
+const _console = _.clone(console);
+console.warn = (message) => {
+    if (message.indexOf('Setting a timer') <= -1) {
+        _console.warn(message);
+    }
+};
+const ObjectId = require('bson-objectid');
 
 export default function CreatePostScreen({
     navigation,
@@ -60,20 +75,42 @@ export default function CreatePostScreen({
         setFlairMessage(message);
     };
 
-    const handleCreatePost = () => {
+    const handleCreatePost = async () => {
         const userData = {
             userId: userId,
             title: title,
             description: desc,
             tags: selectedItems + typeChange,
         };
+        const postId = ObjectId();
         var validate = validateCreatePostInput(userData);
         if (validate.isValid) {
-            setIsLoading(true);
-            fetch(BackendURL + 'rest/post/create', {
+            // if (image !== '') {
+            //     await uploadImage(postId);
+            // }
+            let a = await uploadImage(postId);
+            await fetch(BackendURL + 'rest/post/create', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(userData),
+                body:
+                    image !== ''
+                        ? JSON.stringify({
+                              postId: postId,
+                              userId: userId,
+                              title: title,
+                              description: desc,
+                              tags: selectedItems,
+                              typeTags: typeChange,
+                              postImg: URL,
+                          })
+                        : JSON.stringify({
+                              postId: postId,
+                              userId: userId,
+                              title: title,
+                              description: desc,
+                              tags: selectedItems,
+                              typeTags: typeChange,
+                          }),
             })
                 .then((res) => {
                     if (res.status === 400) {
@@ -91,7 +128,13 @@ export default function CreatePostScreen({
                         setTitle('');
                         setDesc('');
                         setSelectedItems([]);
+                        setTypeChange([]);
+                        setImage('');
+                        setURL('');
                     }
+                })
+                .then((res) => {
+                    navigation.navigate('Forum');
                 })
                 .catch((err) => {
                     console.log(err);
@@ -99,6 +142,76 @@ export default function CreatePostScreen({
         } else {
             setAlert(!alertVisible, validate.message);
         }
+    };
+
+    const [image, setImage] = useState('');
+    const [URL, setURL] = useState('');
+    const setMyURL = (url) => {
+        setURL(url);
+    };
+
+    const pickImage = async () => {
+        let granted = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (granted) {
+            let result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.All,
+                allowsEditing: true,
+                aspect: [1, 1],
+                quality: 0.25,
+            });
+
+            // console.log(result);
+
+            if (!result.cancelled) {
+                setImage(result.uri);
+            }
+        } else {
+            setAlert(true, 'Need Gallery Permission to Upload Image');
+        }
+        // fetch POST => body uri,
+    };
+
+    const uploadImage = async (postId) => {
+        if (image === '') {
+            return postId;
+        }
+        const blob = await new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+            xhr.onload = function () {
+                resolve(xhr.response);
+            };
+            xhr.onerror = function () {
+                reject(new TypeError('Network request failed'));
+            };
+            xhr.responseType = 'blob';
+            xhr.open('GET', image, true);
+            xhr.send(null);
+        });
+
+        const ref = FBStorage.ref().child('post/' + postId);
+        const snapshot = ref.put(blob);
+
+        snapshot.on(
+            firebase.storage.TaskEvent.STATE_CHANGED,
+            () => {
+                setIsLoading(true);
+            },
+            (error) => {
+                setIsLoading(false);
+                console.log(error);
+                blob.close();
+                return;
+            },
+            () => {
+                snapshot.snapshot.ref.getDownloadURL().then((url) => {
+                    // console.log('Hello');
+                    setMyURL(url);
+                    blob.close();
+                    return url;
+                });
+            }
+        );
+        return postId;
     };
 
     const [alertVisible, setAlertVisible] = useState(false);
@@ -147,10 +260,10 @@ export default function CreatePostScreen({
                     )}
                     <View style={createPostStyles().buttonContainer}>
                         <CreatePostButton
-                            bname="Upload Image"
-                            onPress={() => {
-                                Alert.alert('Post Clicked');
-                            }}
+                            bname={
+                                image !== '' ? 'Image Selected' : 'Upload Image'
+                            }
+                            onPress={pickImage}
                         ></CreatePostButton>
                         <CreatePostButton
                             bname={

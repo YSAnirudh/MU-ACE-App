@@ -2,7 +2,11 @@ import React from 'react';
 import {Text, View} from 'react-native';
 import ProfilePicture from 'react-native-profile-picture';
 import {TouchableRipple} from 'react-native-paper';
-import {availabilityStyles, theme} from '../constants/Styles';
+import {
+    availabilityStyles,
+    defaultProfilePicture,
+    theme,
+} from '../constants/Styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {Avatar} from 'react-native-paper';
@@ -47,7 +51,7 @@ const DisplayStatus = ({val, navigation, setIsLoading, isLoading, userId}) => {
                             />
                         ) : (
                             <Avatar.Image
-                                source={require('../assets/bulusu.jpeg')}
+                                source={{uri: defaultProfilePicture}}
                                 size={statusProfPic}
                             />
                         )}
