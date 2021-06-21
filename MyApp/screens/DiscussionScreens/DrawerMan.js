@@ -63,6 +63,42 @@ export function DrawerMan({
         setStatus(u);
     };
 
+    const handleUpdateTheme = () => {
+        const userData = {
+            userId: userId,
+            theme: !darkMode,
+        };
+        setIsLoading(true);
+        fetch(BackendURL + 'rest/theme/update', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(userData),
+        })
+            .then((res) => {
+                if (res.status === 400) {
+                    console.log(res);
+                    return 'Error';
+                } else {
+                    return res.json();
+                }
+            })
+            .then((res) => {
+                if (res === 'Error') {
+                    setAlert(true, 'Cannot Update Theme');
+                } else {
+                    // console.log(res);
+                    setIsLoading(false);
+                    toggleTheme();
+                    setAlert(true, 'Updated Your Theme');
+                    navigation.closeDrawer();
+                }
+            })
+            .catch((err) => {
+                console.log('errr');
+                console.log(err);
+            });
+    };
+
     const handleUpdateStatus = () => {
         const userData = {
             userId: userId,
@@ -83,7 +119,7 @@ export function DrawerMan({
             })
             .then((res) => {
                 if (res === 'Error') {
-                    setAlert(true, 'Cannot Update Profile');
+                    setAlert(true, 'Cannot Update Theme');
                 } else {
                     // console.log(res);
                     setIsLoading(false);
@@ -326,7 +362,9 @@ export function DrawerMan({
                                 <></>
                             )}
 
-                            <TouchableRipple onPress={() => toggleTheme()}>
+                            <TouchableRipple
+                                onPress={() => handleUpdateTheme()}
+                            >
                                 <View
                                     style={[
                                         styles().preferences,

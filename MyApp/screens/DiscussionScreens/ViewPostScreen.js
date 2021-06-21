@@ -8,6 +8,7 @@ import {
     Button,
     Image,
     TouchableOpacity,
+    RefreshControl,
 } from 'react-native';
 import {DrawerContentScrollView} from '@react-navigation/drawer';
 import Post from '../../components/Post';
@@ -22,6 +23,7 @@ import {
 import {iconSize, margin10, margin15, margin20} from '../../constants/Sizes';
 import AlertFilters from '../../components/AlertFilters';
 import AlertStyled from '../../components/Alert';
+import {ScrollView} from 'react-native-gesture-handler';
 
 export default function ViewPostScreen({
     navigation,
@@ -146,10 +148,12 @@ export default function ViewPostScreen({
     const [searchQuery, setSearchQuery] = React.useState('');
 
     const onChangeSearch = (query) => setSearchQuery(query);
+    const onRefresh = React.useCallback(() => {
+        handleGetPosts();
+    }, []);
 
     return !isLoading ? (
         <View style={styles().container}>
-            <Image source={theme().file} style={styles().backgroundImage} />
             <View
                 style={{
                     flexDirection: 'row',
@@ -205,7 +209,15 @@ export default function ViewPostScreen({
             ) : (
                 <></>
             )}
-            <DrawerContentScrollView style={styles().postWrapper}>
+            <DrawerContentScrollView
+                style={styles().postWrapper}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={isLoading}
+                        onRefresh={onRefresh}
+                    />
+                }
+            >
                 {viewPosts()}
             </DrawerContentScrollView>
         </View>

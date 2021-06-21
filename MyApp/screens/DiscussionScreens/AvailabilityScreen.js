@@ -24,24 +24,17 @@ export default function AvailabilityScreen({
     }, []);
     // setIsLoading(false);
     return (
-        <ScrollView
-            contentContainerStyle={availabilityStyles().scrollView}
-            refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-        >
-            <View style={styles().container}>
-                <Image
-                    source={require('../../assets/rohai.png')}
-                    style={[styles().backgroundImage, {height: 500}]}
-                />
-                <Status
-                    {...navigation}
-                    userId={userId}
-                    isLoading={isLoading}
-                    setIsLoading={setIsLoading}
-                />
-            </View>
-        </ScrollView>
+        <View style={styles().container}>
+            <Image
+                source={require('../../assets/rohai.png')}
+                style={[styles().backgroundImage, {height: 500}]}
+            />
+            <Status
+                {...navigation}
+                userId={userId}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
+            />
+        </View>
     );
 }

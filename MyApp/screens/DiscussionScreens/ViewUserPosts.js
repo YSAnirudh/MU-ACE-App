@@ -8,6 +8,7 @@ import {
     Button,
     Image,
     TouchableOpacity,
+    RefreshControl,
 } from 'react-native';
 import {DrawerContentScrollView} from '@react-navigation/drawer';
 import Post from '../../components/Post';
@@ -99,6 +100,9 @@ export default function ViewUserPostScreen({
 
     const [alertVisible, setAlertVisible] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
+    const onRefresh = React.useCallback(() => {
+        handleGetPosts();
+    }, []);
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
@@ -221,7 +225,15 @@ export default function ViewUserPostScreen({
             ) : (
                 <></>
             )}
-            <DrawerContentScrollView style={styles().postWrapper}>
+            <DrawerContentScrollView
+                style={styles().postWrapper}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={isLoading}
+                        onRefresh={onRefresh}
+                    />
+                }
+            >
                 {viewPosts()}
             </DrawerContentScrollView>
         </View>

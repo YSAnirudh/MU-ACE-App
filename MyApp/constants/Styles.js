@@ -345,6 +345,7 @@ export const styles = () => ({
         backgroundColor: theme().background,
         color: theme().text,
         width: '90%',
+        marginTop: margin10,
     },
     icon: {
         fontWeight: 'bold',

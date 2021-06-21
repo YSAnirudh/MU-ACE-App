@@ -24,6 +24,7 @@ import DisplayStatus from './DisplayStatus';
 import AlertFlair from './AlertFlair';
 import AlertFilters from './AlertFilters';
 import AlertStyled from './Alert';
+import {RefreshControl} from 'react-native';
 
 const Status = ({isLoading, setIsLoading, userId, ...navigation}) => {
     const [dataHook, setDataHook] = useState([]);
@@ -47,6 +48,7 @@ const Status = ({isLoading, setIsLoading, userId, ...navigation}) => {
 
     const handleGetStatus = () => {
         setIsLoading(true);
+
         fetch(BackendURL + 'rest/status/get', {
             method: 'GET',
             headers: {'Content-Type': 'application/json'},
@@ -136,63 +138,77 @@ const Status = ({isLoading, setIsLoading, userId, ...navigation}) => {
 
     const onChangeSearch = (query) => setSearchQuery(query);
 
+    const onRefresh = React.useCallback(() => {
+        handleGetStatus();
+    }, []);
+
     return !isLoading ? (
         <View style={availabilityStyles().container}>
-            <View
-                style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    marginBottom: margin10,
-                }}
-            >
-                <View style={{width: wp('80%')}}>
-                    <Searchbar
-                        placeholder="Search"
-                        iconColor={theme().text}
-                        onChangeText={onChangeSearch}
-                        placeholderTextColor={theme().text}
-                        col
-                        value={searchQuery}
-                        style={availabilityStyles().searchBar}
-                        theme={{colors: {text: theme().text}}}
+            <ScrollView
+                style={{paddingBottom: 0}}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={isLoading}
+                        onRefresh={onRefresh}
                     />
-                </View>
-                <View>
-                    <TouchableRipple>
-                        <IconButton
-                            icon="filter"
-                            size={iconSize + 4}
-                            borderless={true}
-                            color={theme().text}
-                            onPress={() => {
-                                setFlairVis(!flairAlertVis);
-                            }}
+                }
+            >
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        marginBottom: margin10,
+                    }}
+                >
+                    <View style={{width: wp('80%')}}>
+                        <Searchbar
+                            placeholder="Search"
+                            iconColor={theme().text}
+                            onChangeText={onChangeSearch}
+                            placeholderTextColor={theme().text}
+                            col
+                            value={searchQuery}
+                            style={availabilityStyles().searchBar}
+                            theme={{colors: {text: theme().text}}}
                         />
-                    </TouchableRipple>
+                    </View>
+                    <View>
+                        <TouchableRipple>
+                            <IconButton
+                                icon="filter"
+                                size={iconSize + 4}
+                                borderless={true}
+                                color={theme().text}
+                                onPress={() => {
+                                    setFlairVis(!flairAlertVis);
+                                }}
+                            />
+                        </TouchableRipple>
+                    </View>
                 </View>
-            </View>
-            {alertVisible ? (
-                <AlertStyled
-                    alertVisible={true}
-                    alertMessage={alertMessage}
-                    setAlertVisible={setAlertVisible}
-                />
-            ) : (
-                <></>
-            )}
-            {flairAlertVis ? (
-                //<View style={createPostStyles().flairC}>
-                <AlertFilters
-                    alertVisible={true}
-                    setAlertVisible={setFlairVis}
-                    onSelectedItemsChange={onFiltersChange}
-                    selectedItems={filters}
-                ></AlertFilters>
-            ) : (
-                //</View>
-                <></>
-            )}
-            <ScrollView style={{paddingBottom: 0}}>{viewStatus()}</ScrollView>
+                {alertVisible ? (
+                    <AlertStyled
+                        alertVisible={true}
+                        alertMessage={alertMessage}
+                        setAlertVisible={setAlertVisible}
+                    />
+                ) : (
+                    <></>
+                )}
+                {flairAlertVis ? (
+                    //<View style={createPostStyles().flairC}>
+                    <AlertFilters
+                        alertVisible={true}
+                        setAlertVisible={setFlairVis}
+                        onSelectedItemsChange={onFiltersChange}
+                        selectedItems={filters}
+                    ></AlertFilters>
+                ) : (
+                    //</View>
+                    <></>
+                )}
+                {viewStatus()}
+            </ScrollView>
         </View>
     ) : (
         <LoadingScreen />
