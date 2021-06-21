@@ -58,7 +58,6 @@ export default function ProfileScreen({
             })
             .then((res) => {
                 if (res === 'Error') {
-                    console.log('Hallo');
                     setAlert(true, 'Cannot Get Data');
                 } else {
                     // console.log(res);
@@ -74,7 +73,6 @@ export default function ProfileScreen({
                 }
             })
             .catch((err) => {
-                console.log('errr');
                 console.log(err);
             });
     };
@@ -238,6 +236,7 @@ export default function ProfileScreen({
                                     Firstname: firstName,
                                     Lastname: lastName,
                                     Description: description,
+                                    imageURL: image,
                                 },
                             })
                         }

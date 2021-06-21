@@ -3,7 +3,7 @@ import React from 'react';
 import {View, Image} from 'react-native';
 import {Text, Avatar, Title, Caption} from 'react-native-paper';
 import {styles, theme, drawerStyles} from '../constants/Styles';
-import {postImageHeight} from '../constants/Sizes';
+import {margin10, postImageHeight} from '../constants/Sizes';
 
 const Post = ({
     userName,
@@ -11,13 +11,20 @@ const Post = ({
     description,
     title,
     postOpen,
+    postImg,
+    profileImg,
+    postImgDim,
     userType,
 }) => {
-    const hasImage = true;
     return (
         <View style={styles().post}>
             <View style={drawerStyles().postPic}>
-                <Avatar.Image source={require('../assets/logo2.png')} />
+                {typeof profileImg !== 'undefined' && profileImg !== '' ? (
+                    <Avatar.Image source={{uri: profileImg}} />
+                ) : (
+                    <Avatar.Image source={require('../assets/bulusu.jpeg')} />
+                )}
+
                 <View>
                     <Title style={drawerStyles().postTitle}>{title}</Title>
                     <Caption style={drawerStyles().postCaption}>
@@ -29,27 +36,27 @@ const Post = ({
                 </View>
             </View>
             <View>
-                {/* <Caption style={drawerStyles().descTitle}>
-                    BRIEF DESCRIPTION -{' '}
-                </Caption> */}
+                <Caption style={drawerStyles().descTitle}>Brief - </Caption>
                 <Text style={drawerStyles().description}>
                     {postOpen
                         ? description
-                        : description.length >= 30
-                        ? description.substring(0, 30) + '...'
+                        : description.length >= 20
+                        ? description.substring(0, 20) + '...'
                         : description}
                 </Text>
             </View>
-            <View>
-                {hasImage && (
+            <View style={{marginRight: margin10}}>
+                {typeof postImg !== 'undefined' && postImg !== '' ? (
                     <Image
-                        source={require('../assets/logo3.png')}
+                        source={{uri: postImg}}
                         style={{
-                            height: postImageHeight,
+                            height: 'auto',
                             width: '100%',
                             margin: 5,
                         }}
                     />
+                ) : (
+                    <></>
                 )}
             </View>
         </View>

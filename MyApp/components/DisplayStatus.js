@@ -39,8 +39,8 @@ const DisplayStatus = ({val, navigation, setIsLoading, isLoading, userId}) => {
                             marginRight: wp('4%'),
                         }}
                     >
-                        {console.log(val.profileImgURI)}
-                        {typeof val.profileImgURI !== 'undefined' ? (
+                        {typeof val.profileImgURI !== 'undefined' &&
+                        val.profileImgURI !== '' ? (
                             <Avatar.Image
                                 source={{uri: val.profileImgURI}}
                                 size={statusProfPic}
@@ -82,13 +82,6 @@ const DisplayStatus = ({val, navigation, setIsLoading, isLoading, userId}) => {
                         </Text>
                     </View>
                     <View>
-                        {/* <View
-                                style={
-                                    availabilityStyles(
-                                        val.status
-                                    ).statusIcon
-                                }
-                            > */}
                         <Icon
                             name="checkmark-circle"
                             size={iconSize + 5}

@@ -15,7 +15,7 @@ var MainTab = createMaterialBottomTabNavigator();
 
 function Tabs({userId, isLoading, setIsLoading, setUserId, setIsLogin}) {
     return (
-        <MainTab.Navigator initialRouteName="Profile" activeColor={Colors.Grey}>
+        <MainTab.Navigator initialRouteName="Forum" activeColor={Colors.Grey}>
             <MainTab.Screen
                 name="Forum"
                 options={{

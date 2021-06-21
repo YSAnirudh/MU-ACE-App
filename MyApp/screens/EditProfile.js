@@ -8,15 +8,34 @@ import {
     TouchableOpacity,
     Image,
     ScrollView,
+    Platform,
 } from 'react-native';
 import {Avatar} from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
-import {editProfileStyles, theme, createPostStyles} from '../constants/Styles';
+import {
+    editProfileStyles,
+    theme,
+    createPostStyles,
+    profileStyles,
+} from '../constants/Styles';
 import {font12, profProfPic, textFont} from '../constants/Sizes';
 import {validateEditProfileInput} from '../validation/editProfileValidation';
 import {BackendURL} from '../constants/Backend';
 import LoadingScreen from './LoadingScreen';
 import AlertStyled from '../components/Alert';
+import * as Firebase from 'firebase';
+import {FBStorage} from '../firebase';
+import firebase from 'firebase';
+import 'firebase/storage';
+import {LogBox} from 'react-native';
+import _ from 'lodash';
+LogBox.ignoreLogs(['Setting a timer']);
+const _console = _.clone(console);
+console.warn = (message) => {
+    if (message.indexOf('Setting a timer') <= -1) {
+        _console.warn(message);
+    }
+};
 
 export default function EditProfile({
     navigation,
@@ -30,13 +49,15 @@ export default function EditProfile({
     const [description, setdescription] = useState(route.params.Description);
     const [password, setpassword] = useState('');
     const [Cpassword, setCpassword] = useState('');
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState('');
+    const [URL, setURL] = useState('');
+
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
             aspect: [1, 1],
-            quality: 1,
+            quality: 0.25,
         });
 
         // console.log(result);
@@ -47,7 +68,62 @@ export default function EditProfile({
         // fetch POST => body uri,
     };
 
-    const handleEditProfile = () => {
+    const uploadImage = async () => {
+        const blob = await new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+            xhr.onload = function () {
+                resolve(xhr.response);
+            };
+            xhr.onerror = function () {
+                reject(new TypeError('Network request failed'));
+            };
+            xhr.responseType = 'blob';
+            xhr.open('GET', image, true);
+            xhr.send(null);
+        });
+
+        const ref = FBStorage.ref().child(userId);
+        const snapshot = ref.put(blob);
+
+        snapshot.on(
+            firebase.storage.TaskEvent.STATE_CHANGED,
+            () => {
+                setIsLoading(true);
+            },
+            (error) => {
+                setIsLoading(false);
+                console.log(error);
+                blob.close();
+                return;
+            },
+            () => {
+                snapshot.snapshot.ref.getDownloadURL().then((url) => {
+                    setURL(url);
+                    blob.close();
+                    return url;
+                });
+            }
+        );
+    };
+
+    const handleImage = async () => {
+        if (image !== '') {
+            await FBStorage.ref()
+                .child(userId)
+                .delete()
+                .then(() => {
+                    console.log('Existing Profile Image deleted');
+                })
+                .catch((err) => {
+                    console.log('Error deleting Existing Profile Image');
+                });
+        }
+        if (image !== '') {
+            await uploadImage();
+        }
+    };
+
+    const handleEditProfile = async () => {
         const userData = {
             userId: userId,
             firstName: firstname,
@@ -55,41 +131,59 @@ export default function EditProfile({
             description: description,
             password: password,
             confirmPassword: Cpassword,
-            profileImgURI: image,
         };
         let validate = validateEditProfileInput(userData);
 
         if (validate.isValid) {
-            setIsLoading(true);
-            fetch(BackendURL + 'rest/profile/update', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(userData),
-            })
-                .then((res) => {
-                    if (res.status === 400) {
-                        return 'Error';
-                    } else {
-                        return res.json();
-                    }
+            handleImage().then((res) => {
+                fetch(BackendURL + 'rest/profile/update', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body:
+                        image !== ''
+                            ? JSON.stringify({
+                                  userId: userId,
+                                  firstName: firstname,
+                                  lastName: lastname,
+                                  description: description,
+                                  password: password,
+                                  confirmPassword: Cpassword,
+                                  profileImgURI: URL,
+                              })
+                            : JSON.stringify({
+                                  userId: userId,
+                                  firstName: firstname,
+                                  lastName: lastname,
+                                  description: description,
+                                  password: password,
+                                  confirmPassword: Cpassword,
+                              }),
                 })
-                .then((res) => {
-                    if (res === 'Error') {
-                        setAlert(true, 'Cannot Update Profile');
-                    } else {
-                        // console.log(res);
-                        setIsLoading(false);
-                        setAlert(
-                            true,
-                            'Saved Changes Successfully!\nCheck After edit profile turning white'
-                        );
+                    .then((res) => {
+                        if (res.status === 400) {
+                            return 'Error';
+                        } else {
+                            return res.json();
+                        }
+                    })
+                    .then((res) => {
+                        if (res === 'Error') {
+                            setAlert(true, 'Cannot Update Profile');
+                        } else {
+                            setIsLoading(false);
+                            setAlert(
+                                true,
+                                'Saved Changes Successfully!\nCheck After edit profile turning white'
+                            );
+                        }
+                    })
+                    .then((res) => {
                         navigation.navigate('Profile');
-                    }
-                })
-                .catch((err) => {
-                    console.log('errr');
-                    console.log(err);
-                });
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+            });
         } else {
             setAlert(true, validate.message);
         }
@@ -103,7 +197,17 @@ export default function EditProfile({
     const [alertVisible, setAlertVisible] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
 
-    useEffect(() => {}, []);
+    useEffect(() => {
+        (async () => {
+            if (Platform.OS !== 'web') {
+                const {status} =
+                    await ImagePicker.requestMediaLibraryPermissionsAsync();
+                if (status !== 'granted') {
+                    setAlert(true, 'Need Gallery access permissions');
+                }
+            }
+        })();
+    }, []);
 
     return (
         <ScrollView>
@@ -111,13 +215,17 @@ export default function EditProfile({
                 <View style={editProfileStyles().container}>
                     <>
                         <View style={editProfileStyles().img}>
-                            {image && (
+                            {image !== '' ? (
                                 <Avatar.Image
                                     source={{uri: image}}
                                     size={profProfPic}
                                 />
-                            )}
-                            {!image && (
+                            ) : route.params.imageURL !== '' ? (
+                                <Avatar.Image
+                                    source={{uri: route.params.imageURL}}
+                                    size={profProfPic}
+                                />
+                            ) : (
                                 <Avatar.Image
                                     source={require('../assets/bulusu.jpeg')}
                                     size={profProfPic}
@@ -215,7 +323,7 @@ export default function EditProfile({
                     )}
                 </View>
             ) : (
-                <View style={editProfileStyles().container}>
+                <View style={profileStyles().root}>
                     <LoadingScreen />
                 </View>
             )}

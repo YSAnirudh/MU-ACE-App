@@ -19,6 +19,8 @@ export default function PostClickable({navigation, postRes, postOpen}) {
                         title: x.theTitle,
                         comments: x.comments,
                         currentUserId: x.userId,
+                        postImg: x.postImg,
+                        profileImg: x.profileImg,
                     },
                 });
             }}
@@ -33,6 +35,9 @@ export default function PostClickable({navigation, postRes, postOpen}) {
                 tags={postRes.tags}
                 title={postRes.theTitle}
                 postOpen={postOpen}
+                postImg={postRes.postImg}
+                profileImg={postRes.profileImg}
+                postImgDim={postRes.postImgDim}
             />
         </TouchableOpacity>
     );
