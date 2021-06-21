@@ -1,22 +1,22 @@
-import React, {Component} from 'react';
-import ViewPostScreen from './ViewPostScreen';
-import CreatePostScreen from './CreatePostScreen';
-import AvailabilityScreen from './AvailabilityScreen';
-import ProfileScreen from './ProfileScreen';
-import {createStackNavigator} from '@react-navigation/stack';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import Colors from '../../constants/Colors';
-import {color} from 'react-native-reanimated';
-import {theme} from '../../constants/Styles';
-import {ThemeProvider} from '@react-navigation/native';
-import {iconSize} from '../../constants/Sizes';
+import React, { Component } from "react";
+import ViewPostScreen from "./ViewPostScreen";
+import CreatePostScreen from "./CreatePostScreen";
+import AvailabilityScreen from "./AvailabilityScreen";
+import ProfileScreen from "./ProfileScreen";
+import { createStackNavigator } from "@react-navigation/stack";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import Colors from "../../constants/Colors";
+import { color } from "react-native-reanimated";
+import { theme } from "../../constants/Styles";
+import { ThemeProvider } from "@react-navigation/native";
+import { iconSize } from "../../constants/Sizes";
 // import ViewPost from './ViewPost';
-import EditProfile from '../EditProfile';
-import ViewPost from './ViewPost';
-import ViewUserPostScreen from './ViewUserPosts';
-import {useState, useEffect} from 'react';
-import {BackendURL} from '../../constants/Backend';
-
+import EditProfile from "../EditProfile";
+import ViewPost from "./ViewPost";
+import ViewUserPostScreen from "./ViewUserPosts";
+import { useState, useEffect } from "react";
+import { BackendURL } from "../../constants/Backend";
+const handleGetPosts = require("./ViewPostScreen");
 const CreatePostStack = createStackNavigator();
 const ViewPostStack = createStackNavigator();
 const ViewPostUserStack = createStackNavigator();
@@ -25,7 +25,7 @@ const ProfileStack = createStackNavigator();
 const ViewStack = createStackNavigator();
 const EditProfileStack = createStackNavigator();
 
-export function ViewStackSc({navigation, userId, isLoading, setIsLoading}) {
+export function ViewStackSc({ navigation, userId, isLoading, setIsLoading }) {
     return (
         <ViewStack.Navigator
             headerMode="screen"
@@ -33,7 +33,7 @@ export function ViewStackSc({navigation, userId, isLoading, setIsLoading}) {
                 headerStyle: {
                     backgroundColor: theme().headerColor,
                 },
-                headerTitleAlign: 'center',
+                headerTitleAlign: "center",
             }}
         >
             <ViewStack.Screen
@@ -49,7 +49,7 @@ export function ViewStackSc({navigation, userId, isLoading, setIsLoading}) {
     );
 }
 
-export function EditProfileSc({navigation, userId, isLoading, setIsLoading}) {
+export function EditProfileSc({ navigation, userId, isLoading, setIsLoading }) {
     return (
         <EditProfileStack.Navigator
             headerMode="screen"
@@ -57,7 +57,7 @@ export function EditProfileSc({navigation, userId, isLoading, setIsLoading}) {
                 headerStyle: {
                     backgroundColor: theme().headerColor,
                 },
-                headerTitleAlign: 'center',
+                headerTitleAlign: "center",
             }}
         >
             <EditProfileStack.Screen
@@ -81,7 +81,12 @@ export function EditProfileSc({navigation, userId, isLoading, setIsLoading}) {
     );
 }
 
-export function ViewUserPostsSc({navigation, userId, isLoading, setIsLoading}) {
+export function ViewUserPostsSc({
+    navigation,
+    userId,
+    isLoading,
+    setIsLoading,
+}) {
     return (
         <ViewPostUserStack.Navigator
             headerMode="screen"
@@ -89,11 +94,11 @@ export function ViewUserPostsSc({navigation, userId, isLoading, setIsLoading}) {
                 headerStyle: {
                     backgroundColor: theme().headerColor,
                 },
-                headerTitleAlign: 'center',
+                headerTitleAlign: "center",
             }}
         >
             <ViewPostUserStack.Screen
-                name={'Your Posts'}
+                name={"Your Posts"}
                 options={{
                     headerTintColor: theme().header,
                     headerLeft: () =>
@@ -113,7 +118,12 @@ export function ViewUserPostsSc({navigation, userId, isLoading, setIsLoading}) {
     );
 }
 
-export function ViewPostStackSc({navigation, userId, isLoading, setIsLoading}) {
+export function ViewPostStackSc({
+    navigation,
+    userId,
+    isLoading,
+    setIsLoading,
+}) {
     return (
         <ViewPostStack.Navigator
             headerMode="screen"
@@ -121,7 +131,7 @@ export function ViewPostStackSc({navigation, userId, isLoading, setIsLoading}) {
                 headerStyle: {
                     backgroundColor: theme().headerColor,
                 },
-                headerTitleAlign: 'center',
+                headerTitleAlign: "center",
             }}
         >
             <ViewPostStack.Screen
@@ -161,7 +171,7 @@ export function CreatePostStackSc({
                 headerStyle: {
                     backgroundColor: theme().headerColor,
                 },
-                headerTitleAlign: 'center',
+                headerTitleAlign: "center",
             }}
         >
             <CreatePostStack.Screen
@@ -198,7 +208,7 @@ export function AvailabilityStackSc({
                 headerStyle: {
                     backgroundColor: theme().headerColor,
                 },
-                headerTitleAlign: 'center',
+                headerTitleAlign: "center",
             }}
         >
             <AvailabilityStack.Screen
@@ -237,7 +247,7 @@ export function ProfileStackSc({
                 headerStyle: {
                     backgroundColor: theme().headerColor,
                 },
-                headerTitleAlign: 'center',
+                headerTitleAlign: "center",
             }}
         >
             <ProfileStack.Screen
@@ -276,6 +286,18 @@ function menuButton(navigation, color) {
 }
 
 function backButton(navigation, color) {
+    return (
+        <Ionicons.Button
+            name="arrow-back"
+            size={iconSize + 10}
+            backgroundColor={color}
+            color={theme().header}
+            onPress={() => navigation.goBack()}
+        />
+    );
+}
+
+function refreshButton(navigation, color) {
     return (
         <Ionicons.Button
             name="arrow-back"

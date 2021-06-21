@@ -1,4 +1,4 @@
-import React, {Component, useState, useEffect} from 'react';
+import React, { Component, useState, useEffect } from "react";
 import {
     StyleSheet,
     Text,
@@ -7,13 +7,13 @@ import {
     Button,
     Image,
     TouchableOpacity,
-} from 'react-native';
-import {DrawerContentScrollView} from '@react-navigation/drawer';
-import Post from '../../components/Post';
-import {styles, theme} from '../../constants/Styles';
-import {BackendURL} from '../../constants/Backend';
-import PostClickable from '../../components/PostClickable';
-import LoadingScreen from '../LoadingScreen';
+} from "react-native";
+import { DrawerContentScrollView } from "@react-navigation/drawer";
+import Post from "../../components/Post";
+import { styles, theme } from "../../constants/Styles";
+import { BackendURL } from "../../constants/Backend";
+import PostClickable from "../../components/PostClickable";
+import LoadingScreen from "../LoadingScreen";
 
 export default function ViewPostScreen({
     navigation,
@@ -30,22 +30,22 @@ export default function ViewPostScreen({
 
     const handleGetPosts = async () => {
         setIsLoading(true);
-        fetch(BackendURL + 'rest/post/get/all', {
-            method: 'GET',
-            headers: {'Content-Type': 'application/json'},
+        fetch(BackendURL + "rest/post/get/all", {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
         })
             .then((res) => {
                 if (res.status === 400) {
-                    return 'Error';
+                    return "Error";
                 } else if (res === null) {
-                    return 'Error';
+                    return "Error";
                 } else {
                     return res.json();
                 }
             })
             .then((res) => {
-                if (res === 'Error') {
-                    alert('Cannot Get Posts');
+                if (res === "Error") {
+                    alert("Cannot Get Posts");
                 } else {
                     // console.log(res.length);
                     var p = [];
@@ -71,7 +71,7 @@ export default function ViewPostScreen({
     };
 
     useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
+        const unsubscribe = navigation.addListener("focus", () => {
             handleGetPosts();
             // viewPosts();
         });
