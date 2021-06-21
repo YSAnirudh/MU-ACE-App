@@ -2,7 +2,6 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {ThemeContext} from '../components/Theme';
 import Colors from './Colors';
-
 export const defaultProfilePicture =
     'https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg';
 
@@ -368,6 +367,13 @@ export const styles = () => ({
 });
 
 export const availabilityStyles = (status) => ({
+    scrollView: {
+        flex: 1,
+        backgroundColor: theme().background,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
     container: {
         flex: 1,
         //alignItems: 'center',

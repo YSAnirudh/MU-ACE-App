@@ -17,7 +17,7 @@ import ViewUserPostScreen from './ViewUserPosts';
 import {useState, useEffect} from 'react';
 import {BackendURL} from '../../constants/Backend';
 import ViewUserProfileScreen from '../ViewUserProfileScreen';
-
+const handleGetPosts = require('./ViewPostScreen');
 const CreatePostStack = createStackNavigator();
 const ViewPostStack = createStackNavigator();
 const ViewPostUserStack = createStackNavigator();
