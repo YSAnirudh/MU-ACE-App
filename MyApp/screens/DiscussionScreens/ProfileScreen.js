@@ -120,7 +120,7 @@ export default function ProfileScreen({
                         }
                     >
                         <View style={{alignItems: 'center'}}>
-                            {URL !== '' ? (
+                            {URL !== '' && typeof URL !== 'undefined' ? (
                                 <Avatar.Image
                                     source={{uri: URL}}
                                     size={profProfPic}
@@ -277,6 +277,11 @@ export default function ProfileScreen({
                             //theme={pageTheme}
                             color={theme().iconColor}
                             onPress={() => {
+                                AsyncStorage.setItem(
+                                    'Login',
+                                    JSON.stringify(true)
+                                );
+                                AsyncStorage.setItem('UserId', '');
                                 setIsLogin(true);
                                 setUserId('');
                             }}

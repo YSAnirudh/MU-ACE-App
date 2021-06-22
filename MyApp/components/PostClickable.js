@@ -2,7 +2,12 @@ import React from 'react';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Post from './Post';
 
-export default function PostClickable({navigation, postRes, postOpen}) {
+export default function PostClickable({
+    navigation,
+    postRes,
+    postOpen,
+    userIdLocal,
+}) {
     return (
         <TouchableOpacity
             onPress={() => {
@@ -21,6 +26,7 @@ export default function PostClickable({navigation, postRes, postOpen}) {
                         currentUserId: x.userId,
                         postImg: x.postImg,
                         profileImg: x.profileImg,
+                        localUserId: userIdLocal,
                     },
                 });
             }}
@@ -38,6 +44,7 @@ export default function PostClickable({navigation, postRes, postOpen}) {
                 postImg={postRes.postImg}
                 profileImg={postRes.profileImg}
                 postImgDim={postRes.postImgDim}
+                localUserId={userIdLocal}
             />
         </TouchableOpacity>
     );

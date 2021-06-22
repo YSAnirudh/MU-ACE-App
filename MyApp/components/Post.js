@@ -8,7 +8,8 @@ import {
     drawerStyles,
     defaultProfilePicture,
 } from '../constants/Styles';
-import {margin10, postImageHeight} from '../constants/Sizes';
+import {iconSize, margin10, postImageHeight} from '../constants/Sizes';
+import Icons from 'react-native-vector-icons/Ionicons';
 
 const Post = ({
     userName,
@@ -20,6 +21,8 @@ const Post = ({
     profileImg,
     postImgDim,
     userType,
+    localUserId,
+    userId,
 }) => {
     return (
         <View style={styles().post}>
@@ -38,6 +41,22 @@ const Post = ({
                     <Caption style={drawerStyles().postCaption}>
                         {userEmail}
                     </Caption>
+                </View>
+                <View>
+                    {localUserId === userId ? (
+                        <Icons
+                            name="person"
+                            color={theme().footerIcons}
+                            size={iconSize + 7}
+                            style={{
+                                alignSelf: 'flex-end',
+                                marginLeft: margin10 * 5,
+                                marginTop: margin10,
+                            }}
+                        />
+                    ) : (
+                        <></>
+                    )}
                 </View>
             </View>
             <View>

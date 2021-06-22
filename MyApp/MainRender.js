@@ -5,14 +5,20 @@ import Registration from './screens/Registration';
 import usePersistedState from './persistedState';
 import BeforeLogin from './screens/BeforeLogin';
 import LoadingScreen from './screens/LoadingScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function MainRender() {
-    const [isLogin, setIsLogin] = useState(false); //usePersistedState('isLogin', true);
-    const [userId, setUserId] = useState('60cb2b96f6c7a700228126f6'); //'60c5dd659465cf0ce4497c08'
+    const [isLogin, setIsLogin] = useState(true);
+    // const [isLogin, setIsLogin] = useState(false);
+    const [userId, setUserId] = useState(''); //'60c5dd659465cf0ce4497c08'
     const setLogin = (bool) => {
         setIsLogin(bool);
     };
     const [isLoading, setIsLoading] = useState(false);
+
+    // useEffect(() => {
+
+    // }, [isLogin])
 
     const setUId = (uId) => {
         setUserId(uId);

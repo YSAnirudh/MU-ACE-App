@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "MyApp",
+    "name": "MU Ace",
     "slug": "discussion-status",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/rohai-main.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/rohai-main.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#121212"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -17,16 +17,20 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.se-team.discussion-forum",
+      "buildNumber": "1.0.0"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/rohai-main.png",
         "backgroundColor": "#121212"
-      }
+      },
+      "versionCode": 1,
+      "package": "com.seteam.muace"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/rohai-main.png"
     },
     "description": "A Discussion Forum and Availability Status App"
   }

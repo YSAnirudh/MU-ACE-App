@@ -17,6 +17,7 @@ const {loginUser} = require('../actions/loginuser');
 const {validateLoginInput} = require('../validation/loginValidation');
 import {koushikBigMistake} from '../constants/Styles';
 import AlertStyled from '../components/Alert';
+
 const LoginScreen = ({
     navigation,
     setIsLogin,

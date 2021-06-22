@@ -18,6 +18,7 @@ export const registerUser = (userData, navigation, isLoading, setIsLoading) => {
         .then((res) => {
             if (res === 'Error') {
                 alert('User Already Present');
+                setIsLoading(false);
             } else {
                 setIsLoading(false);
                 navigation.navigate('Login');

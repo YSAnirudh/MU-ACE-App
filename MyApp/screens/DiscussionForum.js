@@ -7,7 +7,7 @@ import Tabs from './DiscussionScreens/Tab';
 import LoginScreen from '../screens/LoginScreen';
 import Registration from '../screens/Registration';
 import {DrawerMan} from './DiscussionScreens/DrawerMan';
-import {ThemeProvider} from '../components/Theme';
+import {ThemeContext, ThemeProvider} from '../components/Theme';
 import ViewUserProfileScreen from './ViewUserProfileScreen';
 import EditProfile from './EditProfile';
 import ViewPost from './DiscussionScreens/ViewPost';
@@ -17,6 +17,8 @@ import {
     ViewUserPostsSc,
     ViewUserProfileStackSc,
 } from './DiscussionScreens/Stacks';
+import {useEffect} from 'react';
+import {BackendURL} from '../constants/Backend';
 
 const MyDrawer = createDrawerNavigator();
 function DiscussionForumNoob({
@@ -28,6 +30,43 @@ function DiscussionForumNoob({
     setIsLoading,
     ...props
 }) {
+    const {darkMode, toggleTheme, setDarkMode} = React.useContext(ThemeContext);
+    const handleGetData = () => {
+        // handleUID(userId);
+        setIsLoading(true);
+        fetch(BackendURL + 'rest/user/get', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                userId: userId,
+            }),
+        })
+            .then((res) => {
+                if (res.status === 400) {
+                    console.log(res.json());
+                    return 'Error';
+                } else {
+                    return res.json();
+                }
+            })
+            .then((res) => {
+                if (res === 'Error') {
+                    setAlert(true, 'Cannot Get Data');
+                } else {
+                    // console.log(res);
+                    setDarkMode(res.theme);
+                    setIsLoading(false);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
+    useEffect(() => {
+        handleGetData();
+    }, []);
+
     return (
         <NavigationContainer>
             <MyDrawer.Navigator

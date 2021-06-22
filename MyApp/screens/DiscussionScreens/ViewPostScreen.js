@@ -135,6 +135,7 @@ export default function ViewPostScreen({
                     navigation={navigation}
                     postRes={filtered[i]}
                     postOpen={false}
+                    userIdLocal={userId}
                 />
             );
         }

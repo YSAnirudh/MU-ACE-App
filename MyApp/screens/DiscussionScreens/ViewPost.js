@@ -71,6 +71,7 @@ export default function ViewPost({navigation, route}) {
                             postImg={res.postImg}
                             profileImg={res.profileImg}
                             postOpen={true}
+                            localUserId={route.params.localUserId}
                         />
                     );
                     setIsLoading(false);

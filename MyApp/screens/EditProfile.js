@@ -110,32 +110,21 @@ export default function EditProfile({
 
     const handleImage = async () => {
         if (image !== '') {
-            await uploadImage().then((res) => {
+            uploadImage().then((res) => {
                 fetch(BackendURL + 'rest/profile/update', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body:
-                        image !== ''
-                            ? JSON.stringify({
-                                  userId: userId,
-                                  firstName: firstname,
-                                  lastName: lastname,
-                                  description: description,
-                                  password: password,
-                                  confirmPassword: Cpassword,
-                                  profileImgURI: URL,
-                              })
-                            : JSON.stringify({
-                                  userId: userId,
-                                  firstName: firstname,
-                                  lastName: lastname,
-                                  description: description,
-                                  password: password,
-                                  confirmPassword: Cpassword,
-                              }),
+                    body: JSON.stringify({
+                        userId: userId,
+                        firstName: firstname,
+                        lastName: lastname,
+                        description: description,
+                        password: password,
+                        confirmPassword: Cpassword,
+                        profileImgURI: URL,
+                    }),
                 })
                     .then((res) => {
-                        console.log(URL);
                         if (res.status === 400) {
                             return 'Error';
                         } else {
@@ -178,25 +167,14 @@ export default function EditProfile({
                 fetch(BackendURL + 'rest/profile/update', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body:
-                        image !== ''
-                            ? JSON.stringify({
-                                  userId: userId,
-                                  firstName: firstname,
-                                  lastName: lastname,
-                                  description: description,
-                                  password: password,
-                                  confirmPassword: Cpassword,
-                                  profileImgURI: URL,
-                              })
-                            : JSON.stringify({
-                                  userId: userId,
-                                  firstName: firstname,
-                                  lastName: lastname,
-                                  description: description,
-                                  password: password,
-                                  confirmPassword: Cpassword,
-                              }),
+                    body: JSON.stringify({
+                        userId: userId,
+                        firstName: firstname,
+                        lastName: lastname,
+                        description: description,
+                        password: password,
+                        confirmPassword: Cpassword,
+                    }),
                 })
                     .then((res) => {
                         if (res.status === 400) {
@@ -250,12 +228,13 @@ export default function EditProfile({
             <View style={editProfileStyles().container}>
                 <>
                     <View style={editProfileStyles().img}>
-                        {image !== '' ? (
+                        {image !== '' && image !== 'undefined' ? (
                             <Avatar.Image
                                 source={{uri: image}}
                                 size={profProfPic}
                             />
-                        ) : route.params.imageURL !== '' ? (
+                        ) : route.params.imageURL !== '' &&
+                          route.params.imageURL !== 'undefined' ? (
                             <Avatar.Image
                                 source={{uri: route.params.imageURL}}
                                 size={profProfPic}

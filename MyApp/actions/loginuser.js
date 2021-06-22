@@ -1,5 +1,6 @@
 import React from 'react';
 import {BackendURL} from '../constants/Backend';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const loginUser = (
     userData,
@@ -29,11 +30,14 @@ export const loginUser = (
         .then((res) => {
             if (res === 'Error') {
                 alert('Email or Password is Invalid');
+                setIsLoading(false);
             } else {
                 setUserId(res.userId);
-                setTimeout(() => {}, 5000);
+                AsyncStorage.setItem('UserId', res.userId);
+                setTimeout(() => {}, 2000);
                 setIsLoading(false);
                 setIsLogin(false);
+                AsyncStorage.setItem('Login', JSON.stringify(false));
             }
         })
         .catch((err) => {

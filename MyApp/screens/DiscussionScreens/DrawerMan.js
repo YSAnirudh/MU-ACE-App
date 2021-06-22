@@ -36,6 +36,7 @@ import {BackendURL} from '../../constants/Backend';
 import {screenHeight} from '../../utils/ScreenParams';
 import AlertStyled from '../../components/Alert';
 import DrawerStatus from '../../components/DrawerStatus';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export function DrawerMan({
     setIsLogin,
@@ -410,6 +411,8 @@ export function DrawerMan({
                         color: theme().text,
                     }}
                     onPress={() => {
+                        AsyncStorage.setItem('Login', JSON.stringify(true));
+                        AsyncStorage.setItem('UserId', '');
                         setIsLogin(true);
                         setUserId('');
                     }}

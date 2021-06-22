@@ -46,6 +46,7 @@ export default function ViewUserPostScreen({
                     key={Math.random().toString()}
                     navigation={navigation}
                     postRes={postResponses[i]}
+                    userIdLocal={userId}
                 />
             );
         }
@@ -153,6 +154,7 @@ export default function ViewUserPostScreen({
                     navigation={navigation}
                     postRes={filtered[i]}
                     postOpen={false}
+                    userIdLocal={userId}
                 />
             );
         }

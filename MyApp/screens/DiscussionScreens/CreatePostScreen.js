@@ -218,7 +218,7 @@ export default function CreatePostScreen({
                                   }),
                     })
                         .then((res) => {
-                            console.log(URL);
+                            // console.log(URL);
                             if (res.status === 400) {
                                 return 'Error';
                             } else {

@@ -26,8 +26,24 @@ export const validateRegisterInput = (userData) => {
     } else if (!Validator.isEmail(userData.email)) {
         errors.email = 'Email is invalid\n';
     }
+    let k = 0;
+    for (var i = 0; i < userData.email.length; i++) {
+        if (userData.email[i] === '@') {
+            k = i;
+            break;
+        }
+    }
+    if (
+        !Validator.equals(
+            userData.email.substr(k + 1, userData.email.length),
+            'mechyd.ac.in'
+        )
+    ) {
+        errors.email = 'Make Sure to enter MEC Email\n';
+    }
 
     // Password checks
+    console.log(userData.password);
     if (Validator.isEmpty(userData.password)) {
         errors.password = 'Password field is required\n';
     } else if (!Validator.isLength(userData.password, {min: 8, max: 100})) {

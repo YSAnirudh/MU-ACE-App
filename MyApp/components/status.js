@@ -142,76 +142,78 @@ const Status = ({isLoading, setIsLoading, userId, ...navigation}) => {
         handleGetStatus();
     }, []);
 
-    return !isLoading ? (
+    return (
         <View style={availabilityStyles().container}>
-            <ScrollView
-                style={{paddingBottom: 0}}
-                refreshControl={
-                    <RefreshControl
-                        refreshing={isLoading}
-                        onRefresh={onRefresh}
-                    />
-                }
-            >
-                <View
-                    style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        marginBottom: margin10,
-                    }}
-                >
-                    <View style={{width: wp('80%')}}>
-                        <Searchbar
-                            placeholder="Search"
-                            iconColor={theme().text}
-                            onChangeText={onChangeSearch}
-                            placeholderTextColor={theme().text}
-                            col
-                            value={searchQuery}
-                            style={availabilityStyles().searchBar}
-                            theme={{colors: {text: theme().text}}}
+            {!isLoading ? (
+                <ScrollView
+                    style={{paddingBottom: 0}}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={isLoading}
+                            onRefresh={onRefresh}
                         />
-                    </View>
-                    <View>
-                        <TouchableRipple>
-                            <IconButton
-                                icon="filter"
-                                size={iconSize + 4}
-                                borderless={true}
-                                color={theme().text}
-                                onPress={() => {
-                                    setFlairVis(!flairAlertVis);
-                                }}
+                    }
+                >
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            marginBottom: margin10,
+                        }}
+                    >
+                        <View style={{width: wp('80%')}}>
+                            <Searchbar
+                                placeholder="Search"
+                                iconColor={theme().text}
+                                onChangeText={onChangeSearch}
+                                placeholderTextColor={theme().text}
+                                col
+                                value={searchQuery}
+                                style={availabilityStyles().searchBar}
+                                theme={{colors: {text: theme().text}}}
                             />
-                        </TouchableRipple>
+                        </View>
+                        <View>
+                            <TouchableRipple>
+                                <IconButton
+                                    icon="filter"
+                                    size={iconSize + 4}
+                                    borderless={true}
+                                    color={theme().text}
+                                    onPress={() => {
+                                        setFlairVis(!flairAlertVis);
+                                    }}
+                                />
+                            </TouchableRipple>
+                        </View>
                     </View>
-                </View>
-                {alertVisible ? (
-                    <AlertStyled
-                        alertVisible={true}
-                        alertMessage={alertMessage}
-                        setAlertVisible={setAlertVisible}
-                    />
-                ) : (
-                    <></>
-                )}
-                {flairAlertVis ? (
-                    //<View style={createPostStyles().flairC}>
-                    <AlertFilters
-                        alertVisible={true}
-                        setAlertVisible={setFlairVis}
-                        onSelectedItemsChange={onFiltersChange}
-                        selectedItems={filters}
-                    ></AlertFilters>
-                ) : (
-                    //</View>
-                    <></>
-                )}
-                {viewStatus()}
-            </ScrollView>
+                    {alertVisible ? (
+                        <AlertStyled
+                            alertVisible={true}
+                            alertMessage={alertMessage}
+                            setAlertVisible={setAlertVisible}
+                        />
+                    ) : (
+                        <></>
+                    )}
+                    {flairAlertVis ? (
+                        //<View style={createPostStyles().flairC}>
+                        <AlertFilters
+                            alertVisible={true}
+                            setAlertVisible={setFlairVis}
+                            onSelectedItemsChange={onFiltersChange}
+                            selectedItems={filters}
+                        ></AlertFilters>
+                    ) : (
+                        //</View>
+                        <></>
+                    )}
+                    {viewStatus()}
+                </ScrollView>
+            ) : (
+                <LoadingScreen />
+            )}
         </View>
-    ) : (
-        <LoadingScreen />
     );
 };
 
