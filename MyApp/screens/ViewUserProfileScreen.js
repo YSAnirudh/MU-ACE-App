@@ -11,7 +11,13 @@ import {
     noobProfile2 as noobProfile,
 } from '../constants/Styles';
 import Colors from '../constants/Colors';
-import {font12, margin10, margin20, profProfPic} from '../constants/Sizes';
+import {
+    font12,
+    iconSize,
+    margin10,
+    margin20,
+    profProfPic,
+} from '../constants/Sizes';
 import {screenHeight, screenWidth} from '../utils/ScreenParams';
 import {profIconSize, titleFont, textFont} from '../constants/Sizes';
 import ProgressCircle from 'react-native-progress-circle';
@@ -106,10 +112,18 @@ export default function ViewUserProfileScreen({
     return !isLoading ? (
         <View style={userProfileStyles().root}>
             <View style={userProfileStyles().userProfImg}>
-                <Avatar.Image
-                    source={require('../assets/logo2.png')}
-                    size={profProfPic}
-                />
+                {typeof route.params.profileImgURI !== 'undefined' &&
+                route.params.profileImgURI !== '' ? (
+                    <Avatar.Image
+                        source={{uri: route.params.profileImgURI}}
+                        size={profProfPic}
+                    />
+                ) : (
+                    <Avatar.Image
+                        source={{uri: defaultProfilePicture}}
+                        size={profProfPic}
+                    />
+                )}
                 <View style={{marginTop: widthPercentageToDP('8%')}}>
                     <Text style={userProfileStyles().stats}>
                         <Text style={{fontWeight: 'bold', fontSize: margin20}}>
@@ -117,8 +131,12 @@ export default function ViewUserProfileScreen({
                         </Text>
                     </Text>
                     <Text style={userProfileStyles().stats}>
-                        <Text style={{fontWeight: 'bold'}}>Name:</Text>{' '}
-                        {firstName + ' ' + lastName}
+                        <Text style={{fontWeight: 'bold'}}>First Name:</Text>{' '}
+                        {firstName}
+                    </Text>
+                    <Text style={userProfileStyles().stats}>
+                        <Text style={{fontWeight: 'bold'}}>Last Name:</Text>{' '}
+                        {lastName}
                     </Text>
                     <Text style={userProfileStyles().stats}>
                         <Text style={{fontWeight: 'bold'}}>Department:</Text>{' '}
@@ -134,7 +152,17 @@ export default function ViewUserProfileScreen({
                             size={userProfileStyles().emailIcon.size}
                             color={userProfileStyles().emailIcon.color}
                         />
-                        <Text style={userProfileStyles().myText}>{email}</Text>
+                        <Text
+                            style={[
+                                userProfileStyles().myText,
+                                {
+                                    flex: 1,
+                                    flexWrap: 'wrap',
+                                },
+                            ]}
+                        >
+                            {email}
+                        </Text>
                     </View>
                 </View>
             </View>
@@ -148,11 +176,26 @@ export default function ViewUserProfileScreen({
                     }}
                 >
                     <Text style={userProfileStyles().userTitle}>
-                        {userType == 'Professor'
-                            ? status
-                                ? 'Insert Icon for status True'
-                                : 'Insert Icon for status false'
-                            : ''}
+                        {userType === 'Professor' ? (
+                            <Text style={{fontSize: margin10 * 2}}>
+                                {' '}
+                                Status:{' '}
+                            </Text>
+                        ) : (
+                            <></>
+                        )}
+                        {userType === 'Professor' ? (
+                            <Icon
+                                name="checkmark-circle"
+                                size={iconSize + 5}
+                                color={status ? 'green' : 'red'}
+                                style={{
+                                    marginLeft: 1.5,
+                                }}
+                            />
+                        ) : (
+                            ''
+                        )}
                     </Text>
                 </View>
 
@@ -193,7 +236,7 @@ export default function ViewUserProfileScreen({
                     </View>
                     <View style={noobProfile().progressViewBar}>
                         <ProgressCircle
-                            percent={karma.toString()}
+                            percent={karma}
                             // containerStyle={{width}}
                             radius={screenHeight / 15}
                             borderWidth={textFont}

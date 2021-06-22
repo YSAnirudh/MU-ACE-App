@@ -34,14 +34,7 @@ const LoginScreen = ({
         };
         var validate = validateLoginInput(userData);
         if (validate.isValid) {
-            loginUser(
-                userData,
-                setIsLogin,
-                setUserId,
-                isLoading,
-                setIsLoading,
-                alerti
-            );
+            loginUser(userData, setIsLogin, setUserId, isLoading, setIsLoading);
         } else {
             setAlert(!alertVisible, validate.message);
         }

@@ -23,7 +23,7 @@ export default function PostClickable({
                         tags: x.tags,
                         title: x.theTitle,
                         comments: x.comments,
-                        currentUserId: x.userId,
+                        currentUserId: userIdLocal,
                         postImg: x.postImg,
                         profileImg: x.profileImg,
                         localUserId: userIdLocal,

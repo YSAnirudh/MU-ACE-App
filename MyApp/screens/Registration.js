@@ -58,7 +58,7 @@ const Registration = ({navigation, isLoading, setIsLoading}) => {
                 style={koushikMistake().logo}
             />
 
-            <Text style={koushikMistake().ForgotTxt}>Welcome To MU</Text>
+            <Text style={koushikMistake().ForgotTxt}>Welcome To MU Ace</Text>
             <LoginTxtF
                 label="Firstname"
                 placeholder="Firstname"
@@ -105,9 +105,9 @@ const Registration = ({navigation, isLoading, setIsLoading}) => {
                         selectedValue={dept}
                         style={koushikMistake().dept}
                         dropdownIconColor={theme().regIcon}
-                        onValueChange={(itemValue, itemIndex) =>
-                            setDept(itemValue)
-                        }
+                        onValueChange={(itemValue, itemIndex) => {
+                            setDept(itemValue);
+                        }}
                     >
                         <Picker.Item label="CSE" value="CSE" />
                         <Picker.Item label="MECH" value="MECH" />
@@ -121,12 +121,13 @@ const Registration = ({navigation, isLoading, setIsLoading}) => {
                 </View>
                 <View style={koushikMistake().Tf}>
                     <Picker
-                        selectedValue1={userType}
+                        selectedValue={userType}
                         style={koushikMistake().dept}
                         dropdownIconColor={theme().regIcon}
-                        onValueChange={(itemValue, itemIndex) =>
-                            setUserType(itemValue)
-                        }
+                        itemStyle={koushikMistake().item}
+                        onValueChange={(itemValue, itemIndex) => {
+                            setUserType(itemValue);
+                        }}
                     >
                         <Picker.Item label="Student" value="Student" />
                         <Picker.Item label="Professor" value="Professor" />

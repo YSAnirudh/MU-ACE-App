@@ -72,6 +72,7 @@ export default function ViewPost({navigation, route}) {
                             profileImg={res.profileImg}
                             postOpen={true}
                             localUserId={route.params.localUserId}
+                            navigation={navigation}
                         />
                     );
                     setIsLoading(false);
@@ -125,7 +126,7 @@ export default function ViewPost({navigation, route}) {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
                 postId: route.params.postId,
-                userId: route.params.currentUserId,
+                userId: route.params.localUserId,
                 comment: comm,
             }),
         })

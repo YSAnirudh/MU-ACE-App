@@ -197,9 +197,8 @@ export const koushikMistake = () => ({
     },
     dept: {
         height: statusProfPic,
-        width: pad150 * 1.2,
+        width: width200 / 1.2,
         color: theme().regIcon,
-        // fontSize: 100,
     },
     Tf: {
         marginTop: margin5,
@@ -215,6 +214,9 @@ export const koushikMistake = () => ({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: theme().createBackground,
+    },
+    item: {
+        fontSize: margin10,
     },
 });
 
@@ -803,6 +805,7 @@ export const createPostStyles = () => ({
         color: theme().modalButtonText,
         fontWeight: 'bold',
         textAlign: 'center',
+        fontSize: font12,
     },
     modalText: {
         marginBottom: 15,

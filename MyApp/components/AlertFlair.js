@@ -50,7 +50,7 @@ const AlertFlair = ({
                             onPress={() => setAlertVisible(false)}
                         >
                             <Text style={createPostStyles().textStyle}>
-                                Save
+                                Save{' '}
                             </Text>
                         </Pressable>
                     </View>

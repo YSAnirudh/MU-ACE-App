@@ -48,6 +48,8 @@ export default function ProfileScreen({
     const [answers, setAnswers] = useState(0);
     const [image, setImage] = useState('');
     const [URL, setURL] = useState('');
+    const [dept, setDept] = useState('');
+    const [userType, setUserType] = useState('');
 
     const handleGetData = () => {
         setIsLoading(true);
@@ -78,6 +80,8 @@ export default function ProfileScreen({
                     setKarma(parseFloat(res.karma));
                     setDescription(res.description);
                     setURL(res.profileImgURI);
+                    setUserType(res.userType);
+                    setDept(res.department);
                     setIsLoading(false);
                 }
             })
@@ -165,7 +169,12 @@ export default function ProfileScreen({
                                         marginBottom: titleFont,
                                     }}
                                 >
-                                    {firstName}
+                                    {firstName +
+                                        '\n(' +
+                                        dept +
+                                        ' - ' +
+                                        userType +
+                                        ')'}
                                 </Title>
 
                                 <View style={noobProfile().progressView}>
@@ -277,13 +286,8 @@ export default function ProfileScreen({
                             //theme={pageTheme}
                             color={theme().iconColor}
                             onPress={() => {
-                                AsyncStorage.setItem(
-                                    'Login',
-                                    JSON.stringify(true)
-                                );
-                                AsyncStorage.setItem('UserId', '');
-                                setIsLogin(true);
                                 setUserId('');
+                                setIsLogin(true);
                             }}
                             style={profileStyles().buttonStyle}
                         >

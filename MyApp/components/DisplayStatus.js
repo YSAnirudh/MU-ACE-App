@@ -32,6 +32,7 @@ const DisplayStatus = ({val, navigation, setIsLoading, isLoading, userId}) => {
                         screen: 'User Profile',
                         params: {
                             userId: userId,
+                            profileImgURI: val.profileImgURI,
                         },
                     });
                 }}

@@ -105,7 +105,7 @@ const AlertFilters = ({
                             onPress={() => setAlertVisible(false)}
                         >
                             <Text style={createPostStyles().textStyle}>
-                                Save
+                                Save{' '}
                             </Text>
                         </Pressable>
                     </View>

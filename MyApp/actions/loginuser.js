@@ -1,14 +1,12 @@
 import React from 'react';
 import {BackendURL} from '../constants/Backend';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const loginUser = (
     userData,
     setIsLogin,
     setUserId,
     isLoading,
-    setIsLoading,
-    alerti
+    setIsLoading
 ) => {
     const options = {
         headers: {'Access-Control-Allow-Origin': '*'},
@@ -33,11 +31,9 @@ export const loginUser = (
                 setIsLoading(false);
             } else {
                 setUserId(res.userId);
-                AsyncStorage.setItem('UserId', res.userId);
                 setTimeout(() => {}, 2000);
                 setIsLoading(false);
                 setIsLogin(false);
-                AsyncStorage.setItem('Login', JSON.stringify(false));
             }
         })
         .catch((err) => {

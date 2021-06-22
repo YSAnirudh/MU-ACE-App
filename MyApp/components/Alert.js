@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { createPostStyles } from "../constants/Styles";
-import { Modal, Text, View, Alert, Pressable } from "react-native";
+import React, {useState} from 'react';
+import {createPostStyles} from '../constants/Styles';
+import {Modal, Text, View, Alert, Pressable} from 'react-native';
 
-const AlertStyled = ({ alertVisible, alertMessage, setAlertVisible }) => {
+const AlertStyled = ({alertVisible, alertMessage, setAlertVisible}) => {
     return (
         <View style={createPostStyles().centeredView}>
             <Modal
@@ -25,7 +25,9 @@ const AlertStyled = ({ alertVisible, alertMessage, setAlertVisible }) => {
                             ]}
                             onPress={() => setAlertVisible(false)}
                         >
-                            <Text style={createPostStyles().textStyle}>OK</Text>
+                            <Text style={createPostStyles().textStyle}>
+                                Ok{' '}
+                            </Text>
                         </Pressable>
                     </View>
                 </View>

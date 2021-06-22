@@ -36,7 +36,6 @@ import {BackendURL} from '../../constants/Backend';
 import {screenHeight} from '../../utils/ScreenParams';
 import AlertStyled from '../../components/Alert';
 import DrawerStatus from '../../components/DrawerStatus';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export function DrawerMan({
     setIsLogin,
@@ -185,13 +184,53 @@ export function DrawerMan({
             });
     };
 
+    const handleKoushikGetData = () => {
+        // handleUID(userId);
+        fetch(BackendURL + 'rest/user/get', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                userId: uid,
+            }),
+        })
+            .then((res) => {
+                if (res.status === 400) {
+                    console.log(res.json());
+                    return 'Error';
+                } else {
+                    return res.json();
+                }
+            })
+            .then((res) => {
+                if (res === 'Error') {
+                    console.log(uid, userId);
+
+                    setAlert(true, 'Cannot Get Data');
+                } else {
+                    // console.log(res);
+                    setFirstName(res.firstName);
+                    setLastName(res.lastName);
+                    setEmail(res.email);
+                    setAnswers(parseInt(res.noOfAnswers));
+                    setPosts(parseInt(res.noOfPosts));
+                    setKarma(res.karma);
+                    handleUID(res.status);
+                    setUserType(res.userType);
+                    setImage(res.profileImgURI);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
     useEffect(() => {
         handleGetData();
     }, [posts, answers, karma]);
 
     useEffect(() => {
         if (isDrawerOpen) {
-            handleGetData();
+            handleKoushikGetData();
         }
     }, [isDrawerOpen]);
 
@@ -411,10 +450,8 @@ export function DrawerMan({
                         color: theme().text,
                     }}
                     onPress={() => {
-                        AsyncStorage.setItem('Login', JSON.stringify(true));
-                        AsyncStorage.setItem('UserId', '');
-                        setIsLogin(true);
                         setUserId('');
+                        setIsLogin(true);
                     }}
                 />
             </Drawer.Section>

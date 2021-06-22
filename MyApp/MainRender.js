@@ -2,10 +2,8 @@ import React, {useState, useEffect} from 'react';
 import LoginScreen from './screens/LoginScreen';
 import DiscussionForum from './screens/DiscussionForum';
 import Registration from './screens/Registration';
-import usePersistedState from './persistedState';
 import BeforeLogin from './screens/BeforeLogin';
 import LoadingScreen from './screens/LoadingScreen';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function MainRender() {
     const [isLogin, setIsLogin] = useState(true);

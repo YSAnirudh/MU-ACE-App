@@ -56,7 +56,7 @@ export default function EditProfile({
 
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
             aspect: [1, 1],
             quality: 0.25,
@@ -99,53 +99,59 @@ export default function EditProfile({
                 return;
             },
             () => {
-                snapshot.snapshot.ref.getDownloadURL().then((url) => {
-                    setURL(url);
-                    blob.close();
-                    return url;
-                });
+                snapshot.snapshot.ref
+                    .getDownloadURL()
+                    .then((url) => {
+                        setURL(url);
+                        blob.close();
+                        return url;
+                    })
+                    .then((url) => {
+                        fetch(BackendURL + 'rest/profile/update', {
+                            method: 'POST',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify({
+                                userId: userId,
+                                firstName: firstname,
+                                lastName: lastname,
+                                description: description,
+                                password: password,
+                                confirmPassword: Cpassword,
+                                profileImgURI: url,
+                            }),
+                        })
+                            .then((res) => {
+                                if (res.status === 400) {
+                                    return 'Error';
+                                } else {
+                                    return res.json();
+                                }
+                            })
+                            .then((res) => {
+                                if (res === 'Error') {
+                                    setAlert(true, 'Cannot Update Profile');
+                                } else {
+                                    setIsLoading(false);
+                                    setAlert(
+                                        true,
+                                        'Saved Changes Successfully!'
+                                    );
+                                }
+                            })
+                            .then((res) => {
+                                navigation.navigate('Profile');
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                            });
+                    });
             }
         );
     };
 
     const handleImage = async () => {
         if (image !== '') {
-            uploadImage().then((res) => {
-                fetch(BackendURL + 'rest/profile/update', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        userId: userId,
-                        firstName: firstname,
-                        lastName: lastname,
-                        description: description,
-                        password: password,
-                        confirmPassword: Cpassword,
-                        profileImgURI: URL,
-                    }),
-                })
-                    .then((res) => {
-                        if (res.status === 400) {
-                            return 'Error';
-                        } else {
-                            return res.json();
-                        }
-                    })
-                    .then((res) => {
-                        if (res === 'Error') {
-                            setAlert(true, 'Cannot Update Profile');
-                        } else {
-                            setIsLoading(false);
-                            setAlert(true, 'Saved Changes Successfully!');
-                        }
-                    })
-                    .then((res) => {
-                        navigation.navigate('Profile');
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                    });
-            });
+            uploadImage();
         }
     };
 
